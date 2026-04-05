@@ -174,6 +174,7 @@ const AssociatesView = ({ navigateTo }) => {
     {
       id: 'kim',
       name: "Kim Jones",
+      logo: "/kimlogo.webp",
       titles: [
         "UKCP Psychotherapist & Clinical Supervisor",
         "RTM Licenced Clinician",
@@ -234,19 +235,32 @@ const AssociatesView = ({ navigateTo }) => {
       img: "/kiran.webp"
     },
     {
-      id: 'sarah',
-      name: "Sarah Miller",
-      titles: ["Integrative Psychotherapist", "BACP Accredited"],
-      tagline: "Finding balance through integrative and mindful therapeutic approaches.",
-      about: ["I integrate various therapeutic models to match the specific needs of my clients, focusing on mindfulness and cognitive awareness to manage stress and anxiety."],
-      interests: ["Stress", "Mindfulness", "Life transitions", "Workplace burnout"],
-      worksWith: "Adults and Professionals",
+      id: 'letisia',
+      name: "Letisia Vela",
+      logo: "/letisalogo.webp",
+      titles: [
+        "Transactional Analysis (TA) Advanced Trainee",
+        "Bilingual Therapist (English/Spanish)"
+      ],
+      tagline: "I welcome clients who may not have a specific 'label' but simply know that something doesn't feel right.",
+      about: [
+        "As an advanced trainee therapist, I am warm, thoughtful and relational in my approach. I believe meaningful change happens through a safe, collaborative therapeutic relationship where you feel genuinely heard and understood.",
+        "My clinical experience includes placements with Humberside Police and Valued Minds (Space2BHeard), where I have supported adults facing anxiety, low mood, trauma-related difficulties, and complex life challenges.",
+        "Grounded in Transactional Analysis, my work explores patterns in how you relate to yourself and others, helping you understand where certain beliefs or behaviours may have developed and how they might be affecting you now.",
+        "As a bilingual therapist (English and Spanish), I aim to offer a culturally sensitive and inclusive space where all parts of your identity are welcome. As a UKCP trainee, I bring curiosity, up-to-date training, and dedicated supervision, alongside a strong commitment to ethical and reflective practice."
+      ],
+      interests: [
+        "Anxiety", "Low mood", "Relationship difficulties", "Repeating patterns", "Inner world exploration",
+        "Cultural identity", "Trauma-related difficulties", "Ethical practice"
+      ],
+      worksWith: "Individuals & Adults",
       methods: "Face-to-face & online",
-      supervisees: "Yes",
-      hours: "Evenings and Weekends",
-      fees: "£65 / 60 mins",
-      location: "Hull",
-      img: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=400"
+      supervisees: "No",
+      hours: "Tues, Wed, Thurs (Day into Evening) & Sat mornings",
+      fees: "Individuals £40 per session",
+      location: "Willerby",
+      insurance: "Balens Ltd",
+      img: "/letisa.webp"
     },
     {
       id: 'james',
@@ -303,22 +317,21 @@ const AssociatesView = ({ navigateTo }) => {
                   <div key={associate.id} className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 px-3">
                     <div 
                       onClick={() => { setSelectedAssociate(associate); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                      className="cursor-pointer bg-white/10 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[580px] justify-between overflow-hidden"
+                      className="cursor-pointer bg-white/10 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[680px] justify-between overflow-hidden pb-10"
                     >
                       <div className="flex flex-col items-center w-full">
-                        {/* Larger Circle for Carousel (Kim's requirement) */}
-                        <div className="w-32 h-32 md:w-40 md:h-40 rounded-full mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5">
+                        <div className="w-32 h-32 md:w-44 md:h-44 rounded-full mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
                           <img src={associate.img} className="w-full h-full object-cover" alt={associate.name} />
                         </div>
                         <h3 className="text-3xl font-serif mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
-                        <div className="space-y-1 mb-4 h-12 overflow-hidden">
+                        <div className="space-y-1 mb-4 h-12 overflow-hidden flex-shrink-0">
                           {associate.titles.slice(0, 1).map((t, i) => (
                             <p key={i} className="text-[10px] opacity-60 uppercase tracking-widest font-bold px-4 text-white line-clamp-2">{t}</p>
                           ))}
                         </div>
                         <p className="font-subtitle text-xl text-white mb-6 leading-snug px-2 line-clamp-4">"{associate.tagline}"</p>
                       </div>
-                      <div className="w-full">
+                      <div className="w-full px-4 mt-auto">
                         <PrimaryButton className="pointer-events-none scale-90 w-full">View Profile</PrimaryButton>
                       </div>
                     </div>
@@ -336,9 +349,9 @@ const AssociatesView = ({ navigateTo }) => {
           </div>
         </>
       ) : (
-        /* FULL-VIEW PROFILE DETAIL (RESPONSIVE FIX) */
+        /* FULL-VIEW PROFILE DETAIL */
         <div className="animate-fadeIn relative z-[10] min-h-[80vh] w-full">
-          {/* Parallax - Left to Right Background Layer */}
+          {/* Parallax Background Layer */}
           <div className="absolute inset-x-0 top-0 h-full overflow-hidden pointer-events-none opacity-10 -z-0">
              <div className="flex whitespace-nowrap animate-marquee-ltr py-10 mt-20">
                {[...Array(12)].map((_, i) => (
@@ -361,10 +374,9 @@ const AssociatesView = ({ navigateTo }) => {
             <div className="flex flex-col lg:flex-row gap-8 md:gap-16 items-start relative z-10">
               {/* Profile Card Column */}
               <div className="w-full lg:w-1/3 space-y-6 md:space-y-8 lg:sticky lg:top-8">
-                {/* Large Square Image (Fits Kim and Kiran properly) */}
                 <div className="relative group">
                   {selectedAssociate.logo && (
-                    <div className="absolute -top-4 -left-4 z-20 w-24 h-24 md:w-32 md:h-32 p-2 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 animate-float shadow-2xl">
+                    <div className="absolute -top-4 -left-4 z-20 w-24 h-24 md:w-32 md:h-32 p-2 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 animate-float shadow-2xl overflow-hidden">
                       <img src={selectedAssociate.logo} className="w-full h-full object-contain" alt="Logo" />
                     </div>
                   )}

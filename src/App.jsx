@@ -51,14 +51,17 @@ const Icons = {
   ChevronRight: () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
   ),
-  Facebook: () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+  ChevronDown: ({ size = 20 }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
   ),
-  Instagram: () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+  Facebook: ({ size = 24 }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
   ),
-  LinkedIn: () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+  Instagram: ({ size = 24 }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+  ),
+  LinkedIn: ({ size = 24 }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
   )
 };
 
@@ -336,8 +339,9 @@ const AssociatesView = ({ navigateTo }) => {
                       )}
                       
                       <div className="flex flex-col items-center w-full">
-                        <div className="w-32 h-32 md:w-44 md:h-44 rounded-full mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0 flex items-center justify-center p-2">
-                          <img src={associate.img} className="w-full h-full object-contain" alt={associate.name} />
+                        {/* Object-cover strictly forces the image to fill the circle edge-to-edge */}
+                        <div className="w-32 h-32 md:w-44 md:h-44 rounded-full mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
+                          <img src={associate.img} className="w-full h-full object-cover" alt={associate.name} />
                         </div>
                         <h3 className="text-3xl font-serif mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
                         <div className="space-y-1 mb-4 h-12 overflow-hidden flex-shrink-0">
@@ -392,12 +396,14 @@ const AssociatesView = ({ navigateTo }) => {
               <div className="w-full lg:w-1/3 space-y-6 md:space-y-8 lg:sticky lg:top-8">
                 <div className="relative group">
                   {selectedAssociate.logo && (
-                    <div className="absolute -top-4 -left-4 z-20 w-24 h-24 md:w-32 md:h-32 p-2 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 animate-float shadow-2xl overflow-hidden">
+                    <div className="absolute -top-4 -left-4 md:-top-6 md:-left-6 z-20 w-24 h-24 md:w-32 md:h-32 p-3 bg-white/10 backdrop-blur-xl rounded-2xl md:rounded-3xl border border-white/20 shadow-2xl flex items-center justify-center">
+                      {/* Logo strictly uses object-contain to avoid cropping */}
                       <img src={selectedAssociate.logo} className="w-full h-full object-contain" alt="Logo" />
                     </div>
                   )}
-                  <div className="w-full aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden border-4 md:border-8 border-white/20 shadow-2xl bg-white/5 flex items-center justify-center p-4">
-                    <img src={selectedAssociate.img} className="w-full h-full object-contain" alt={selectedAssociate.name} />
+                  {/* Profile image strictly uses object-cover with NO padding, forcing it to fill the square frame */}
+                  <div className="w-full aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden border-4 md:border-8 border-white/20 shadow-2xl bg-white/5">
+                    <img src={selectedAssociate.img} className="w-full h-full object-cover" alt={selectedAssociate.name} />
                   </div>
                 </div>
                 
@@ -605,19 +611,44 @@ export default function App() {
           <div className="cursor-pointer group flex items-center shrink-0" onClick={() => navigateTo('home')}>
             <img src="/logo.png" alt="Logo" className="h-10 sm:h-12 md:h-16 w-auto" />
           </div>
-          <div className="hidden lg:flex space-x-6 xl:space-x-8">
-            {navLinks.map((link) => (
-              <button key={link.id} onClick={() => navigateTo(link.id)} className={`text-xs xl:text-sm uppercase tracking-widest font-bold transition-all ${currentPage === link.id ? 'border-b-2 border-white pb-1' : 'opacity-70 hover:opacity-100'}`}>
-                {link.label}
+          
+          {/* Minimized Desktop Header with Dropdown */}
+          <div className="hidden lg:flex items-center gap-8">
+            <div className="relative group">
+              <button className="flex items-center gap-2 text-sm uppercase tracking-widest font-bold opacity-80 hover:opacity-100 transition-opacity py-2">
+                Menu <Icons.ChevronDown size={16} />
               </button>
-            ))}
+              {/* Dropdown Menu (filters out Contact) */}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-[#7a9d9b] border border-white/20 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden flex flex-col">
+                {navLinks.filter(l => l.id !== 'contact').map((link) => (
+                  <button 
+                    key={link.id} 
+                    onClick={() => navigateTo(link.id)} 
+                    className="w-full text-left px-6 py-4 hover:bg-white/10 transition-colors text-sm uppercase tracking-widest font-bold border-b border-white/5 last:border-0"
+                  >
+                    {link.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <button 
+              onClick={() => navigateTo('contact')} 
+              className={`text-sm uppercase tracking-widest font-bold transition-all ${currentPage === 'contact' ? 'border-b-2 border-white pb-1' : 'opacity-80 hover:opacity-100'}`}
+            >
+              Contact
+            </button>
           </div>
+
+          {/* Mobile Hamburger Menu */}
           <div className="lg:hidden">
             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 bg-white/10 rounded-xl">
               {isMobileMenuOpen ? <Icons.X /> : <Icons.Menu />}
             </button>
           </div>
         </div>
+
+        {/* Mobile Dropdown */}
         {isMobileMenuOpen && (
           <div className="lg:hidden absolute top-full left-0 w-full bg-[#8cb2b0] border-t border-white/10 text-white animate-fadeIn shadow-2xl p-6 flex flex-col space-y-2">
             {navLinks.map((link) => (
@@ -639,18 +670,25 @@ export default function App() {
         {currentPage === 'contact' && <ContactView />}
       </main>
 
-      <footer className="mt-12 py-12 border-t border-white/10 bg-black/5 flex flex-col items-center">
-        <div className="flex gap-6 mb-8">
-          <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] transition-colors"><Icons.LinkedIn /></a>
-          <a href="https://www.facebook.com/Debbiettherapy" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] transition-colors"><Icons.Facebook /></a>
-          <a href="https://www.instagram.com/debbiettherapy/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] transition-colors"><Icons.Instagram /></a>
+      {/* Footer seamlessly blended with body background */}
+      <footer className="mt-12 pt-12 pb-16 border-t border-white/10 flex flex-col items-center relative z-20">
+        <div className="flex gap-8 mb-10">
+          <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">
+            <Icons.LinkedIn size={36} />
+          </a>
+          <a href="https://www.facebook.com/Debbiettherapy" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">
+            <Icons.Facebook size={36} />
+          </a>
+          <a href="https://www.instagram.com/debbiettherapy/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">
+            <Icons.Instagram size={36} />
+          </a>
         </div>
         
-        <p className="opacity-60 mb-6 max-w-xs mx-auto text-sm text-center text-white">Providing a safe space in Willerby Square.</p>
+        <p className="opacity-70 mb-8 max-w-xs mx-auto text-sm text-center text-white">Providing a safe space in Willerby Square.</p>
         
-        <div className="flex flex-col items-center gap-2 text-[10px] opacity-40 font-sans tracking-widest uppercase text-white">
+        <div className="flex flex-col items-center gap-3 text-[11px] opacity-50 font-sans tracking-widest uppercase text-white">
           <span>&copy; {new Date().getFullYear()} All rights reserved.</span>
-          <a href="https://builtbyliam.uk/" target="_blank" rel="noopener noreferrer" className="hover:underline">Built By Liam</a>
+          <a href="https://builtbyliam.uk/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline decoration-white/30 underline-offset-4">Built By Liam</a>
         </div>
       </footer>
     </div>

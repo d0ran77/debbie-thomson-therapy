@@ -35,6 +35,12 @@ const Icons = {
   ),
   MapPin: () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+  ),
+  Clock: () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+  ),
+  Heart: () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
   )
 };
 
@@ -147,43 +153,166 @@ const ServicesView = ({ navigateTo }) => (
   </div>
 );
 
-const AssociatesView = ({ navigateTo }) => (
-  <div className="max-w-5xl mx-auto px-4 py-20 animate-fadeIn text-white">
-    <h1 className="text-5xl md:text-7xl font-serif text-center mb-10 uppercase tracking-tight">Associates</h1>
-    
-    <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md p-8 md:p-12 rounded-[2.5rem] border border-white/20 shadow-2xl mb-16 text-center">
-      <h2 className="text-3xl font-serif mb-6" style={{ color: COLORS.button }}>Announcement</h2>
-      <p className="text-xl md:text-2xl font-subtitle mb-6 leading-relaxed">
-        I am excited to announce the launch of my Associate Therapist Service!
-      </p>
-      <p className="text-lg opacity-90 mb-8 leading-relaxed">
-        If I am full in my caseload, I can recommend other therapists who may be able to work with you and meet your needs.
-        Have a look through my associates and get in touch if you would like to be connected with an associate therapist or have any questions.
-      </p>
-      <PrimaryButton onClick={() => navigateTo('contact')}>Contact to Connect</PrimaryButton>
-    </div>
+const AssociatesView = ({ navigateTo }) => {
+  const [selectedAssociate, setSelectedAssociate] = useState(null);
 
-    <div className="grid md:grid-cols-2 gap-12">
-      {[
-        { name: "Kim Jones", title: "UKCP Psychotherapist", fees: "£85 / hour", desc: "My mission is to empower you to realise your full potential.", img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200" },
-        { name: "Kiran Nagra", title: "TA Psychotherapist", fees: "£55 / 50 mins", desc: "A thoughtful and psychologically grounded space for individuals and couples.", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200" }
-      ].map((associate, index) => (
-        <div key={index} className="bg-white/10 backdrop-blur-md p-10 rounded-3xl border border-white/20 text-center flex flex-col items-center">
-          <div className="w-24 h-24 rounded-full bg-slate-100 mb-6 overflow-hidden shadow-md">
-            <img src={associate.img} className="w-full h-full object-cover" alt={associate.name} />
+  const associates = [
+    {
+      id: 'kim',
+      name: "Kim Jones",
+      titles: [
+        "UKCP Psychotherapist & Clinical Supervisor",
+        "RTM Licenced Clinician",
+        "Eco Coach/Therapist",
+        "Advanced Practitioner of Emotional Freedom Technique"
+      ],
+      tagline: "Creating more choices and empowering minds leads to positive changes both personally and professionally.",
+      about: [
+        "I am empathic, approachable, open minded, friendly and professional. In my work I provide therapeutic solutions, build confidence, enable clients to realise their potential, develop awareness of their innate ability to perceive and resolve problems from a different perspective as well as help re-discover the true inner version of themselves.",
+        "I work with adults and businesses, with a varied range of social, behavioural, and mental health issues, within local authorities, charities, privately and businesses.",
+        "I am passionate about working within a range of areas and clients, ensuring I remain versatile and multi-faceted in my work. My mission is to empower you, to remind you that you are enough, always, and to help you re-discover the true inner you.",
+        "I operate judgement free across all services, in a safe, comfortable and a protective environment in which we explore and resolve the things that you want to change.",
+        "I adopt principles of empathy, understanding and support as you begin to find the real and authentic you.",
+        "Having made an enquiry, we will arrange a convenient time for an initial consultation where I will learn more about you. Together we will outline a flexible schedule, within which we will aim for your goals to be met, we will work together to facilitate positive changes to ensure you get the results that you want."
+      ],
+      interests: ["Abuse", "Anger management", "Anxiety", "Bullying", "PTSD/CPTSD", "Depression", "Divorce", "Domestic abuse", "Relationships", "Stress", "Trauma"],
+      worksWith: "Individual clients, groups, adult and young adults from 18+",
+      methods: "Face-to-face, online & eco therapy",
+      supervisees: "Yes",
+      hours: "Monday 1-7pm; Tuesday/Wednesday/Thursday 8.45am-6.30pm; Friday 8.45am-1pm (Flexible)",
+      fees: "Individual: £85/hr; Supervisees: £60/hr; Reduced rates for trainees. Group prices on application.",
+      location: "Howden",
+      img: "/kim.svg"
+    },
+    {
+      id: 'kiran',
+      name: "Kiran Nagra",
+      titles: ["TA Psychotherapist", "NCPS Registered"],
+      tagline: "A thoughtful and psychologically grounded space for individuals and couples.",
+      about: ["My approach is warm, collaborative and reflective. I work in a trauma-informed way, helping you understand how past experiences shape your present emotional responses."],
+      interests: ["Anxiety", "Depression", "Self-esteem", "Trauma"],
+      worksWith: "Adults 18+",
+      methods: "Face-to-face & online",
+      supervisees: "No",
+      hours: "Contact for availability",
+      fees: "£55 / 50 mins",
+      location: "Willerby",
+      img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400"
+    }
+  ];
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 py-20 animate-fadeIn text-white relative">
+      <h1 className="text-5xl md:text-7xl font-serif text-center mb-10 uppercase tracking-tight">Associates</h1>
+      
+      <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md p-8 md:p-12 rounded-[2.5rem] border border-white/20 shadow-2xl mb-16 text-center">
+        <h2 className="text-3xl font-serif mb-6" style={{ color: COLORS.button }}>Announcement</h2>
+        <p className="text-xl md:text-2xl font-subtitle mb-6 leading-relaxed">
+          I am excited to announce the launch of my Associate Therapist Service!
+        </p>
+        <p className="text-lg opacity-90 mb-0 leading-relaxed">
+          If I am full in my caseload, I can recommend other therapists who may be able to work with you and meet your needs.
+        </p>
+      </div>
+
+      {/* Associate Cards Grid */}
+      <div className="grid md:grid-cols-2 gap-12 mb-20">
+        {associates.map((associate) => (
+          <div 
+            key={associate.id} 
+            onClick={() => setSelectedAssociate(associate)}
+            className="group relative cursor-pointer bg-white/10 backdrop-blur-md p-10 rounded-[3rem] border border-white/20 text-center flex flex-col items-center animate-float hover:scale-[1.03] hover:bg-white/15 transition-all duration-500 shadow-xl"
+            style={{ animationDelay: associate.id === 'kim' ? '0s' : '0.5s' }}
+          >
+            <div className="w-32 h-32 rounded-full mb-8 overflow-hidden border-4 border-white/30 shadow-lg transition-transform group-hover:scale-110 duration-500 bg-white/5">
+              <img src={associate.img} className="w-full h-full object-cover" alt={associate.name} />
+            </div>
+            <h3 className="text-4xl font-serif mb-3" style={{ color: COLORS.button }}>{associate.name}</h3>
+            <div className="space-y-1 mb-6">
+              {associate.titles.slice(0, 2).map((t, i) => (
+                <p key={i} className="text-xs opacity-60 uppercase tracking-widest font-bold">{t}</p>
+              ))}
+            </div>
+            <p className="font-subtitle text-2xl opacity-90 mb-8 leading-snug">"{associate.tagline}"</p>
+            <PrimaryButton className="pointer-events-none">View Full Profile</PrimaryButton>
           </div>
-          <h3 className="text-3xl font-serif mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
-          <p className="text-sm opacity-60 mb-4 uppercase tracking-widest">{associate.title}</p>
-          <p className="opacity-80 mb-8 italic">"{associate.desc}"</p>
-          <div className="bg-black/10 w-full p-4 rounded-xl mb-8">
-            <strong>Fees:</strong> {associate.fees}
+        ))}
+      </div>
+
+      {/* MODAL / EXPANDED VIEW */}
+      {selectedAssociate && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-black/60 backdrop-blur-md animate-fadeIn">
+          <div className="relative w-full max-w-5xl max-h-[90vh] bg-[#7a9d9b] rounded-[3rem] border border-white/20 shadow-2xl overflow-hidden flex flex-col animate-fadeIn">
+            {/* Close Button */}
+            <button 
+              onClick={() => setSelectedAssociate(null)}
+              className="absolute top-6 right-6 p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors z-10"
+            >
+              <Icons.X />
+            </button>
+
+            <div className="overflow-y-auto p-8 md:p-16 scrollbar-hide">
+              <div className="flex flex-col md:flex-row gap-12 items-start">
+                {/* Side Info Column */}
+                <div className="w-full md:w-1/3 space-y-8">
+                  <div className="w-full aspect-square rounded-[3rem] overflow-hidden border-8 border-white/10 shadow-2xl bg-white/5">
+                    <img src={selectedAssociate.img} className="w-full h-full object-cover" alt={selectedAssociate.name} />
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h2 className="text-4xl font-serif" style={{ color: COLORS.button }}>Work with {selectedAssociate.name.split(' ')[0]}</h2>
+                    <div className="space-y-2">
+                      {selectedAssociate.titles.map((t, i) => (
+                        <p key={i} className="text-xs font-bold opacity-70 uppercase tracking-widest leading-tight">{t}</p>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="p-6 bg-white/10 rounded-3xl space-y-4 text-sm border border-white/5">
+                    <div className="flex items-center gap-3"><Icons.MapPin /> <span><strong>Location:</strong> {selectedAssociate.location}</span></div>
+                    <div className="flex items-center gap-3"><Icons.Clock /> <span><strong>Hours:</strong> {selectedAssociate.hours}</span></div>
+                    <div className="flex items-center gap-3"><Icons.User /> <span><strong>Works With:</strong> {selectedAssociate.worksWith}</span></div>
+                    <div className="flex items-center gap-3"><Icons.Calendar /> <span><strong>Working Methods:</strong> {selectedAssociate.methods}</span></div>
+                    <div className="flex items-center gap-3"><Icons.Users /> <span><strong>Supervisees:</strong> {selectedAssociate.supervisees}</span></div>
+                    <div className="pt-4 border-t border-white/10">
+                      <p className="font-bold text-base mb-2">Fees</p>
+                      <p className="opacity-80 leading-relaxed text-xs">{selectedAssociate.fees}</p>
+                    </div>
+                  </div>
+
+                  <PrimaryButton onClick={() => { navigateTo('contact'); setSelectedAssociate(null); }} className="w-full">Enquire Now</PrimaryButton>
+                </div>
+
+                {/* Content Column */}
+                <div className="w-full md:w-2/3 space-y-10">
+                  <section>
+                    <p className="font-subtitle text-3xl md:text-4xl leading-snug" style={{ color: COLORS.button }}>"{selectedAssociate.tagline}"</p>
+                  </section>
+
+                  <section className="space-y-6">
+                    <h4 className="font-serif text-3xl flex items-center gap-3">About <div className="h-px bg-white/20 flex-grow"></div></h4>
+                    {selectedAssociate.about.map((p, i) => (
+                      <p key={i} className="text-lg opacity-90 leading-relaxed">{p}</p>
+                    ))}
+                  </section>
+
+                  <section className="space-y-6">
+                    <h4 className="font-serif text-3xl flex items-center gap-3">Areas of Interest <div className="h-px bg-white/20 flex-grow"></div></h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedAssociate.interests.map((interest, i) => (
+                        <span key={i} className="px-5 py-2 bg-white/10 rounded-full text-xs font-bold tracking-wide uppercase border border-white/5">{interest}</span>
+                      ))}
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
           </div>
-          <PrimaryButton onClick={() => navigateTo('contact')} className="w-full">Work with {associate.name.split(' ')[0]}</PrimaryButton>
         </div>
-      ))}
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 const RoomRentalView = () => (
   <div className="max-w-5xl mx-auto px-4 py-20 animate-fadeIn text-white">
@@ -234,12 +363,11 @@ const ContactView = () => (
         <div className="space-y-8">
           <p className="text-3xl font-subtitle" style={{ color: COLORS.button }}>I'm here to help.</p>
           <div className="space-y-6">
-            <div className="flex items-center gap-4"><Icons.Mail /> dthomsonta@outlook.com</div>
-            <div className="flex items-center gap-4"><Icons.Phone /> 07883 393590</div>
-            <div className="flex items-center gap-4"><Icons.MapPin /> Willerby Square, East Yorks</div>
+            <div className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity"><Icons.Mail /> dthomsonta@outlook.com</div>
+            <div className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity"><Icons.Phone /> 07883 393590</div>
+            <div className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity"><Icons.MapPin /> Willerby Square, East Yorks</div>
           </div>
         </div>
-        {/* Netlify Form Handling */}
         <form className="space-y-6" name="contact" method="POST" data-netlify="true">
           <input type="hidden" name="form-name" value="contact" />
           <input className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2" style={{ ringColor: COLORS.button }} placeholder="Name" name="name" required />
@@ -281,12 +409,13 @@ export default function App() {
         .font-serif { font-family: 'Kalam', cursive !important; }
         .font-sans { font-family: 'Patrick Hand', cursive !important; }
         .font-subtitle { font-family: 'Caveat', cursive !important; font-size: 2.2rem !important; line-height: 1.2 !important; }
-        .animate-fadeIn { animation: fadeIn 1s ease-out forwards; }
+        .animate-fadeIn { animation: fadeIn 0.5s ease-out forwards; }
         .animate-float { animation: float 6s ease-in-out infinite; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0%, 100% { transform: translateY(0px) rotate(3deg); } 50% { transform: translateY(-15px) rotate(1deg); } }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
       `}} />
 
       <nav className="sticky top-0 z-50 shadow-2xl backdrop-blur-xl bg-white/5 border-b border-white/10">

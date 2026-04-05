@@ -321,7 +321,8 @@ const AssociatesView = ({ navigateTo }) => {
                     >
                       <div className="flex flex-col items-center w-full">
                         <div className="w-32 h-32 md:w-44 md:h-44 rounded-full mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
-                          <img src={associate.img} className="w-full h-full object-cover" alt={associate.name} />
+                          {/* Changed to object-contain so images fit inside the frame perfectly */}
+                          <img src={associate.img} className="w-full h-full object-contain" alt={associate.name} />
                         </div>
                         <h3 className="text-3xl font-serif mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
                         <div className="space-y-1 mb-4 h-12 overflow-hidden flex-shrink-0">
@@ -381,7 +382,8 @@ const AssociatesView = ({ navigateTo }) => {
                     </div>
                   )}
                   <div className="w-full aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden border-4 md:border-8 border-white/20 shadow-2xl bg-white/5">
-                    <img src={selectedAssociate.img} className="w-full h-full object-cover" alt={selectedAssociate.name} />
+                    {/* Changed to object-contain so images fit inside the frame perfectly */}
+                    <img src={selectedAssociate.img} className="w-full h-full object-contain" alt={selectedAssociate.name} />
                   </div>
                 </div>
                 

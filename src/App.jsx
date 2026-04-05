@@ -98,7 +98,7 @@ const HomeView = ({ navigateTo }) => (
                 Providing a safe, nurturing space in Willerby, East Yorkshire, to help you navigate life's challenges and improve your emotional wellbeing.
               </p>
             </div>
-            {/* Desktop-only button: stays with text */}
+            {/* Desktop-only button */}
             <div className="hidden md:block pt-4">
               <PrimaryButton onClick={() => navigateTo('contact')}>
                 Begin Your Journey
@@ -106,7 +106,7 @@ const HomeView = ({ navigateTo }) => (
             </div>
           </div>
 
-          {/* Portrait Image - Now appears under text on mobile, animated */}
+          {/* Portrait Image */}
           <div className="w-full md:w-1/2 flex justify-center animate-float">
             <div className="relative w-full max-w-sm lg:max-w-md aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border border-white/20 bg-white/5 backdrop-blur-sm">
               <img 
@@ -118,7 +118,7 @@ const HomeView = ({ navigateTo }) => (
             </div>
           </div>
 
-          {/* Mobile-only centered CTA button */}
+          {/* Mobile-only button */}
           <div className="md:hidden w-full flex justify-center pt-4">
             <PrimaryButton onClick={() => navigateTo('contact')}>
               Begin Your Journey
@@ -396,7 +396,6 @@ const AssociatesView = ({ navigateTo }) => {
                     <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight leading-none">
                       Work with {selectedAssociate.name.split(' ')[0]}
                     </h2>
-                    {/* Enlarged Associate Logos */}
                     {selectedAssociate.logo && (
                       <div className="h-24 md:h-44 lg:h-64 shrink-0 flex items-center">
                         <img 
@@ -640,21 +639,18 @@ export default function App() {
         .scrollbar-hide::-webkit-scrollbar { display: none; }
       `}} />
 
-      {/* Header: Transparent, shadow-free, enlarged logo and bigger menu/contact text */}
+      {/* Header: Fixed Alignment to max-w-7xl and Transparent */}
       <nav className="sticky top-0 z-50 bg-transparent">
-        <div className="max-w-6xl mx-auto px-4 h-24 md:h-32 lg:h-40 flex justify-between items-center text-white">
+        <div className="max-w-7xl mx-auto px-4 h-24 md:h-32 lg:h-40 flex justify-between items-center text-white">
           <div className="cursor-pointer group flex items-center shrink-0" onClick={() => navigateTo('home')}>
-            {/* Logo: Larger and no shadows */}
             <img src="/debbielogo.webp" alt="Logo" className="h-24 sm:h-32 md:h-40 lg:h-48 w-auto transition-transform hover:scale-105 duration-500" />
           </div>
           
           <div className="hidden lg:flex items-center gap-12">
             <div className="relative group">
-              {/* Menu Text: Bigger (text-xl) */}
               <button className="flex items-center gap-3 text-xl uppercase tracking-widest font-bold opacity-90 hover:opacity-100 transition-opacity py-2">
                 Menu <Icons.ChevronDown size={22} />
               </button>
-              {/* Dropdown: Glassmorphism effect */}
               <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-64 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden flex flex-col">
                 {navLinks.filter(l => l.id !== 'contact').map((link) => (
                   <button 
@@ -668,7 +664,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Contact Text: Bigger (text-xl) */}
             <button 
               onClick={() => navigateTo('contact')} 
               className={`text-xl uppercase tracking-widest font-bold transition-all ${currentPage === 'contact' ? 'border-b-4 border-white pb-1' : 'opacity-90 hover:opacity-100'}`}
@@ -684,7 +679,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* Mobile Dropdown */}
         {isMobileMenuOpen && (
           <div className="lg:hidden absolute top-full left-0 w-full bg-white/10 backdrop-blur-2xl border-t border-white/10 text-white animate-fadeIn shadow-2xl p-6 flex flex-col space-y-2">
             {navLinks.map((link) => (
@@ -696,7 +690,8 @@ export default function App() {
         )}
       </nav>
 
-      <main className="flex-grow min-h-[60vh]">
+      {/* Main Content: Grows to push footer down */}
+      <main className="flex-grow">
         {currentPage === 'home' && <HomeView navigateTo={navigateTo} />}
         {currentPage === 'about' && <AboutView />}
         {currentPage === 'services' && <ServicesView />}
@@ -706,8 +701,8 @@ export default function App() {
         {currentPage === 'contact' && <ContactView />}
       </main>
 
-      {/* Footer: Sticky, body-color match, enlarged icons, no separator line */}
-      <footer className="sticky bottom-0 mt-auto pt-10 pb-12 flex flex-col items-center relative z-20">
+      {/* Sticky Footer: Matches body color and anchors to bottom */}
+      <footer className="sticky bottom-0 z-20 mt-auto pt-10 pb-12 flex flex-col items-center" style={{ backgroundColor: COLORS.main }}>
         <div className="flex gap-10 mb-8">
           <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">
             <Icons.LinkedIn size={54} />

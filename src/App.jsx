@@ -31,7 +31,7 @@ const Icons = {
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
   ),
   Phone: () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1 22 16.92z"/></svg>
   ),
   MapPin: () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -39,8 +39,11 @@ const Icons = {
   Clock: () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
   ),
-  Heart: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+  ChevronLeft: () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  ),
+  ChevronRight: () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
   )
 };
 
@@ -155,32 +158,24 @@ const ServicesView = ({ navigateTo }) => (
 
 const AssociatesView = ({ navigateTo }) => {
   const [selectedAssociate, setSelectedAssociate] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const associates = [
     {
       id: 'kim',
       name: "Kim Jones",
-      titles: [
-        "UKCP Psychotherapist & Clinical Supervisor",
-        "RTM Licenced Clinician",
-        "Eco Coach/Therapist",
-        "Advanced Practitioner of Emotional Freedom Technique"
-      ],
+      titles: ["UKCP Psychotherapist & Clinical Supervisor", "RTM Licenced Clinician"],
       tagline: "Creating more choices and empowering minds leads to positive changes both personally and professionally.",
       about: [
         "I am empathic, approachable, open minded, friendly and professional. In my work I provide therapeutic solutions, build confidence, enable clients to realise their potential, develop awareness of their innate ability to perceive and resolve problems from a different perspective as well as help re-discover the true inner version of themselves.",
-        "I work with adults and businesses, with a varied range of social, behavioural, and mental health issues, within local authorities, charities, privately and businesses.",
-        "I am passionate about working within a range of areas and clients, ensuring I remain versatile and multi-faceted in my work. My mission is to empower you, to remind you that you are enough, always, and to help you re-discover the true inner you.",
-        "I operate judgement free across all services, in a safe, comfortable and a protective environment in which we explore and resolve the things that you want to change.",
-        "I adopt principles of empathy, understanding and support as you begin to find the real and authentic you.",
-        "Having made an enquiry, we will arrange a convenient time for an initial consultation where I will learn more about you. Together we will outline a flexible schedule, within which we will aim for your goals to be met, we will work together to facilitate positive changes to ensure you get the results that you want."
+        "Having made an enquiry, we will arrange a convenient time for an initial consultation where I will learn more about you."
       ],
-      interests: ["Abuse", "Anger management", "Anxiety", "Bullying", "PTSD/CPTSD", "Depression", "Divorce", "Domestic abuse", "Relationships", "Stress", "Trauma"],
-      worksWith: "Individual clients, groups, adult and young adults from 18+",
+      interests: ["Abuse", "Anxiety", "PTSD/CPTSD", "Depression", "Relationships", "Stress", "Trauma"],
+      worksWith: "Adults 18+",
       methods: "Face-to-face, online & eco therapy",
       supervisees: "Yes",
-      hours: "Monday 1-7pm; Tuesday/Wednesday/Thursday 8.45am-6.30pm; Friday 8.45am-1pm (Flexible)",
-      fees: "Individual: £85/hr; Supervisees: £60/hr; Reduced rates for trainees. Group prices on application.",
+      hours: "Mon 1-7pm; Tue-Thu 8:45am-6:30pm; Fri 8:45am-1pm",
+      fees: "Individual: £85/hr; Supervisees: £60/hr",
       location: "Howden",
       img: "/kim.svg"
     },
@@ -198,79 +193,141 @@ const AssociatesView = ({ navigateTo }) => {
       fees: "£55 / 50 mins",
       location: "Willerby",
       img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: 'sarah',
+      name: "Sarah Miller",
+      titles: ["Integrative Psychotherapist", "BACP Accredited"],
+      tagline: "Finding balance through integrative and mindful therapeutic approaches.",
+      about: ["I integrate various therapeutic models to match the specific needs of my clients, focusing on mindfulness and cognitive awareness."],
+      interests: ["Stress", "Mindfulness", "Workplace burnout"],
+      worksWith: "Adults and Professionals",
+      methods: "Face-to-face & online",
+      supervisees: "Yes",
+      hours: "Evenings and Weekends",
+      fees: "£65 / 60 mins",
+      location: "Hull",
+      img: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: 'james',
+      name: "James Wilson",
+      titles: ["CBT Specialist", "Mental Health Practitioner"],
+      tagline: "Practical tools and cognitive strategies for sustainable mental health.",
+      about: ["My work centers on Cognitive Behavioural Therapy, providing clients with tangible tools to challenge negative thought patterns."],
+      interests: ["Phobias", "Social Anxiety", "OCD"],
+      worksWith: "Adults and Teens (16+)",
+      methods: "Online only",
+      supervisees: "No",
+      hours: "Tue-Thu 9am-5pm",
+      fees: "£50 / 50 mins",
+      location: "Remote",
+      img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400"
     }
   ];
 
+  // Carousel Responsive Logic
+  const nextSlide = () => {
+    const visibleCount = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
+    const max = associates.length - visibleCount;
+    setCurrentSlide((prev) => (prev >= max ? 0 : prev + 1));
+  };
+  const prevSlide = () => {
+    const visibleCount = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
+    const max = associates.length - visibleCount;
+    setCurrentSlide((prev) => (prev <= 0 ? max : prev - 1));
+  };
+
   return (
-    <div className="max-w-6xl mx-auto px-4 py-20 animate-fadeIn text-white relative">
-      <h1 className="text-5xl md:text-7xl font-serif text-center mb-10 uppercase tracking-tight">Associates</h1>
-      
-      <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md p-8 md:p-12 rounded-[2.5rem] border border-white/20 shadow-2xl mb-16 text-center">
-        <h2 className="text-3xl font-serif mb-6" style={{ color: COLORS.button }}>Announcement</h2>
-        <p className="text-xl md:text-2xl font-subtitle mb-6 leading-relaxed">
-          I am excited to announce the launch of my Associate Therapist Service!
-        </p>
-        <p className="text-lg opacity-90 mb-0 leading-relaxed">
-          If I am full in my caseload, I can recommend other therapists who may be able to work with you and meet your needs.
-        </p>
-      </div>
-
-      {/* Associate Cards Grid */}
-      <div className="grid md:grid-cols-2 gap-12 mb-20">
-        {associates.map((associate) => (
-          <div 
-            key={associate.id} 
-            onClick={() => setSelectedAssociate(associate)}
-            className="group relative cursor-pointer bg-white/10 backdrop-blur-md p-10 rounded-[3rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.05] active:scale-95 transition-all duration-500 shadow-xl"
-          >
-            <div className="w-32 h-32 rounded-full mb-8 overflow-hidden border-4 border-white/30 shadow-lg transition-transform group-hover:scale-110 duration-500 bg-white/5">
-              <img src={associate.img} className="w-full h-full object-cover" alt={associate.name} />
-            </div>
-            <h3 className="text-4xl font-serif mb-3" style={{ color: COLORS.button }}>{associate.name}</h3>
-            <div className="space-y-1 mb-6">
-              {associate.titles.slice(0, 2).map((t, i) => (
-                <p key={i} className="text-xs opacity-60 uppercase tracking-widest font-bold">{t}</p>
-              ))}
-            </div>
-            <p className="font-subtitle text-2xl opacity-90 mb-8 leading-snug">"{associate.tagline}"</p>
-            <PrimaryButton className="pointer-events-none">View Full Profile</PrimaryButton>
+    <div className="max-w-7xl mx-auto px-4 py-20 animate-fadeIn text-white relative min-h-[80vh]">
+      {!selectedAssociate ? (
+        <>
+          <h1 className="text-5xl md:text-7xl font-serif text-center mb-10 uppercase tracking-tight">Associates</h1>
+          
+          <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md p-8 md:p-12 rounded-[2.5rem] border border-white/20 shadow-2xl mb-16 text-center">
+            <h2 className="text-3xl font-serif mb-6" style={{ color: COLORS.button }}>Announcement</h2>
+            <p className="text-xl md:text-2xl font-subtitle mb-6 leading-relaxed text-white">
+              I am excited to announce the launch of my Associate Therapist Service!
+            </p>
+            <p className="text-lg opacity-90 mb-0 leading-relaxed text-white">
+              If I am full in my caseload, I can recommend other therapists who may be able to work with you and meet your needs.
+            </p>
           </div>
-        ))}
-      </div>
 
-      {/* MODAL / EXPANDED VIEW */}
-      {selectedAssociate && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-[#8cb2b0]/40 backdrop-blur-2xl animate-fadeIn">
-          {/* Infinite Scroll Parallax Panel Layer */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
-             <div className="flex whitespace-nowrap animate-marquee py-10">
-               {[...Array(10)].map((_, i) => (
-                 <span key={i} className="text-[12rem] font-serif font-bold uppercase tracking-tighter mx-20 text-white">
+          <div className="relative px-4 sm:px-12 group">
+            <div className="overflow-hidden pb-10">
+              <div 
+                className="flex transition-transform duration-700 ease-in-out" 
+                style={{ transform: `translateX(-${currentSlide * (window.innerWidth >= 1024 ? 33.33 : window.innerWidth >= 640 ? 50 : 100)}%)` }}
+              >
+                {associates.map((associate) => (
+                  <div key={associate.id} className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 px-3">
+                    {/* Fixed Height Card with Clamping for Stability */}
+                    <div 
+                      onClick={() => setSelectedAssociate(associate)}
+                      className="cursor-pointer bg-white/10 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[580px] justify-between overflow-hidden"
+                    >
+                      <div className="flex flex-col items-center w-full">
+                        <div className="w-24 h-24 md:w-28 md:h-28 rounded-full mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5">
+                          <img src={associate.img} className="w-full h-full object-cover" alt={associate.name} />
+                        </div>
+                        <h3 className="text-3xl font-serif mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
+                        <div className="space-y-1 mb-4 h-12 overflow-hidden">
+                          {associate.titles.slice(0, 1).map((t, i) => (
+                            <p key={i} className="text-[10px] opacity-60 uppercase tracking-widest font-bold px-4 text-white line-clamp-2">{t}</p>
+                          ))}
+                        </div>
+                        {/* Text Clamping: Tagline won't push the button out anymore */}
+                        <p className="font-subtitle text-xl text-white mb-6 leading-snug px-2 line-clamp-4">"{associate.tagline}"</p>
+                      </div>
+                      <div className="w-full">
+                        <PrimaryButton className="pointer-events-none scale-90 w-full">View Profile</PrimaryButton>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <button onClick={prevSlide} className="absolute left-0 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
+              <Icons.ChevronLeft />
+            </button>
+            <button onClick={nextSlide} className="absolute right-0 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
+              <Icons.ChevronRight />
+            </button>
+          </div>
+        </>
+      ) : (
+        /* EXPANDED PROFILE VIEW */
+        <div className="animate-fadeIn relative z-[100] min-h-[70vh]">
+          {/* Parallax - Left to Right */}
+          <div className="absolute inset-x-0 top-0 h-full overflow-hidden pointer-events-none opacity-10 -z-10">
+             <div className="flex whitespace-nowrap animate-marquee-ltr py-10">
+               {[...Array(12)].map((_, i) => (
+                 <span key={i} className="text-[14rem] font-serif font-bold uppercase tracking-tighter mx-20 text-white">
                    {selectedAssociate.name} • {selectedAssociate.name} •
                  </span>
                ))}
              </div>
           </div>
 
-          <div className="relative w-full max-w-5xl max-h-[90vh] bg-white/10 rounded-[3rem] border border-white/30 shadow-2xl overflow-hidden flex flex-col animate-fadeIn backdrop-blur-md">
-            {/* Close Button */}
+          <div className="relative w-full bg-white/15 rounded-[3rem] border border-white/30 shadow-2xl overflow-hidden flex flex-col backdrop-blur-3xl">
             <button 
               onClick={() => setSelectedAssociate(null)}
-              className="absolute top-6 right-6 p-3 bg-white/20 rounded-full hover:bg-white/40 transition-colors z-[110]"
+              className="absolute top-6 right-6 p-4 bg-white/20 rounded-full hover:bg-white/40 transition-all z-[110] active:scale-90"
             >
               <Icons.X />
             </button>
 
             <div className="overflow-y-auto p-8 md:p-16 scrollbar-hide">
               <div className="flex flex-col md:flex-row gap-12 items-start">
-                {/* Side Info Column */}
                 <div className="w-full md:w-1/3 space-y-8">
                   <div className="w-full aspect-square rounded-[3rem] overflow-hidden border-8 border-white/20 shadow-2xl bg-white/5">
                     <img src={selectedAssociate.img} className="w-full h-full object-cover" alt={selectedAssociate.name} />
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl font-serif text-white">Work with {selectedAssociate.name.split(' ')[0]}</h2>
+                    <h2 className="text-4xl font-serif text-white uppercase tracking-tight">Work with {selectedAssociate.name.split(' ')[0]}</h2>
                     <div className="space-y-2">
                       {selectedAssociate.titles.map((t, i) => (
                         <p key={i} className="text-xs font-bold opacity-70 uppercase tracking-widest leading-tight text-white">{t}</p>
@@ -278,11 +335,11 @@ const AssociatesView = ({ navigateTo }) => {
                     </div>
                   </div>
 
-                  <div className="p-6 bg-white/10 rounded-3xl space-y-4 text-sm border border-white/10">
+                  <div className="p-6 bg-white/10 rounded-3xl space-y-4 text-sm border border-white/10 text-white">
                     <div className="flex items-center gap-3"><Icons.MapPin /> <span><strong>Location:</strong> {selectedAssociate.location}</span></div>
                     <div className="flex items-center gap-3"><Icons.Clock /> <span><strong>Hours:</strong> {selectedAssociate.hours}</span></div>
                     <div className="flex items-center gap-3"><Icons.User /> <span><strong>Works With:</strong> {selectedAssociate.worksWith}</span></div>
-                    <div className="flex items-center gap-3"><Icons.Calendar /> <span><strong>Working Methods:</strong> {selectedAssociate.methods}</span></div>
+                    <div className="flex items-center gap-3"><Icons.Calendar /> <span><strong>Methods:</strong> {selectedAssociate.methods}</span></div>
                     <div className="flex items-center gap-3"><Icons.Users /> <span><strong>Supervisees:</strong> {selectedAssociate.supervisees}</span></div>
                     <div className="pt-4 border-t border-white/10">
                       <p className="font-bold text-base mb-2">Fees</p>
@@ -293,24 +350,23 @@ const AssociatesView = ({ navigateTo }) => {
                   <PrimaryButton onClick={() => { navigateTo('contact'); setSelectedAssociate(null); }} className="w-full">Enquire Now</PrimaryButton>
                 </div>
 
-                {/* Content Column */}
                 <div className="w-full md:w-2/3 space-y-10">
                   <section>
                     <p className="font-subtitle text-3xl md:text-4xl leading-snug text-white">"{selectedAssociate.tagline}"</p>
                   </section>
 
                   <section className="space-y-6">
-                    <h4 className="font-serif text-3xl flex items-center gap-3">About <div className="h-px bg-white/20 flex-grow"></div></h4>
+                    <h4 className="font-serif text-3xl flex items-center gap-3 text-white">About <div className="h-px bg-white/20 flex-grow"></div></h4>
                     {selectedAssociate.about.map((p, i) => (
-                      <p key={i} className="text-lg opacity-90 leading-relaxed">{p}</p>
+                      <p key={i} className="text-lg opacity-90 leading-relaxed text-white">{p}</p>
                     ))}
                   </section>
 
                   <section className="space-y-6">
-                    <h4 className="font-serif text-3xl flex items-center gap-3">Areas of Interest <div className="h-px bg-white/20 flex-grow"></div></h4>
+                    <h4 className="font-serif text-3xl flex items-center gap-3 text-white">Areas of Interest <div className="h-px bg-white/20 flex-grow"></div></h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedAssociate.interests.map((interest, i) => (
-                        <span key={i} className="px-5 py-2 bg-white/10 rounded-full text-xs font-bold tracking-wide uppercase border border-white/10">{interest}</span>
+                        <span key={i} className="px-5 py-2 bg-white/10 rounded-full text-xs font-bold tracking-wide uppercase border border-white/10 text-white">{interest}</span>
                       ))}
                     </div>
                   </section>
@@ -380,17 +436,15 @@ const ContactView = () => (
         </div>
         <form className="space-y-6" name="contact" method="POST" data-netlify="true">
           <input type="hidden" name="form-name" value="contact" />
-          <input className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2" style={{ ringColor: COLORS.button }} placeholder="Name" name="name" required />
-          <input className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2" style={{ ringColor: COLORS.button }} placeholder="Email" name="email" type="email" required />
-          <textarea className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2" style={{ ringColor: COLORS.button }} placeholder="Message" name="message" rows="5" required></textarea>
+          <input className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2 text-white" style={{ ringColor: COLORS.button }} placeholder="Name" name="name" required />
+          <input className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2 text-white" style={{ ringColor: COLORS.button }} placeholder="Email" name="email" type="email" required />
+          <textarea className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2 text-white" style={{ ringColor: COLORS.button }} placeholder="Message" name="message" rows="5" required></textarea>
           <PrimaryButton type="submit" className="w-full">Send Message</PrimaryButton>
         </form>
       </div>
     </div>
   </div>
 );
-
-// --- MAIN APP COMPONENT ---
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -421,10 +475,10 @@ export default function App() {
         .font-subtitle { font-family: 'Caveat', cursive !important; font-size: 2.2rem !important; line-height: 1.2 !important; }
         .animate-fadeIn { animation: fadeIn 0.5s ease-out forwards; }
         .animate-float { animation: float 6s ease-in-out infinite; }
-        .animate-marquee { animation: marquee 30s linear infinite; }
+        .animate-marquee-ltr { animation: marquee-ltr 60s linear infinite; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0%, 100% { transform: translateY(0px) rotate(3deg); } 50% { transform: translateY(-15px) rotate(1deg); } }
-        @keyframes marquee { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+        @keyframes marquee-ltr { from { transform: translateX(-50%); } to { transform: translateX(0); } }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
@@ -437,11 +491,7 @@ export default function App() {
           </div>
           <div className="hidden lg:flex space-x-6 xl:space-x-8">
             {navLinks.map((link) => (
-              <button 
-                key={link.id} 
-                onClick={() => navigateTo(link.id)} 
-                className={`text-xs xl:text-sm uppercase tracking-widest font-bold transition-all ${currentPage === link.id ? 'border-b-2 border-white pb-1' : 'opacity-70 hover:opacity-100'}`}
-              >
+              <button key={link.id} onClick={() => navigateTo(link.id)} className={`text-xs xl:text-sm uppercase tracking-widest font-bold transition-all ${currentPage === link.id ? 'border-b-2 border-white pb-1' : 'opacity-70 hover:opacity-100'}`}>
                 {link.label}
               </button>
             ))}
@@ -474,9 +524,9 @@ export default function App() {
       </main>
 
       <footer className="mt-12 py-12 text-center border-t border-white/10 bg-black/5">
-        <h3 className="font-serif text-2xl uppercase tracking-widest mb-4">Debbie Thomson Therapy</h3>
-        <p className="opacity-40 mb-6 max-w-xs mx-auto text-sm">Providing a safe space in Willerby Square.</p>
-        <p className="text-[10px] opacity-40 font-sans tracking-widest uppercase">&copy; {new Date().getFullYear()} Debbie Thomson Therapy. All rights reserved.</p>
+        <h3 className="font-serif text-2xl uppercase tracking-widest mb-4 text-white">Debbie Thomson Therapy</h3>
+        <p className="opacity-40 mb-6 max-w-xs mx-auto text-sm text-white">Providing a safe space in Willerby Square.</p>
+        <p className="text-[10px] opacity-40 font-sans tracking-widest uppercase text-white">&copy; {new Date().getFullYear()} Debbie Thomson Therapy. All rights reserved.</p>
       </footer>
     </div>
   );

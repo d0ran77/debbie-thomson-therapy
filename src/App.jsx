@@ -339,8 +339,8 @@ const AssociatesView = ({ navigateTo }) => {
                       )}
                       
                       <div className="flex flex-col items-center w-full">
-                        {/* Object-cover strictly forces the image to fill the circle edge-to-edge */}
-                        <div className="w-32 h-32 md:w-44 md:h-44 rounded-full mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
+                        {/* Rework: Rounded square frame with object-cover fills the space perfectly without bad clipping */}
+                        <div className="w-36 h-36 md:w-48 md:h-48 rounded-[2rem] mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
                           <img src={associate.img} className="w-full h-full object-cover" alt={associate.name} />
                         </div>
                         <h3 className="text-3xl font-serif mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
@@ -395,13 +395,13 @@ const AssociatesView = ({ navigateTo }) => {
               {/* Profile Card Column */}
               <div className="w-full lg:w-1/3 space-y-6 md:space-y-8 lg:sticky lg:top-8">
                 <div className="relative group">
+                  {/* Rework: Logo in a solid white badge so it never blends in */}
                   {selectedAssociate.logo && (
-                    <div className="absolute -top-4 -left-4 md:-top-6 md:-left-6 z-20 w-24 h-24 md:w-32 md:h-32 p-3 bg-white/10 backdrop-blur-xl rounded-2xl md:rounded-3xl border border-white/20 shadow-2xl flex items-center justify-center">
-                      {/* Logo strictly uses object-contain to avoid cropping */}
-                      <img src={selectedAssociate.logo} className="w-full h-full object-contain" alt="Logo" />
+                    <div className="absolute -top-6 -left-6 z-20 w-28 h-28 md:w-36 md:h-36 p-2 bg-white rounded-3xl border-4 border-[#8cb2b0] shadow-2xl flex items-center justify-center overflow-hidden">
+                      <img src={selectedAssociate.logo} className="w-full h-full object-contain p-2" alt="Logo" />
                     </div>
                   )}
-                  {/* Profile image strictly uses object-cover with NO padding, forcing it to fill the square frame */}
+                  {/* Rework: Square frame with object-cover fills beautifully */}
                   <div className="w-full aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden border-4 md:border-8 border-white/20 shadow-2xl bg-white/5">
                     <img src={selectedAssociate.img} className="w-full h-full object-cover" alt={selectedAssociate.name} />
                   </div>
@@ -490,30 +490,69 @@ const AssociatesView = ({ navigateTo }) => {
   );
 };
 
-const RoomRentalView = () => (
-  <div className="max-w-5xl mx-auto px-4 py-20 animate-fadeIn text-white">
-    <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Room Rental</h1>
-    <div className="bg-white/10 backdrop-blur-md rounded-[40px] overflow-hidden border border-white/20 shadow-2xl flex flex-col md:flex-row">
-      <div className="md:w-1/2 min-h-[300px]">
-        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover" alt="Therapy Room" />
-      </div>
-      <div className="md:w-1/2 p-12 flex flex-col justify-center">
-        <h2 className="text-3xl font-serif mb-6" style={{ color: COLORS.button }}>Practice Space</h2>
-        <p className="text-lg opacity-90 mb-8 leading-relaxed">
-          Centrally located in Willerby Square, this bespoke therapy room offers a quiet and professional environment for private practitioners.
-        </p>
-        <ul className="space-y-4 text-sm opacity-80 mb-10">
-          <li className="flex items-center gap-3"><Icons.Check /> Waiting area for clients</li>
-          <li className="flex items-center gap-3"><Icons.Check /> Quiet, soundproofed space</li>
-          <li className="flex items-center gap-3"><Icons.Check /> High-speed internet included</li>
-        </ul>
-        <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')}>
-          Enquire Now <Icons.ExternalLink />
-        </PrimaryButton>
+const RoomRentalView = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const images = ['/1.webp', '/2.webp', '/3.webp', '/4.webp', '/5.webp', '/6.webp'];
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % images.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 py-20 animate-fadeIn text-white">
+      <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Room Rental</h1>
+      
+      <div className="bg-white/10 backdrop-blur-md rounded-[40px] overflow-hidden border border-white/20 shadow-2xl flex flex-col md:flex-row">
+        
+        {/* Left Side: Interactive Photo Carousel */}
+        <div className="md:w-1/2 min-h-[400px] md:min-h-[500px] relative group overflow-hidden bg-black/20">
+          <div 
+            className="flex w-full h-full transition-transform duration-700 ease-in-out absolute inset-0" 
+            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          >
+            {images.map((src, idx) => (
+              <div key={idx} className="w-full h-full flex-shrink-0">
+                <img src={src} alt={`Therapy Room ${idx + 1}`} className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+          
+          <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
+            <Icons.ChevronLeft />
+          </button>
+          <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
+            <Icons.ChevronRight />
+          </button>
+          
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10">
+            {images.map((_, idx) => (
+              <button 
+                key={idx} 
+                onClick={() => setCurrentSlide(idx)} 
+                className={`h-2 rounded-full transition-all duration-500 shadow-md ${currentSlide === idx ? 'bg-white w-8' : 'bg-white/50 w-2'}`} 
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Right Side: Updated Content */}
+        <div className="md:w-1/2 p-8 md:p-16 flex flex-col justify-center">
+          <h2 className="text-4xl font-serif mb-6" style={{ color: COLORS.button }}>Practice Space</h2>
+          
+          <p className="text-xl md:text-2xl font-subtitle opacity-90 mb-6 leading-relaxed">
+            My therapy room is in the heart of Willerby Square, East Yorkshire.
+          </p>
+          <p className="text-lg opacity-80 mb-10 leading-relaxed">
+            I also have a smaller therapy room available to rent if you are a therapist looking for a new space to work from.
+          </p>
+          
+          <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')} className="self-start">
+            Get in touch <Icons.ExternalLink />
+          </PrimaryButton>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const FAQView = () => (
   <div className="max-w-3xl mx-auto px-4 py-20 animate-fadeIn text-white">

@@ -80,20 +80,20 @@ const PrimaryButton = ({ children, onClick, className = '', type = "button" }) =
 
 const HomeView = ({ navigateTo }) => (
   <div className="animate-ink px-6 md:px-8">
-    {/* Tightened layout: changed items-center to items-start and adjusted top padding */}
-    <div className="relative overflow-hidden min-h-[60vh] md:min-h-[75vh] flex items-start pt-8 md:pt-16 pb-12 max-w-7xl mx-auto">
+    {/* Layout tightened for zero-scroll on most viewports */}
+    <div className="relative overflow-hidden flex items-start pt-4 md:pt-12 max-w-7xl mx-auto">
        <div className="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
        
-       <div className="relative z-10 flex flex-col md:flex-row items-start gap-8 lg:gap-24 w-full">
-          <div className="w-full md:w-1/2 text-center md:text-left text-white space-y-6 flex flex-col">
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif leading-tight drop-shadow-md tracking-tight uppercase" style={{ color: COLORS.button }}>
+       <div className="relative z-10 flex flex-col md:flex-row items-start gap-4 md:gap-8 lg:gap-24 w-full">
+          <div className="w-full md:w-1/2 text-center md:text-left text-white space-y-4 md:space-y-6 flex flex-col">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-serif leading-tight drop-shadow-md tracking-tight uppercase" style={{ color: COLORS.button }}>
               Debbie Thomson Therapy
             </h1>
-            <div className="space-y-4">
-              <p className="font-subtitle text-3xl sm:text-4xl opacity-90 tracking-wide uppercase">
+            <div className="space-y-2 md:space-y-4">
+              <p className="font-subtitle text-2xl sm:text-3xl md:text-4xl opacity-90 tracking-wide uppercase">
                 Private Psychotherapist
               </p>
-              <p className="text-xl md:text-2xl leading-relaxed opacity-95 max-w-xl mx-auto md:mx-0 font-light">
+              <p className="text-base md:text-2xl leading-relaxed opacity-95 max-w-xl mx-auto md:mx-0 font-light">
                 Providing a safe, nurturing space in Willerby, East Yorkshire, to help you navigate life's challenges and improve your emotional wellbeing.
               </p>
             </div>
@@ -105,7 +105,7 @@ const HomeView = ({ navigateTo }) => (
           </div>
 
           <div className="w-full md:w-1/2 flex justify-center animate-float">
-            <div className="relative w-full max-w-sm lg:max-w-md aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border border-white/20 bg-white/5 backdrop-blur-sm">
+            <div className="relative w-full max-w-[280px] sm:max-w-sm lg:max-w-md aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border border-white/20 bg-white/5 backdrop-blur-sm">
               <img 
                 src="/debbie.webp" 
                 alt="Debbie Thomson" 
@@ -115,8 +115,8 @@ const HomeView = ({ navigateTo }) => (
             </div>
           </div>
 
-          <div className="md:hidden w-full flex justify-center pt-4">
-            <PrimaryButton onClick={() => navigateTo('contact')}>
+          <div className="md:hidden w-full flex justify-center pt-2">
+            <PrimaryButton onClick={() => navigateTo('contact')} className="py-3 px-6 text-base">
               Begin Your Journey
             </PrimaryButton>
           </div>
@@ -348,7 +348,6 @@ const AssociatesView = ({ navigateTo }) => {
           </div>
         </>
       ) : (
-        /* FULL-VIEW PROFILE DETAIL: logos removed, enquire button moved to bottom */
         <div className="animate-ink relative z-[10] min-h-[80vh] w-full">
           <div className="absolute inset-x-0 top-0 h-full overflow-hidden pointer-events-none opacity-10 -z-0">
              <div className="flex whitespace-nowrap animate-marquee-ltr py-10 mt-20">
@@ -414,7 +413,6 @@ const AssociatesView = ({ navigateTo }) => {
                   <div className="flex flex-wrap gap-2 md:gap-3">{(selectedAssociate.interests[lang] || selectedAssociate.interests['ENG']).map((interest) => <span key={interest} className="px-4 md:px-6 py-2 md:py-3 bg-white/10 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase border border-white/10 text-white hover:bg-white/20 transition-colors">{interest}</span>)}</div>
                 </section>
                 
-                {/* Enquire Now button repositioned to the bottom of the detail column */}
                 <div className="pt-12 border-t border-white/10">
                   <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')} className="w-full">
                     {lang === 'ENG' ? 'Enquire Now' : 'Consultar Ahora'} <Icons.ExternalLink />
@@ -605,8 +603,8 @@ export default function App() {
         )}
       </nav>
 
-      {/* Main Content Area: Key forces a re-mount for the ink animation */}
-      <main key={currentPage} className="flex-grow pb-48 md:pb-64">
+      {/* Main Content Area: Key forces a re-mount for the ink animation. Conditional bottom padding. */}
+      <main key={currentPage} className={`flex-grow ${currentPage === 'home' ? 'pb-24' : 'pb-48 md:pb-64'}`}>
         {currentPage === 'home' && <HomeView navigateTo={navigateTo} />}
         {currentPage === 'about' && <AboutView />}
         {currentPage === 'services' && <ServicesView />}

@@ -65,6 +65,49 @@ const Icons = {
   )
 };
 
+// --- WORLD CLASS COMPONENTS ---
+
+const KineticSignature = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sigRef = useRef(null);
+  const text = "Debbie Thomson";
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+      }
+    }, { threshold: 0.5 });
+
+    if (sigRef.current) observer.observe(sigRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={sigRef} className="flex flex-col items-center justify-center py-20 mt-10 overflow-hidden">
+      <div className="relative inline-block text-center select-none">
+        {/* WORLD CLASS: Sequential "signing" reveal */}
+        <div className="font-serif text-5xl md:text-7xl lg:text-8xl text-white flex">
+          {text.split('').map((char, index) => (
+            <span 
+              key={index}
+              className={`transition-all duration-700 ease-out inline-block
+              ${isVisible ? 'opacity-100 blur-0 translate-y-0 translate-x-0' : 'opacity-0 blur-sm translate-y-4 -translate-x-2'}`}
+              style={{ 
+                transitionDelay: `${isVisible ? (index * 80) + 200 : 0}ms`,
+                whiteSpace: char === ' ' ? 'pre' : 'normal'
+              }}
+            >
+              {char}
+            </span>
+          ))}
+        </div>
+        <div className={`h-px w-3/4 mx-auto bg-white/20 mt-6 transition-all duration-[3000ms] ease-in-out ${isVisible ? 'scale-x-100 opacity-30' : 'scale-x-0 opacity-0'}`} />
+      </div>
+    </div>
+  );
+};
+
 // --- SUB-COMPONENTS ---
 
 const PrimaryButton = ({ children, onClick, className = '', type = "button" }) => (
@@ -127,9 +170,9 @@ const HomeView = ({ navigateTo }) => (
 const AboutView = () => (
   <div className="max-w-5xl mx-auto px-6 py-20 animate-ink text-white">
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-20 drop-shadow-md uppercase tracking-tight">About Debbie</h1>
-    <div className="flex flex-col md:flex-row gap-16 items-center">
+    <div className="flex flex-col md:flex-row gap-16 items-center mb-24">
       <div className="w-full md:w-2/5 flex justify-center">
-        <div className="w-full max-w-sm aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border border-white/20">
+        <div className="w-full max-sm aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border border-white/20">
           <img 
             src="/debbie.webp" 
             alt="Debbie Thomson"
@@ -141,7 +184,7 @@ const AboutView = () => (
       <div className="w-full md:w-3/5 space-y-8">
         <p className="text-3xl font-subtitle opacity-90 leading-relaxed">My Approach is relational, co-creative and grounded in Transactional Analysis.</p>
         <p className="text-xl leading-relaxed opacity-80">
-          I am a UKCP accredited Psychotherapist based in Willerby, East Yorkshire. I help clients navigate deep-seated patterns to find genuine healing and self-awareness.
+          I am a qualified Psychotherapist and UKCP accredited at level 6. I provide a bespoke treatment plan for each of my individual clients in Willerby, East Yorkshire.
         </p>
         <div className="p-8 bg-white/10 rounded-3xl border border-white/20 shadow-inner">
            <h4 className="font-serif text-2xl mb-4 uppercase tracking-wide">Professional Standing</h4>
@@ -153,11 +196,14 @@ const AboutView = () => (
         </div>
       </div>
     </div>
+
+    {/* IDEA 3: KINETIC SIGNATURE (Sequential "signing" logic) */}
+    <KineticSignature />
   </div>
 );
 
 const ServicesView = () => (
-  <div className="max-w-5xl mx-auto px-6 py-20 animate-ink text-white">
+  <div className="max-w-5xl mx-auto px-4 py-20 animate-ink text-white">
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Services</h1>
     <div className="grid md:grid-cols-2 gap-12">
       <div className="bg-white/10 backdrop-blur-md p-10 rounded-3xl border border-white/20 text-center">
@@ -190,7 +236,6 @@ const AssociatesView = ({ navigateTo }) => {
     {
       id: 'kim',
       name: "Kim Jones",
-      logo: "/kimlogo.webp",
       titles: { ENG: ["UKCP Psychotherapist & Clinical Supervisor", "RTM Licenced Clinician", "Eco Coach/Therapist", "Advanced Practitioner of Emotional Freedom Technique"] },
       tagline: { ENG: "Creating more choices and empowering minds leads to positive changes both personally and professionally." },
       about: {
@@ -214,7 +259,6 @@ const AssociatesView = ({ navigateTo }) => {
     {
       id: 'kiran',
       name: "Kiran Nagra",
-      logo: "/kiranlogo.webp",
       titles: { ENG: ["Transactional Analysis (TA) Psychotherapist", "Imago Relationship Therapist (in training)", "UKCP trainee member & NCPS registered"] },
       tagline: { ENG: "A thoughtful and psychologically grounded space for individuals and couples." },
       about: {
@@ -246,7 +290,6 @@ const AssociatesView = ({ navigateTo }) => {
     {
       id: 'letisia',
       name: "Letisia Vela",
-      logo: "/letisalogo.webp",
       badge: "Bilingual (Spanish)",
       titles: {
         ENG: ["Transactional Analysis (TA) Advanced Trainee", "Bilingual Therapist (English/Spanish)"],
@@ -350,7 +393,7 @@ const AssociatesView = ({ navigateTo }) => {
           </div>
         </>
       ) : (
-        /* FULL-VIEW PROFILE DETAIL: logos removed, enquire button at bottom */
+        /* FULL-VIEW PROFILE DETAIL: Logos removed, Enquire button moved to bottom of detail col */
         <div className="animate-ink relative z-[10] min-h-[80vh] w-full">
           <div className="absolute inset-x-0 top-0 h-full overflow-hidden pointer-events-none opacity-10 -z-0">
              <div className="flex whitespace-nowrap animate-marquee-ltr py-10 mt-20">
@@ -416,6 +459,7 @@ const AssociatesView = ({ navigateTo }) => {
                   <div className="flex flex-wrap gap-2 md:gap-3">{(selectedAssociate.interests[lang] || selectedAssociate.interests['ENG']).map((interest) => <span key={interest} className="px-4 md:px-6 py-2 md:py-3 bg-white/10 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase border border-white/10 text-white hover:bg-white/20 transition-colors">{interest}</span>)}</div>
                 </section>
                 
+                {/* Enquire Now button repositioned to the bottom of the detail column */}
                 <div className="pt-12 border-t border-white/10">
                   <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')} className="w-full">
                     {lang === 'ENG' ? 'Enquire Now' : 'Consultar Ahora'} <Icons.ExternalLink />

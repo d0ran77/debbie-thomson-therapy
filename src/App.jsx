@@ -50,6 +50,15 @@ const Icons = {
   ),
   ChevronRight: () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  ),
+  Facebook: () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+  ),
+  Instagram: () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+  ),
+  LinkedIn: () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
   )
 };
 
@@ -238,6 +247,7 @@ const AssociatesView = ({ navigateTo }) => {
       id: 'letisia',
       name: "Letisia Vela",
       logo: "/letisalogo.webp",
+      badge: "Bilingual (Spanish)",
       titles: [
         "Transactional Analysis (TA) Advanced Trainee",
         "Bilingual Therapist (English/Spanish)"
@@ -314,14 +324,19 @@ const AssociatesView = ({ navigateTo }) => {
                 style={{ transform: `translateX(-${currentSlide * (window.innerWidth >= 1024 ? 33.33 : window.innerWidth >= 640 ? 50 : 100)}%)` }}
               >
                 {associates.map((associate) => (
-                  <div key={associate.id} className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 px-3">
+                  <div key={associate.id} className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 px-3 relative">
                     <div 
                       onClick={() => { setSelectedAssociate(associate); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                      className="cursor-pointer bg-white/10 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[680px] justify-between overflow-hidden pb-10"
+                      className="cursor-pointer bg-white/10 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[680px] justify-between overflow-hidden pb-10 relative"
                     >
+                      {associate.badge && (
+                        <div className="absolute top-6 right-6 bg-[#b28c8e] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md z-20">
+                          {associate.badge}
+                        </div>
+                      )}
+                      
                       <div className="flex flex-col items-center w-full">
-                        <div className="w-32 h-32 md:w-44 md:h-44 rounded-full mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
-                          {/* Changed to object-contain so images fit inside the frame perfectly */}
+                        <div className="w-32 h-32 md:w-44 md:h-44 rounded-full mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0 flex items-center justify-center p-2">
                           <img src={associate.img} className="w-full h-full object-contain" alt={associate.name} />
                         </div>
                         <h3 className="text-3xl font-serif mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
@@ -381,14 +396,20 @@ const AssociatesView = ({ navigateTo }) => {
                       <img src={selectedAssociate.logo} className="w-full h-full object-contain" alt="Logo" />
                     </div>
                   )}
-                  <div className="w-full aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden border-4 md:border-8 border-white/20 shadow-2xl bg-white/5">
-                    {/* Changed to object-contain so images fit inside the frame perfectly */}
+                  <div className="w-full aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden border-4 md:border-8 border-white/20 shadow-2xl bg-white/5 flex items-center justify-center p-4">
                     <img src={selectedAssociate.img} className="w-full h-full object-contain" alt={selectedAssociate.name} />
                   </div>
                 </div>
                 
                 <div className="space-y-3 md:space-y-4 text-center lg:text-left">
-                  <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight leading-none">Work with {selectedAssociate.name.split(' ')[0]}</h2>
+                  <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight leading-none">
+                    Work with {selectedAssociate.name.split(' ')[0]}
+                  </h2>
+                  {selectedAssociate.badge && (
+                    <span className="inline-block bg-[#b28c8e] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mt-2 shadow-md mb-2">
+                      {selectedAssociate.badge}
+                    </span>
+                  )}
                   <div className="space-y-2">
                     {selectedAssociate.titles.map((t, i) => (
                       <p key={i} className="text-[11px] md:text-xs font-bold opacity-80 uppercase tracking-widest leading-tight text-white">{t}</p>
@@ -618,10 +639,19 @@ export default function App() {
         {currentPage === 'contact' && <ContactView />}
       </main>
 
-      <footer className="mt-12 py-12 text-center border-t border-white/10 bg-black/5">
-        <h3 className="font-serif text-2xl uppercase tracking-widest mb-4 text-white">Debbie Thomson Therapy</h3>
-        <p className="opacity-40 mb-6 max-w-xs mx-auto text-sm text-white">Providing a safe space in Willerby Square.</p>
-        <p className="text-[10px] opacity-40 font-sans tracking-widest uppercase text-white">&copy; {new Date().getFullYear()} Debbie Thomson Therapy. All rights reserved.</p>
+      <footer className="mt-12 py-12 border-t border-white/10 bg-black/5 flex flex-col items-center">
+        <div className="flex gap-6 mb-8">
+          <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] transition-colors"><Icons.LinkedIn /></a>
+          <a href="https://www.facebook.com/Debbiettherapy" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] transition-colors"><Icons.Facebook /></a>
+          <a href="https://www.instagram.com/debbiettherapy/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] transition-colors"><Icons.Instagram /></a>
+        </div>
+        
+        <p className="opacity-60 mb-6 max-w-xs mx-auto text-sm text-center text-white">Providing a safe space in Willerby Square.</p>
+        
+        <div className="flex flex-col items-center gap-2 text-[10px] opacity-40 font-sans tracking-widest uppercase text-white">
+          <span>&copy; {new Date().getFullYear()} All rights reserved.</span>
+          <a href="https://builtbyliam.uk/" target="_blank" rel="noopener noreferrer" className="hover:underline">Built By Liam</a>
+        </div>
       </footer>
     </div>
   );

@@ -65,49 +65,6 @@ const Icons = {
   )
 };
 
-// --- WORLD CLASS COMPONENTS ---
-
-const KineticSignature = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sigRef = useRef(null);
-  const text = "Debbie Thomson";
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-      }
-    }, { threshold: 0.5 });
-
-    if (sigRef.current) observer.observe(sigRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div ref={sigRef} className="flex flex-col items-center justify-center py-20 mt-10 overflow-hidden">
-      <div className="relative inline-block text-center select-none">
-        {/* WORLD CLASS: Sequential "signing" reveal */}
-        <div className="font-serif text-5xl md:text-7xl lg:text-8xl text-white flex">
-          {text.split('').map((char, index) => (
-            <span 
-              key={index}
-              className={`transition-all duration-700 ease-out inline-block
-              ${isVisible ? 'opacity-100 blur-0 translate-y-0 translate-x-0' : 'opacity-0 blur-sm translate-y-4 -translate-x-2'}`}
-              style={{ 
-                transitionDelay: `${isVisible ? (index * 80) + 200 : 0}ms`,
-                whiteSpace: char === ' ' ? 'pre' : 'normal'
-              }}
-            >
-              {char}
-            </span>
-          ))}
-        </div>
-        <div className={`h-px w-3/4 mx-auto bg-white/20 mt-6 transition-all duration-[3000ms] ease-in-out ${isVisible ? 'scale-x-100 opacity-30' : 'scale-x-0 opacity-0'}`} />
-      </div>
-    </div>
-  );
-};
-
 // --- SUB-COMPONENTS ---
 
 const PrimaryButton = ({ children, onClick, className = '', type = "button" }) => (
@@ -196,9 +153,6 @@ const AboutView = () => (
         </div>
       </div>
     </div>
-
-    {/* IDEA 3: KINETIC SIGNATURE (Sequential "signing" logic) */}
-    <KineticSignature />
   </div>
 );
 
@@ -393,7 +347,7 @@ const AssociatesView = ({ navigateTo }) => {
           </div>
         </>
       ) : (
-        /* FULL-VIEW PROFILE DETAIL: Logos removed, Enquire button moved to bottom of detail col */
+        /* FULL-VIEW PROFILE DETAIL: logos removed, enquire button moved to bottom */
         <div className="animate-ink relative z-[10] min-h-[80vh] w-full">
           <div className="absolute inset-x-0 top-0 h-full overflow-hidden pointer-events-none opacity-10 -z-0">
              <div className="flex whitespace-nowrap animate-marquee-ltr py-10 mt-20">

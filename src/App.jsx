@@ -79,11 +79,11 @@ const PrimaryButton = ({ children, onClick, className = '', type = "button" }) =
 );
 
 const HomeView = ({ navigateTo }) => (
-  <div className="animate-fadeIn px-4">
-    <div className="relative overflow-hidden min-h-[70vh] md:min-h-[85vh] flex items-center py-12 md:py-0">
+  <div className="animate-fadeIn px-6 md:px-8">
+    <div className="relative overflow-hidden min-h-[70vh] md:min-h-[85vh] flex items-center py-12 md:py-0 max-w-7xl mx-auto">
        <div className="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
        
-       <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8 lg:gap-24 w-full">
+       <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 lg:gap-24 w-full">
           
           {/* Header & Text Content */}
           <div className="w-full md:w-1/2 text-center md:text-left text-white space-y-6 flex flex-col">
@@ -130,7 +130,7 @@ const HomeView = ({ navigateTo }) => (
 );
 
 const AboutView = () => (
-  <div className="max-w-5xl mx-auto px-4 py-20 animate-fadeIn text-white">
+  <div className="max-w-5xl mx-auto px-6 py-20 animate-fadeIn text-white">
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-20 drop-shadow-md uppercase tracking-tight">About Debbie</h1>
     <div className="flex flex-col md:flex-row gap-16 items-center">
       <div className="w-full md:w-2/5 flex justify-center">
@@ -162,7 +162,7 @@ const AboutView = () => (
 );
 
 const ServicesView = () => (
-  <div className="max-w-5xl mx-auto px-4 py-20 animate-fadeIn text-white">
+  <div className="max-w-5xl mx-auto px-6 py-20 animate-fadeIn text-white">
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Services</h1>
     <div className="grid md:grid-cols-2 gap-12">
       <div className="bg-white/10 backdrop-blur-md p-10 rounded-3xl border border-white/20 text-center">
@@ -296,7 +296,7 @@ const AssociatesView = ({ navigateTo }) => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 md:py-20 animate-fadeIn text-white relative min-h-[80vh]">
+    <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 animate-fadeIn text-white relative min-h-[80vh]">
       {!selectedAssociate ? (
         <>
           <h1 className="text-5xl md:text-7xl font-serif text-center mb-10 uppercase tracking-tight">Associates</h1>
@@ -311,15 +311,15 @@ const AssociatesView = ({ navigateTo }) => {
             </p>
           </div>
 
-          {/* Reworked Associate Carousel with Condensed Mobile Cards */}
           <div className="relative group">
+            {/* Improved Associate Carousel for Pixel 8 Pro: Adjusted card width and center-snapping */}
             <div className="overflow-x-auto lg:overflow-hidden pb-10 scrollbar-hide snap-x snap-mandatory flex">
               <div 
                 className="flex transition-transform duration-700 ease-in-out md:translate-x-0" 
                 style={{ transform: window.innerWidth >= 1024 ? `translateX(-${currentSlide * 33.33}%)` : 'none' }}
               >
                 {associates.map((associate) => (
-                  <div key={associate.id} className="w-[88%] sm:w-1/2 lg:w-1/3 flex-shrink-0 px-2 sm:px-3 relative snap-center">
+                  <div key={associate.id} className="w-[82vw] sm:w-1/2 lg:w-1/3 flex-shrink-0 px-2 sm:px-3 relative snap-center">
                     <div 
                       onClick={() => { setSelectedAssociate(associate); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                       className="cursor-pointer bg-white/10 backdrop-blur-md p-6 sm:p-8 rounded-[2rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[520px] md:h-[620px] justify-between overflow-hidden relative"
@@ -398,7 +398,7 @@ const AssociatesView = ({ navigateTo }) => {
                       Work with {selectedAssociate.name.split(' ')[0]}
                     </h2>
                     {selectedAssociate.logo && (
-                      <div className="h-24 md:h-44 lg:h-64 shrink-0 flex items-center">
+                      <div className="h-32 md:h-52 lg:h-72 shrink-0 flex items-center">
                         <img 
                           src={selectedAssociate.logo} 
                           className="h-full w-auto object-contain" 
@@ -487,44 +487,57 @@ const AssociatesView = ({ navigateTo }) => {
   );
 };
 
-// Reworked RoomRentalView for proper mobile support
+// Reworked RoomRentalView with Scroll-based Mobile Support
 const RoomRentalView = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const images = ['/1.webp', '/2.webp', '/3.webp', '/4.webp', '/5.webp', '/6.webp'];
+  const scrollRef = useRef(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % images.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
+  const handleScroll = (e) => {
+    const scrollLeft = e.target.scrollLeft;
+    const width = e.target.offsetWidth;
+    const index = Math.round(scrollLeft / width);
+    setCurrentSlide(index);
+  };
+
+  const scrollToIndex = (index) => {
+    if (scrollRef.current) {
+      const width = scrollRef.current.offsetWidth;
+      scrollRef.current.scrollTo({ left: width * index, behavior: 'smooth' });
+      setCurrentSlide(index);
+    }
+  };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-20 animate-fadeIn text-white">
+    <div className="max-w-7xl mx-auto px-6 py-20 animate-fadeIn text-white">
       <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Room Rental</h1>
       
       <div className="bg-white/10 backdrop-blur-md rounded-[40px] overflow-hidden border border-white/20 shadow-2xl flex flex-col md:flex-row">
         
-        {/* Carousel Container: Fixed for Mobile */}
-        <div className="md:w-1/2 min-h-[400px] md:min-h-[500px] relative group bg-black/20 overflow-hidden">
-          {/* Native scroll container for mobile, buttons for desktop */}
-          <div className="flex w-full h-full overflow-x-auto md:overflow-hidden snap-x snap-mandatory scrollbar-hide">
-            <div 
-              className="flex h-full transition-transform duration-700 ease-in-out" 
-              style={{ 
-                width: `${images.length * 100}%`,
-                transform: typeof window !== 'undefined' && window.innerWidth >= 768 ? `translateX(-${(currentSlide * 100) / images.length}%)` : 'none'
-              }}
-            >
-              {images.map((src, idx) => (
-                <div key={idx} className="h-full flex-shrink-0 snap-center" style={{ width: `${100 / images.length}%` }}>
-                  <img src={src} alt={`Therapy Room ${idx + 1}`} className="w-full h-full object-cover" />
-                </div>
-              ))}
-            </div>
+        {/* Left Side: Native Scroll Carousel */}
+        <div className="md:w-1/2 min-h-[400px] md:min-h-[500px] relative group bg-black/20">
+          <div 
+            ref={scrollRef}
+            onScroll={handleScroll}
+            className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+          >
+            {images.map((src, idx) => (
+              <div key={idx} className="w-full h-full flex-shrink-0 snap-center">
+                <img src={src} alt={`Therapy Room ${idx + 1}`} className="w-full h-full object-cover" />
+              </div>
+            ))}
           </div>
           
-          {/* Nav Buttons (Always visible on mobile to fix the "not working" feeling) */}
-          <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10 md:opacity-0 md:group-hover:opacity-100">
+          <button 
+            onClick={() => scrollToIndex((currentSlide - 1 + images.length) % images.length)} 
+            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10"
+          >
             <Icons.ChevronLeft />
           </button>
-          <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10 md:opacity-0 md:group-hover:opacity-100">
+          <button 
+            onClick={() => scrollToIndex((currentSlide + 1) % images.length)} 
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10"
+          >
             <Icons.ChevronRight />
           </button>
           
@@ -532,13 +545,14 @@ const RoomRentalView = () => {
             {images.map((_, idx) => (
               <button 
                 key={idx} 
-                onClick={() => setCurrentSlide(idx)} 
+                onClick={() => scrollToIndex(idx)}
                 className={`h-2 rounded-full transition-all duration-500 shadow-md ${currentSlide === idx ? 'bg-white w-8' : 'bg-white/50 w-2'}`} 
               />
             ))}
           </div>
         </div>
 
+        {/* Right Side */}
         <div className="md:w-1/2 p-8 md:p-16 flex flex-col justify-center">
           <h2 className="text-4xl font-serif mb-6" style={{ color: COLORS.button }}>Practice Space</h2>
           
@@ -559,7 +573,7 @@ const RoomRentalView = () => {
 };
 
 const FAQView = () => (
-  <div className="max-w-3xl mx-auto px-4 py-20 animate-fadeIn text-white">
+  <div className="max-w-3xl mx-auto px-6 py-20 animate-fadeIn text-white">
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">FAQ</h1>
     <div className="space-y-6">
       {[
@@ -577,7 +591,7 @@ const FAQView = () => (
 );
 
 const ContactView = () => (
-  <div className="max-w-5xl mx-auto px-4 py-20 animate-fadeIn text-white">
+  <div className="max-w-5xl mx-auto px-6 py-20 animate-fadeIn text-white">
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Contact</h1>
     
     <div className="bg-white/10 backdrop-blur-md p-10 rounded-[40px] border border-white/20 shadow-2xl">
@@ -629,7 +643,7 @@ export default function App() {
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
       scrollTimeout.current = setTimeout(() => {
         setIsScrolling(false);
-      }, 150); // Reduced delay for faster slide back
+      }, 150); 
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -671,7 +685,7 @@ export default function App() {
       `}} />
 
       <nav className="sticky top-0 z-50 bg-transparent">
-        <div className="max-w-7xl mx-auto px-4 h-24 md:h-32 lg:h-40 flex justify-between items-center text-white">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 h-24 md:h-32 lg:h-40 flex justify-between items-center text-white">
           <div className="cursor-pointer group flex items-center shrink-0" onClick={() => navigateTo('home')}>
             <img src="/debbielogo.webp" alt="Logo" className="h-24 sm:h-32 md:h-40 lg:h-48 w-auto transition-transform hover:scale-105 duration-500" />
           </div>

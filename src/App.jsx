@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // --- STYLING CONSTANTS ---
 const COLORS = {
@@ -311,14 +311,14 @@ const AssociatesView = ({ navigateTo }) => {
             </p>
           </div>
 
-          <div className="relative px-2 sm:px-12 group">
-            <div className="overflow-hidden pb-10">
+          <div className="relative group">
+            <div className="overflow-x-auto lg:overflow-hidden pb-10 scrollbar-hide snap-x snap-mandatory flex">
               <div 
-                className="flex transition-transform duration-700 ease-in-out" 
-                style={{ transform: `translateX(-${currentSlide * (window.innerWidth >= 1024 ? 33.33 : window.innerWidth >= 640 ? 50 : 100)}%)` }}
+                className="flex transition-transform duration-700 ease-in-out md:translate-x-0" 
+                style={{ transform: window.innerWidth >= 1024 ? `translateX(-${currentSlide * 33.33}%)` : 'none' }}
               >
                 {associates.map((associate) => (
-                  <div key={associate.id} className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 px-3 relative">
+                  <div key={associate.id} className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 px-3 relative snap-center">
                     <div 
                       onClick={() => { setSelectedAssociate(associate); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                       className="cursor-pointer bg-white/10 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[680px] justify-between overflow-hidden pb-10 relative"
@@ -350,15 +350,15 @@ const AssociatesView = ({ navigateTo }) => {
               </div>
             </div>
 
-            {associates.length > (window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1) && (
-              <>
+            {associates.length > 3 && (
+              <div className="hidden lg:block">
                 <button onClick={prevSlide} className="absolute left-0 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
                   <Icons.ChevronLeft />
                 </button>
                 <button onClick={nextSlide} className="absolute right-0 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
                   <Icons.ChevronRight />
                 </button>
-              </>
+              </div>
             )}
           </div>
         </>
@@ -471,7 +471,7 @@ const AssociatesView = ({ navigateTo }) => {
                   <h4 className="font-serif text-3xl md:text-4xl flex items-center gap-4 text-white">Areas of Interest <div className="h-px bg-white/20 flex-grow"></div></h4>
                   <div className="flex flex-wrap gap-2 md:gap-3">
                     {selectedAssociate.interests.map((interest, i) => (
-                      <span key={i} className="px-4 md:px-6 py-2 md:py-3 bg-white/10 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase border border-white/10 text-white hover:bg-white/20 transition-colors">
+                      <span key={interest} className="px-4 md:px-6 py-2 md:py-3 bg-white/10 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase border border-white/10 text-white hover:bg-white/20 transition-colors">
                         {interest}
                       </span>
                     ))}
@@ -557,7 +557,7 @@ const FAQView = () => (
         { q: "Where is the practice located?", a: "The practice is centrally located in Willerby Square, East Yorkshire." },
         { q: "Do you offer online sessions?", a: "Yes, I offer online sessions for individuals. Couples therapy is face-to-face only." }
       ].map((item, i) => (
-        <div key={i} className="p-8 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20">
+        <div key={item.q} className="p-8 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20">
           <h3 className="text-2xl font-serif mb-3" style={{ color: COLORS.button }}>{item.q}</h3>
           <p className="opacity-80 leading-relaxed">{item.a}</p>
         </div>
@@ -604,12 +604,30 @@ const ContactView = () => (
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const scrollTimeout = useRef(null);
 
   const navigateTo = (page) => {
     setCurrentPage(page);
     setIsMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolling(true);
+      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+      scrollTimeout.current = setTimeout(() => {
+        setIsScrolling(false);
+      }, 350); // Pause scroll for 350ms to slide back
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+    };
+  }, []);
 
   const navLinks = [
     { id: 'home', label: 'Home' },
@@ -637,11 +655,12 @@ export default function App() {
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .magnet-effect { transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1), filter 0.3s ease; }
-        .magnet-effect:hover { transform: scale(1.15) translateY(-5px); filter: brightness(1.1); }
+        .magnet-effect { transition: transform 0.4s cubic-bezier(0.33, 1, 0.68, 1), filter 0.3s ease; }
+        .magnet-effect:hover { transform: scale(1.18) translateY(-8px); filter: brightness(1.15); }
+        .mobile-hamburger-fixed { position: fixed; top: 1.5rem; right: 1.5rem; z-index: 100; }
       `}} />
 
-      {/* Header: Fixed Alignment to max-w-7xl and Transparent */}
+      {/* Header: Balanced Alignment to max-w-7xl */}
       <nav className="sticky top-0 z-50 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 h-24 md:h-32 lg:h-40 flex justify-between items-center text-white">
           <div className="cursor-pointer group flex items-center shrink-0" onClick={() => navigateTo('home')}>
@@ -675,17 +694,23 @@ export default function App() {
             </button>
           </div>
 
-          <div className="lg:hidden">
-            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-3 bg-white/10 rounded-xl">
+          {/* STICKY Mobile Hamburger Trigger (Fixed on screen) */}
+          <div className="lg:hidden mobile-hamburger-fixed">
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+              className="p-3 bg-white/10 backdrop-blur-xl rounded-xl border border-white/20 shadow-xl"
+            >
               {isMobileMenuOpen ? <Icons.X /> : <Icons.Menu />}
             </button>
           </div>
         </div>
 
+        {/* Mobile Dropdown Menu (Fixed Over Content) */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 w-full bg-white/10 backdrop-blur-2xl border-t border-white/10 text-white animate-fadeIn shadow-2xl p-6 flex flex-col space-y-2">
+          <div className="lg:hidden fixed inset-0 z-[90] bg-[#8cb2b0] flex flex-col pt-32 p-6 space-y-2 animate-fadeIn">
+             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
             {navLinks.map((link) => (
-              <button key={link.id} onClick={() => navigateTo(link.id)} className="py-4 uppercase tracking-widest text-xl font-bold">
+              <button key={link.id} onClick={() => navigateTo(link.id)} className="py-5 uppercase tracking-widest text-2xl font-bold text-left border-b border-white/10">
                 {link.label}
               </button>
             ))}
@@ -694,7 +719,7 @@ export default function App() {
       </nav>
 
       {/* Main Content: pb-48 offset for the fixed glassmorphism footer */}
-      <main className="flex-grow pb-48">
+      <main className="flex-grow pb-48 md:pb-64">
         {currentPage === 'home' && <HomeView navigateTo={navigateTo} />}
         {currentPage === 'about' && <AboutView />}
         {currentPage === 'services' && <ServicesView />}
@@ -704,8 +729,10 @@ export default function App() {
         {currentPage === 'contact' && <ContactView />}
       </main>
 
-      {/* FIXED Footer: Glassmorphism effect, reduced height, anchored to bottom */}
-      <footer className="fixed bottom-0 left-0 right-0 z-20 py-6 flex flex-col items-center bg-white/10 backdrop-blur-xl border-t border-white/5 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+      {/* FIXED FOOTER: Slides down on scroll, slides up on stop. Glassmorphism + magnet icons. */}
+      <footer 
+        className={`fixed bottom-0 left-0 right-0 z-20 py-6 flex flex-col items-center bg-white/10 backdrop-blur-xl transition-transform duration-500 ease-in-out ${isScrolling ? 'translate-y-[100%]' : 'translate-y-0'}`}
+      >
         <div className="flex gap-10 mb-6">
           <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect">
             <Icons.LinkedIn size={44} />

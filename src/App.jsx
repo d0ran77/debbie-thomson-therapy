@@ -396,6 +396,7 @@ const AssociatesView = ({ navigateTo }) => {
                     <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight leading-none">
                       Work with {selectedAssociate.name.split(' ')[0]}
                     </h2>
+                    {/* Enlarged Associate Logos */}
                     {selectedAssociate.logo && (
                       <div className="h-24 md:h-44 lg:h-64 shrink-0 flex items-center">
                         <img 
@@ -470,7 +471,7 @@ const AssociatesView = ({ navigateTo }) => {
                 <section className="space-y-6 md:space-y-8 pb-12">
                   <h4 className="font-serif text-3xl md:text-4xl flex items-center gap-4 text-white">Areas of Interest <div className="h-px bg-white/20 flex-grow"></div></h4>
                   <div className="flex flex-wrap gap-2 md:gap-3">
-                    {selectedAssociate.interests.map((interest, i) => (
+                    {selectedAssociate.interests.map((interest) => (
                       <span key={interest} className="px-4 md:px-6 py-2 md:py-3 bg-white/10 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase border border-white/10 text-white hover:bg-white/20 transition-colors">
                         {interest}
                       </span>
@@ -486,6 +487,7 @@ const AssociatesView = ({ navigateTo }) => {
   );
 };
 
+// Reworked RoomRentalView for proper mobile support
 const RoomRentalView = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const images = ['/1.webp', '/2.webp', '/3.webp', '/4.webp', '/5.webp', '/6.webp'];
@@ -499,22 +501,30 @@ const RoomRentalView = () => {
       
       <div className="bg-white/10 backdrop-blur-md rounded-[40px] overflow-hidden border border-white/20 shadow-2xl flex flex-col md:flex-row">
         
-        <div className="md:w-1/2 min-h-[400px] md:min-h-[500px] relative group overflow-hidden bg-black/20">
-          <div 
-            className="flex w-full h-full transition-transform duration-700 ease-in-out absolute inset-0" 
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          >
-            {images.map((src, idx) => (
-              <div key={idx} className="w-full h-full flex-shrink-0">
-                <img src={src} alt={`Therapy Room ${idx + 1}`} className="w-full h-full object-cover" />
-              </div>
-            ))}
+        {/* Carousel Container: Fixed for Mobile */}
+        <div className="md:w-1/2 min-h-[400px] md:min-h-[500px] relative group bg-black/20 overflow-hidden">
+          {/* Native scroll container for mobile, buttons for desktop */}
+          <div className="flex w-full h-full overflow-x-auto md:overflow-hidden snap-x snap-mandatory scrollbar-hide">
+            <div 
+              className="flex h-full transition-transform duration-700 ease-in-out" 
+              style={{ 
+                width: `${images.length * 100}%`,
+                transform: typeof window !== 'undefined' && window.innerWidth >= 768 ? `translateX(-${(currentSlide * 100) / images.length}%)` : 'none'
+              }}
+            >
+              {images.map((src, idx) => (
+                <div key={idx} className="h-full flex-shrink-0 snap-center" style={{ width: `${100 / images.length}%` }}>
+                  <img src={src} alt={`Therapy Room ${idx + 1}`} className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
           </div>
           
-          <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
+          {/* Nav Buttons (Always visible on mobile to fix the "not working" feeling) */}
+          <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10 md:opacity-0 md:group-hover:opacity-100">
             <Icons.ChevronLeft />
           </button>
-          <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
+          <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10 md:opacity-0 md:group-hover:opacity-100">
             <Icons.ChevronRight />
           </button>
           
@@ -556,7 +566,7 @@ const FAQView = () => (
         { q: "How long is a standard session?", a: "Individual sessions are 60 minutes long. Couples sessions are 90 minutes." },
         { q: "Where is the practice located?", a: "The practice is centrally located in Willerby Square, East Yorkshire." },
         { q: "Do you offer online sessions?", a: "Yes, I offer online sessions for individuals. Couples therapy is face-to-face only." }
-      ].map((item, i) => (
+      ].map((item) => (
         <div key={item.q} className="p-8 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20">
           <h3 className="text-2xl font-serif mb-3" style={{ color: COLORS.button }}>{item.q}</h3>
           <p className="opacity-80 leading-relaxed">{item.a}</p>
@@ -619,7 +629,7 @@ export default function App() {
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
       scrollTimeout.current = setTimeout(() => {
         setIsScrolling(false);
-      }, 350); // Pause scroll for 350ms to slide back
+      }, 150); // Reduced delay for faster slide back
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -660,7 +670,6 @@ export default function App() {
         .mobile-hamburger-fixed { position: fixed; top: 1.5rem; right: 1.5rem; z-index: 100; }
       `}} />
 
-      {/* Header: Balanced Alignment to max-w-7xl */}
       <nav className="sticky top-0 z-50 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 h-24 md:h-32 lg:h-40 flex justify-between items-center text-white">
           <div className="cursor-pointer group flex items-center shrink-0" onClick={() => navigateTo('home')}>
@@ -685,7 +694,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Magnetised Contact Button */}
             <button 
               onClick={() => navigateTo('contact')} 
               className={`text-xl uppercase tracking-widest font-bold transition-all magnet-effect ${currentPage === 'contact' ? 'border-b-4 border-white pb-1' : 'opacity-90 hover:opacity-100'}`}
@@ -694,7 +702,6 @@ export default function App() {
             </button>
           </div>
 
-          {/* STICKY Mobile Hamburger Trigger (Fixed on screen) */}
           <div className="lg:hidden mobile-hamburger-fixed">
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
@@ -705,12 +712,15 @@ export default function App() {
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu (Fixed Over Content) */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden fixed inset-0 z-[90] bg-[#8cb2b0] flex flex-col pt-32 p-6 space-y-2 animate-fadeIn">
-             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+          <div className="lg:hidden fixed inset-0 z-[90] bg-white/10 backdrop-blur-3xl flex flex-col pt-32 p-6 space-y-2 animate-fadeIn overflow-y-auto">
+             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent pointer-events-none"></div>
             {navLinks.map((link) => (
-              <button key={link.id} onClick={() => navigateTo(link.id)} className="py-5 uppercase tracking-widest text-2xl font-bold text-left border-b border-white/10">
+              <button 
+                key={link.id} 
+                onClick={() => navigateTo(link.id)} 
+                className="relative z-10 py-5 uppercase tracking-widest text-2xl font-bold text-left border-b border-white/10"
+              >
                 {link.label}
               </button>
             ))}
@@ -718,7 +728,6 @@ export default function App() {
         )}
       </nav>
 
-      {/* Main Content: pb-48 offset for the fixed glassmorphism footer */}
       <main className="flex-grow pb-48 md:pb-64">
         {currentPage === 'home' && <HomeView navigateTo={navigateTo} />}
         {currentPage === 'about' && <AboutView />}
@@ -729,9 +738,8 @@ export default function App() {
         {currentPage === 'contact' && <ContactView />}
       </main>
 
-      {/* FIXED FOOTER: Slides down on scroll, slides up on stop. Glassmorphism + magnet icons. */}
       <footer 
-        className={`fixed bottom-0 left-0 right-0 z-20 py-6 flex flex-col items-center bg-white/10 backdrop-blur-xl transition-transform duration-500 ease-in-out ${isScrolling ? 'translate-y-[100%]' : 'translate-y-0'}`}
+        className={`fixed bottom-0 left-0 right-0 z-20 py-6 flex flex-col items-center bg-white/10 backdrop-blur-xl transition-transform duration-300 ease-in-out ${isScrolling ? 'translate-y-[100%]' : 'translate-y-0'}`}
       >
         <div className="flex gap-10 mb-6">
           <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect">

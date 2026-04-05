@@ -7,6 +7,9 @@ const COLORS = {
   textWhite: '#ffffff',
 };
 
+// --- EXTERNAL LINKS ---
+const ENQUIRY_FORM_URL = "https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAN__kMoCMBURTFHS0Q5S1FNSzJSS1IyM1NVTlBYN1JMQy4u&route=shorturl";
+
 // --- STABLE CUSTOM SVG ICONS ---
 const Icons = {
   Menu: () => (
@@ -39,6 +42,9 @@ const Icons = {
   Clock: () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
   ),
+  ExternalLink: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+  ),
   ChevronLeft: () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
   ),
@@ -53,7 +59,7 @@ const PrimaryButton = ({ children, onClick, className = '', type = "button" }) =
   <button
     type={type}
     onClick={onClick}
-    className={`px-8 py-4 rounded-full font-serif text-lg md:text-xl transition-all duration-500 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 active:scale-95 ${className}`}
+    className={`px-8 py-4 rounded-full font-serif text-lg md:text-xl transition-all duration-500 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2 ${className}`}
     style={{ backgroundColor: COLORS.button, color: COLORS.textWhite }}
   >
     {children}
@@ -136,7 +142,7 @@ const AboutView = () => (
   </div>
 );
 
-const ServicesView = ({ navigateTo }) => (
+const ServicesView = () => (
   <div className="max-w-5xl mx-auto px-4 py-20 animate-fadeIn text-white">
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Services</h1>
     <div className="grid md:grid-cols-2 gap-12">
@@ -144,13 +150,17 @@ const ServicesView = ({ navigateTo }) => (
         <h2 className="text-3xl font-serif mb-4" style={{ color: COLORS.button }}>Individual Therapy</h2>
         <p className="opacity-80 mb-8">Face-to-face or online sessions focusing on anxiety, depression, and personal scripts.</p>
         <p className="text-3xl font-bold mb-8">£60 / hour</p>
-        <PrimaryButton onClick={() => navigateTo('contact')} className="w-full">Enquire</PrimaryButton>
+        <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')} className="w-full">
+          Enquire <Icons.ExternalLink />
+        </PrimaryButton>
       </div>
       <div className="bg-white/10 backdrop-blur-md p-10 rounded-3xl border border-white/20 text-center">
         <h2 className="text-3xl font-serif mb-4" style={{ color: COLORS.button }}>Couples Therapy</h2>
         <p className="opacity-80 mb-8">Specialised Imago sessions to deepen connection and resolve conflict. Face-to-face only.</p>
         <p className="text-3xl font-bold mb-8">£120 / 90 mins</p>
-        <PrimaryButton onClick={() => navigateTo('contact')} className="w-full">Enquire</PrimaryButton>
+        <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')} className="w-full">
+          Enquire <Icons.ExternalLink />
+        </PrimaryButton>
       </div>
     </div>
   </div>
@@ -354,11 +364,13 @@ const AssociatesView = ({ navigateTo }) => {
                   <div className="flex items-start gap-3"><Icons.Users className="shrink-0 mt-1" /> <span><strong>Supervisees:</strong> {selectedAssociate.supervisees}</span></div>
                   <div className="pt-4 border-t border-white/10">
                     <p className="font-bold text-lg mb-2">Fees</p>
-                    <p className="opacity-90 leading-relaxed whitespace-pre-line">{selectedAssociate.fees}</p>
+                    <p className="opacity-90 leading-relaxed whitespace-pre-line text-xs">{selectedAssociate.fees}</p>
                   </div>
                 </div>
 
-                <PrimaryButton onClick={() => { navigateTo('contact'); setSelectedAssociate(null); }} className="w-full">Enquire Now</PrimaryButton>
+                <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')} className="w-full">
+                  Enquire Now <Icons.ExternalLink />
+                </PrimaryButton>
               </div>
 
               {/* Detail Content Column (Fluid on Mobile) */}
@@ -425,7 +437,9 @@ const RoomRentalView = () => (
           <li className="flex items-center gap-3"><Icons.Check /> Quiet, soundproofed space</li>
           <li className="flex items-center gap-3"><Icons.Check /> High-speed internet included</li>
         </ul>
-        <PrimaryButton onClick={() => window.location.href = 'mailto:dthomsonta@outlook.com'}>Enquire Now</PrimaryButton>
+        <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')}>
+          Enquire Now <Icons.ExternalLink />
+        </PrimaryButton>
       </div>
     </div>
   </div>
@@ -452,6 +466,7 @@ const FAQView = () => (
 const ContactView = () => (
   <div className="max-w-5xl mx-auto px-4 py-20 animate-fadeIn text-white">
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Contact</h1>
+    
     <div className="bg-white/10 backdrop-blur-md p-10 rounded-[40px] border border-white/20 shadow-2xl">
       <div className="grid md:grid-cols-2 gap-16">
         <div className="space-y-8">
@@ -461,8 +476,17 @@ const ContactView = () => (
             <div className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity"><Icons.Phone /> 07883 393590</div>
             <div className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity"><Icons.MapPin /> Willerby Square, East Yorks</div>
           </div>
+
+          <div className="pt-8 border-t border-white/10">
+            <p className="mb-6 opacity-90 text-lg">Use our digital form for a quick enquiry:</p>
+            <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')} className="w-full">
+              Open Enquiry Form <Icons.ExternalLink />
+            </PrimaryButton>
+          </div>
         </div>
+
         <form className="space-y-6" name="contact" method="POST" data-netlify="true">
+          <p className="text-center font-serif text-xl mb-4">Or send a message below</p>
           <input type="hidden" name="form-name" value="contact" />
           <input className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2 text-white" style={{ ringColor: COLORS.button }} placeholder="Name" name="name" required />
           <input className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2 text-white" style={{ ringColor: COLORS.button }} placeholder="Email" name="email" type="email" required />
@@ -544,7 +568,7 @@ export default function App() {
       <main className="flex-grow min-h-[60vh]">
         {currentPage === 'home' && <HomeView navigateTo={navigateTo} />}
         {currentPage === 'about' && <AboutView />}
-        {currentPage === 'services' && <ServicesView navigateTo={navigateTo} />}
+        {currentPage === 'services' && <ServicesView />}
         {currentPage === 'associates' && <AssociatesView navigateTo={navigateTo} />}
         {currentPage === 'room-rental' && <RoomRentalView />}
         {currentPage === 'faq' && <FAQView />}

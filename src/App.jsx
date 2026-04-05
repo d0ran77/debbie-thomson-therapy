@@ -83,28 +83,31 @@ const HomeView = ({ navigateTo }) => (
     <div className="relative overflow-hidden min-h-[70vh] md:min-h-[85vh] flex items-center py-12 md:py-0">
        <div className="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
        
-       <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 lg:gap-24 w-full">
+       <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8 lg:gap-24 w-full">
           
-          {/* Left Content - Cleaner, more elegant typography */}
-          <div className="w-full md:w-1/2 text-center md:text-left text-white space-y-6">
+          {/* Header & Text Content */}
+          <div className="w-full md:w-1/2 text-center md:text-left text-white space-y-6 flex flex-col">
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif leading-tight drop-shadow-md tracking-tight uppercase" style={{ color: COLORS.button }}>
               Debbie Thomson Therapy
             </h1>
-            <p className="font-subtitle text-3xl sm:text-4xl opacity-90 drop-shadow-sm tracking-wide uppercase">
-              Private Psychotherapist
-            </p>
-            <p className="text-xl md:text-2xl leading-relaxed opacity-95 max-w-xl mx-auto md:mx-0 font-light">
-              Providing a safe, nurturing space in Willerby, East Yorkshire to help you navigate life's challenges and improve your emotional wellbeing.
-            </p>
-            <div className="pt-4">
+            <div className="space-y-4">
+              <p className="font-subtitle text-3xl sm:text-4xl opacity-90 tracking-wide uppercase">
+                Private Psychotherapist
+              </p>
+              <p className="text-xl md:text-2xl leading-relaxed opacity-95 max-w-xl mx-auto md:mx-0 font-light">
+                Providing a safe, nurturing space in Willerby, East Yorkshire, to help you navigate life's challenges and improve your emotional wellbeing.
+              </p>
+            </div>
+            {/* Desktop-only button: stays with text */}
+            <div className="hidden md:block pt-4">
               <PrimaryButton onClick={() => navigateTo('contact')}>
                 Begin Your Journey
               </PrimaryButton>
             </div>
           </div>
 
-          {/* Right Image - portrait frame [4/5] ratio */}
-          <div className="w-full md:w-1/2 flex justify-center mt-8 md:mt-0">
+          {/* Portrait Image - Now appears under text on mobile, animated */}
+          <div className="w-full md:w-1/2 flex justify-center animate-float">
             <div className="relative w-full max-w-sm lg:max-w-md aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border border-white/20 bg-white/5 backdrop-blur-sm">
               <img 
                 src="/debbie.webp" 
@@ -113,6 +116,13 @@ const HomeView = ({ navigateTo }) => (
                 onError={(e) => e.target.src = 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800'} 
               />
             </div>
+          </div>
+
+          {/* Mobile-only centered CTA button */}
+          <div className="md:hidden w-full flex justify-center pt-4">
+            <PrimaryButton onClick={() => navigateTo('contact')}>
+              Begin Your Journey
+            </PrimaryButton>
           </div>
        </div>
     </div>
@@ -277,16 +287,12 @@ const AssociatesView = ({ navigateTo }) => {
   const nextSlide = () => {
     const visibleCount = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
     const max = associates.length - visibleCount;
-    if (max > 0) {
-      setCurrentSlide((prev) => (prev >= max ? 0 : prev + 1));
-    }
+    if (max > 0) setCurrentSlide((prev) => (prev >= max ? 0 : prev + 1));
   };
   const prevSlide = () => {
     const visibleCount = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
     const max = associates.length - visibleCount;
-    if (max > 0) {
-      setCurrentSlide((prev) => (prev <= 0 ? max : prev - 1));
-    }
+    if (max > 0) setCurrentSlide((prev) => (prev <= 0 ? max : prev - 1));
   };
 
   return (
@@ -324,7 +330,6 @@ const AssociatesView = ({ navigateTo }) => {
                       )}
                       
                       <div className="flex flex-col items-center w-full">
-                        {/* Square Portrait Frames with perfect coverage */}
                         <div className="w-32 h-32 md:w-44 md:h-44 rounded-2xl mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
                           <img src={associate.img} className="w-full h-full object-cover object-center" alt={associate.name} />
                         </div>
@@ -391,9 +396,9 @@ const AssociatesView = ({ navigateTo }) => {
                     <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight leading-none">
                       Work with {selectedAssociate.name.split(' ')[0]}
                     </h2>
-                    {/* Enlarged Logos with NO background and NO shadows */}
+                    {/* Enlarged Associate Logos */}
                     {selectedAssociate.logo && (
-                      <div className="h-24 md:h-32 lg:h-40 shrink-0 flex items-center">
+                      <div className="h-24 md:h-44 lg:h-64 shrink-0 flex items-center">
                         <img 
                           src={selectedAssociate.logo} 
                           className="h-full w-auto object-contain" 
@@ -629,17 +634,18 @@ export default function App() {
         .animate-marquee-ltr { animation: marquee-ltr 60s linear infinite; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0%, 100% { transform: translateY(0px) rotate(3deg); } 50% { transform: translateY(-15px) rotate(1deg); } }
-        @keyframes marquee-ltr { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @keyframes marquee-ltr { from { transform: translateX(-50%); } to { transform: translateX(0); } }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
       `}} />
 
-      <nav className="sticky top-0 z-50 shadow-2xl backdrop-blur-xl bg-white/5 border-b border-white/10">
-        <div className="max-w-6xl mx-auto px-4 h-20 md:h-24 flex justify-between items-center text-white">
+      {/* Header: Completely transparent and shadow-free */}
+      <nav className="sticky top-0 z-50 bg-transparent">
+        <div className="max-w-6xl mx-auto px-4 h-24 md:h-32 flex justify-between items-center text-white">
           <div className="cursor-pointer group flex items-center shrink-0" onClick={() => navigateTo('home')}>
-            {/* Switched to debbielogo.webp and removed filter drop shadow */}
-            <img src="/debbielogo.webp" alt="Logo" className="h-10 sm:h-12 md:h-16 w-auto" />
+            {/* Enlarged Header Logo */}
+            <img src="/debbielogo.webp" alt="Logo" className="h-20 sm:h-24 md:h-32 lg:h-36 w-auto" />
           </div>
           
           <div className="hidden lg:flex items-center gap-8">
@@ -699,13 +705,13 @@ export default function App() {
       <footer className="mt-12 pt-12 pb-16 border-t border-white/10 flex flex-col items-center relative z-20">
         <div className="flex gap-8 mb-10">
           <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">
-            <Icons.LinkedIn size={36} />
+            <Icons.LinkedIn size={48} />
           </a>
           <a href="https://www.facebook.com/Debbiettherapy" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">
-            <Icons.Facebook size={36} />
+            <Icons.Facebook size={48} />
           </a>
           <a href="https://www.instagram.com/debbiettherapy/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">
-            <Icons.Instagram size={36} />
+            <Icons.Instagram size={48} />
           </a>
         </div>
         

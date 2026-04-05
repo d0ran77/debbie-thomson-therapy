@@ -80,41 +80,38 @@ const PrimaryButton = ({ children, onClick, className = '', type = "button" }) =
 
 const HomeView = ({ navigateTo }) => (
   <div className="animate-fadeIn px-4">
-    <div className="relative overflow-hidden min-h-[600px] md:min-h-[700px] flex items-center">
+    <div className="relative overflow-hidden min-h-[70vh] md:min-h-[85vh] flex items-center py-12 md:py-0">
        <div className="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
        
-       <div className="relative z-10 max-w-6xl mx-auto py-12 md:py-20 flex flex-col md:flex-row items-center gap-10 lg:gap-24">
-          <div className="w-full md:w-3/5 text-center md:text-left text-white">
-            <h1 className="text-4xl sm:text-6xl md:text-8xl font-serif mb-4 md:mb-6 leading-tight drop-shadow-md tracking-tight uppercase" style={{ color: COLORS.button }}>
-              DEBBIE THOMSON THERAPY
+       <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 lg:gap-24 w-full">
+          
+          {/* Left Content - Cleaner, more elegant typography */}
+          <div className="w-full md:w-1/2 text-center md:text-left text-white space-y-6">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif leading-tight drop-shadow-md tracking-tight uppercase" style={{ color: COLORS.button }}>
+              Debbie Thomson Therapy
             </h1>
-            <p className="font-subtitle text-2xl sm:text-3xl mb-6 md:mb-8 opacity-90 drop-shadow-sm tracking-[0.1em] md:tracking-[0.2em] uppercase">
-              PRIVATE PSYCHOTHERAPIST
+            <p className="font-subtitle text-3xl sm:text-4xl opacity-90 drop-shadow-sm tracking-wide uppercase">
+              Private Psychotherapist
             </p>
-            
-            <div className="bg-white/10 backdrop-blur-md p-6 md:p-8 rounded-3xl border border-white/20 shadow-2xl mb-8 md:mb-10 transform hover:scale-[1.01] transition-transform duration-500 text-white text-left">
-              <h2 className="text-2xl sm:text-3xl font-serif mb-4">Hello & welcome</h2>
-              <p className="text-lg md:text-xl leading-relaxed opacity-95">
-                I provide counselling and psychotherapy in Willerby, East Yorkshire. I help people to work through difficulties they are facing in life and to improve their mental health and emotional wellbeing.
-              </p>
+            <p className="text-xl md:text-2xl leading-relaxed opacity-95 max-w-xl mx-auto md:mx-0 font-light">
+              Providing a safe, nurturing space in Willerby, East Yorkshire to help you navigate life's challenges and improve your emotional wellbeing.
+            </p>
+            <div className="pt-4">
+              <PrimaryButton onClick={() => navigateTo('contact')}>
+                Begin Your Journey
+              </PrimaryButton>
             </div>
-            
-            <PrimaryButton onClick={() => navigateTo('contact')}>
-              Begin Your Journey
-            </PrimaryButton>
           </div>
 
-          <div className="w-full md:w-2/5 flex justify-center mt-4 md:mt-0">
-            <div className="relative animate-float">
-              <div className="absolute -inset-6 md:-inset-8 rounded-full opacity-30 blur-3xl animate-pulse" style={{ backgroundColor: COLORS.button }}></div>
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[450px] md:h-[450px] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-4 md:border-8 border-white/30 backdrop-blur-sm rotate-3 hover:rotate-0 transition-all duration-700">
-                <img 
-                  src="/debbie.webp" 
-                  alt="Debbie Thomson" 
-                  className="w-full h-full object-cover scale-110" 
-                  onError={(e) => e.target.src = 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800'} 
-                />
-              </div>
+          {/* Right Image - Replaced chaotic rotation/boxes with a clean, perfectly proportioned portrait frame */}
+          <div className="w-full md:w-1/2 flex justify-center mt-8 md:mt-0">
+            <div className="relative w-full max-w-sm lg:max-w-md aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border border-white/20 bg-white/5 backdrop-blur-sm">
+              <img 
+                src="/debbie.webp" 
+                alt="Debbie Thomson" 
+                className="w-full h-full object-cover object-top" 
+                onError={(e) => e.target.src = 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800'} 
+              />
             </div>
           </div>
        </div>
@@ -127,11 +124,11 @@ const AboutView = () => (
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-20 drop-shadow-md uppercase tracking-tight">About Debbie</h1>
     <div className="flex flex-col md:flex-row gap-16 items-center">
       <div className="w-full md:w-2/5 flex justify-center">
-        <div className="w-64 h-64 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl border-8 border-white/20 animate-float">
+        <div className="w-full max-w-sm aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border border-white/20">
           <img 
             src="/debbie.webp" 
             alt="Debbie Thomson"
-            className="w-full h-full object-cover" 
+            className="w-full h-full object-cover object-top" 
             onError={(e) => e.target.src = 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=800'}
           />
         </div>
@@ -292,7 +289,6 @@ const AssociatesView = ({ navigateTo }) => {
     }
   ];
 
-  // Carousel Responsive Logic
   const nextSlide = () => {
     const visibleCount = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
     const max = associates.length - visibleCount;
@@ -339,9 +335,8 @@ const AssociatesView = ({ navigateTo }) => {
                       )}
                       
                       <div className="flex flex-col items-center w-full">
-                        {/* Rework: Rounded square frame with object-cover fills the space perfectly without bad clipping */}
-                        <div className="w-36 h-36 md:w-48 md:h-48 rounded-[2rem] mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
-                          <img src={associate.img} className="w-full h-full object-cover" alt={associate.name} />
+                        <div className="w-32 h-32 md:w-44 md:h-44 rounded-full mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
+                          <img src={associate.img} className="w-full h-full object-cover object-center" alt={associate.name} />
                         </div>
                         <h3 className="text-3xl font-serif mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
                         <div className="space-y-1 mb-4 h-12 overflow-hidden flex-shrink-0">
@@ -392,31 +387,35 @@ const AssociatesView = ({ navigateTo }) => {
             </button>
 
             <div className="flex flex-col lg:flex-row gap-8 md:gap-16 items-start relative z-10">
+              
               {/* Profile Card Column */}
               <div className="w-full lg:w-1/3 space-y-6 md:space-y-8 lg:sticky lg:top-8">
-                <div className="relative group">
-                  {/* Rework: Logo in a solid white badge so it never blends in */}
-                  {selectedAssociate.logo && (
-                    <div className="absolute -top-6 -left-6 z-20 w-28 h-28 md:w-36 md:h-36 p-2 bg-white rounded-3xl border-4 border-[#8cb2b0] shadow-2xl flex items-center justify-center overflow-hidden">
-                      <img src={selectedAssociate.logo} className="w-full h-full object-contain p-2" alt="Logo" />
-                    </div>
-                  )}
-                  {/* Rework: Square frame with object-cover fills beautifully */}
-                  <div className="w-full aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden border-4 md:border-8 border-white/20 shadow-2xl bg-white/5">
-                    <img src={selectedAssociate.img} className="w-full h-full object-cover" alt={selectedAssociate.name} />
-                  </div>
+                
+                {/* Reworked Image Frame to Portrait Aspect Ratio [4/5] to fit photos naturally without chopping heads */}
+                <div className="w-full aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl bg-white/5">
+                  <img src={selectedAssociate.img} className="w-full h-full object-cover object-center" alt={selectedAssociate.name} />
                 </div>
                 
-                <div className="space-y-3 md:space-y-4 text-center lg:text-left">
-                  <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight leading-none">
-                    Work with {selectedAssociate.name.split(' ')[0]}
-                  </h2>
+                <div className="space-y-4 text-center lg:text-left">
+                  {/* Reworked Logo Placement: Sits next to the name inside a white pill, not hovering over the photo */}
+                  <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4">
+                    <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight leading-none">
+                      Work with {selectedAssociate.name.split(' ')[0]}
+                    </h2>
+                    {selectedAssociate.logo && (
+                      <div className="h-12 md:h-14 px-3 bg-white rounded-xl shadow-lg flex items-center justify-center shrink-0">
+                        <img src={selectedAssociate.logo} className="h-full w-auto object-contain py-1" alt={`${selectedAssociate.name} Logo`} />
+                      </div>
+                    )}
+                  </div>
+                  
                   {selectedAssociate.badge && (
-                    <span className="inline-block bg-[#b28c8e] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mt-2 shadow-md mb-2">
+                    <span className="inline-block bg-[#b28c8e] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md">
                       {selectedAssociate.badge}
                     </span>
                   )}
-                  <div className="space-y-2">
+                  
+                  <div className="space-y-2 pt-2">
                     {selectedAssociate.titles.map((t, i) => (
                       <p key={i} className="text-[11px] md:text-xs font-bold opacity-80 uppercase tracking-widest leading-tight text-white">{t}</p>
                     ))}

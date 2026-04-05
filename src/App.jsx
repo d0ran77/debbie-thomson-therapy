@@ -103,7 +103,7 @@ const HomeView = ({ navigateTo }) => (
             </div>
           </div>
 
-          {/* Right Image - Replaced chaotic rotation/boxes with a clean, perfectly proportioned portrait frame */}
+          {/* Right Image - portrait frame [4/5] ratio */}
           <div className="w-full md:w-1/2 flex justify-center mt-8 md:mt-0">
             <div className="relative w-full max-w-sm lg:max-w-md aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border border-white/20 bg-white/5 backdrop-blur-sm">
               <img 
@@ -194,7 +194,7 @@ const AssociatesView = ({ navigateTo }) => {
       about: [
         "I am empathic, approachable, open minded, friendly and professional. In my work I provide therapeutic solutions, build confidence, enable clients to realise their potential, develop awareness of their innate ability to perceive and resolve problems from a different perspective as well as help re-discover the true inner version of themselves.",
         "I work with adults and businesses, with a varied range of social, behavioural, and mental health issues, within local authorities, charities, privately and businesses.",
-        "I am passionate about working within a range of areas and clients, ensuring I remain versatile and multi-faceted in my work. My mission is to empower you, to remind you that you are enough, always, and to help you re-discover the true inner you.",
+        "I am passionate about working within a range of areas and clients, ensuring I remain versatile and multi-faceted in my work. My mission to empower you, to remind you that you are enough, always, and to help you re-discover the true inner you.",
         "I abide by confidentiality and have the utmost respect for who you are.",
         "Having made an enquiry, we will arrange a convenient time for an initial consultation where I will learn more about you. Together we will outline a flexible schedule, within which we will aim for your goals to be met, we will work together to facilitate positive changes to ensure you get the results that you want."
       ],
@@ -324,7 +324,7 @@ const AssociatesView = ({ navigateTo }) => {
                       )}
                       
                       <div className="flex flex-col items-center w-full">
-                        {/* Fixed profile frames: Changed from circular to square with rounded corners, applying object-cover for a perfect fit */}
+                        {/* Square Portrait Frames with perfect coverage */}
                         <div className="w-32 h-32 md:w-44 md:h-44 rounded-2xl mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
                           <img src={associate.img} className="w-full h-full object-cover object-center" alt={associate.name} />
                         </div>
@@ -345,7 +345,6 @@ const AssociatesView = ({ navigateTo }) => {
               </div>
             </div>
 
-            {/* Only show carousel arrows if there are more associates than fit on screen */}
             {associates.length > (window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1) && (
               <>
                 <button onClick={prevSlide} className="absolute left-0 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
@@ -361,7 +360,6 @@ const AssociatesView = ({ navigateTo }) => {
       ) : (
         /* FULL-VIEW PROFILE DETAIL */
         <div className="animate-fadeIn relative z-[10] min-h-[80vh] w-full">
-          {/* Parallax Background Layer */}
           <div className="absolute inset-x-0 top-0 h-full overflow-hidden pointer-events-none opacity-10 -z-0">
              <div className="flex whitespace-nowrap animate-marquee-ltr py-10 mt-20">
                {[...Array(12)].map((_, i) => (
@@ -373,7 +371,6 @@ const AssociatesView = ({ navigateTo }) => {
           </div>
 
           <div className="relative w-full bg-white/15 rounded-[2.5rem] md:rounded-[4rem] border border-white/30 shadow-2xl overflow-hidden flex flex-col backdrop-blur-3xl p-6 md:p-16">
-            {/* Back Button */}
             <button 
               onClick={() => setSelectedAssociate(null)}
               className="absolute top-4 right-4 md:top-8 md:right-8 p-3 md:p-4 bg-white/20 rounded-full hover:bg-white/40 transition-all z-[110] active:scale-90"
@@ -383,29 +380,31 @@ const AssociatesView = ({ navigateTo }) => {
 
             <div className="flex flex-col lg:flex-row gap-8 md:gap-16 items-start relative z-10">
               
-              {/* Profile Card Column */}
               <div className="w-full lg:w-1/3 space-y-6 md:space-y-8 lg:sticky lg:top-8">
                 
-                {/* Reworked Image Frame to a soft square to fit photos perfectly */}
                 <div className="relative group w-full aspect-square rounded-2xl md:rounded-[2.5rem] overflow-hidden border-4 md:border-8 border-white/20 shadow-2xl bg-white/5">
                   <img src={selectedAssociate.img} className="w-full h-full object-cover object-center" alt={selectedAssociate.name} />
                 </div>
                 
-                <div className="space-y-4 text-center lg:text-left">
-                  {/* Reworked Logo Placement: Sits next to the name, with NO white background, just a drop shadow */}
-                  <div className="flex flex-col lg:flex-row items-center lg:items-end gap-4">
+                <div className="space-y-4 text-center lg:text-left pt-2">
+                  <div className="flex flex-col lg:flex-row items-center lg:items-end gap-6">
                     <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight leading-none">
                       Work with {selectedAssociate.name.split(' ')[0]}
                     </h2>
+                    {/* Enlarged Logos with NO background and NO shadows */}
                     {selectedAssociate.logo && (
-                      <div className="h-12 md:h-16 shrink-0 pb-1">
-                        <img src={selectedAssociate.logo} className="h-full w-auto object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]" alt={`${selectedAssociate.name} Logo`} />
+                      <div className="h-24 md:h-32 lg:h-40 shrink-0 flex items-center">
+                        <img 
+                          src={selectedAssociate.logo} 
+                          className="h-full w-auto object-contain" 
+                          alt={`${selectedAssociate.name} Logo`} 
+                        />
                       </div>
                     )}
                   </div>
                   
                   {selectedAssociate.badge && (
-                    <span className="inline-block bg-[#b28c8e] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md">
+                    <span className="inline-block bg-[#b28c8e] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md mb-2">
                       {selectedAssociate.badge}
                     </span>
                   )}
@@ -437,7 +436,6 @@ const AssociatesView = ({ navigateTo }) => {
                 </PrimaryButton>
               </div>
 
-              {/* Detail Content Column */}
               <div className="w-full lg:w-2/3 space-y-12 md:space-y-16 pt-8 lg:pt-0">
                 <section>
                   <p className="font-subtitle text-3xl md:text-5xl leading-tight text-white">"{selectedAssociate.tagline}"</p>
@@ -497,7 +495,6 @@ const RoomRentalView = () => {
       
       <div className="bg-white/10 backdrop-blur-md rounded-[40px] overflow-hidden border border-white/20 shadow-2xl flex flex-col md:flex-row">
         
-        {/* Left Side: Interactive Photo Carousel */}
         <div className="md:w-1/2 min-h-[400px] md:min-h-[500px] relative group overflow-hidden bg-black/20">
           <div 
             className="flex w-full h-full transition-transform duration-700 ease-in-out absolute inset-0" 
@@ -528,7 +525,6 @@ const RoomRentalView = () => {
           </div>
         </div>
 
-        {/* Right Side: Updated Content */}
         <div className="md:w-1/2 p-8 md:p-16 flex flex-col justify-center">
           <h2 className="text-4xl font-serif mb-6" style={{ color: COLORS.button }}>Practice Space</h2>
           
@@ -633,7 +629,7 @@ export default function App() {
         .animate-marquee-ltr { animation: marquee-ltr 60s linear infinite; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0%, 100% { transform: translateY(0px) rotate(3deg); } 50% { transform: translateY(-15px) rotate(1deg); } }
-        @keyframes marquee-ltr { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+        @keyframes marquee-ltr { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
@@ -642,17 +638,15 @@ export default function App() {
       <nav className="sticky top-0 z-50 shadow-2xl backdrop-blur-xl bg-white/5 border-b border-white/10">
         <div className="max-w-6xl mx-auto px-4 h-20 md:h-24 flex justify-between items-center text-white">
           <div className="cursor-pointer group flex items-center shrink-0" onClick={() => navigateTo('home')}>
-            {/* Added strong drop-shadow to the main logo to make it stand out against the background */}
-            <img src="/logo.png" alt="Logo" className="h-10 sm:h-12 md:h-16 w-auto drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)] filter" />
+            {/* Switched to debbielogo.webp and removed filter drop shadow */}
+            <img src="/debbielogo.webp" alt="Logo" className="h-10 sm:h-12 md:h-16 w-auto" />
           </div>
           
-          {/* Minimized Desktop Header with Dropdown */}
           <div className="hidden lg:flex items-center gap-8">
             <div className="relative group">
               <button className="flex items-center gap-2 text-sm uppercase tracking-widest font-bold opacity-80 hover:opacity-100 transition-opacity py-2">
                 Menu <Icons.ChevronDown size={16} />
               </button>
-              {/* Dropdown Menu (filters out Contact) */}
               <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-[#7a9d9b] border border-white/20 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden flex flex-col">
                 {navLinks.filter(l => l.id !== 'contact').map((link) => (
                   <button 
@@ -674,7 +668,6 @@ export default function App() {
             </button>
           </div>
 
-          {/* Mobile Hamburger Menu */}
           <div className="lg:hidden">
             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 bg-white/10 rounded-xl">
               {isMobileMenuOpen ? <Icons.X /> : <Icons.Menu />}
@@ -682,7 +675,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* Mobile Dropdown */}
         {isMobileMenuOpen && (
           <div className="lg:hidden absolute top-full left-0 w-full bg-[#8cb2b0] border-t border-white/10 text-white animate-fadeIn shadow-2xl p-6 flex flex-col space-y-2">
             {navLinks.map((link) => (
@@ -704,7 +696,6 @@ export default function App() {
         {currentPage === 'contact' && <ContactView />}
       </main>
 
-      {/* Footer seamlessly blended with body background */}
       <footer className="mt-12 pt-12 pb-16 border-t border-white/10 flex flex-col items-center relative z-20">
         <div className="flex gap-8 mb-10">
           <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">

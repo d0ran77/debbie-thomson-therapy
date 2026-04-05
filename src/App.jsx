@@ -79,13 +79,11 @@ const PrimaryButton = ({ children, onClick, className = '', type = "button" }) =
 );
 
 const HomeView = ({ navigateTo }) => (
-  <div className="animate-fadeIn px-6 md:px-8">
+  <div className="animate-ink px-6 md:px-8">
     <div className="relative overflow-hidden min-h-[70vh] md:min-h-[85vh] flex items-center py-12 md:py-0 max-w-7xl mx-auto">
        <div className="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
        
        <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 lg:gap-24 w-full">
-          
-          {/* Header & Text Content */}
           <div className="w-full md:w-1/2 text-center md:text-left text-white space-y-6 flex flex-col">
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif leading-tight drop-shadow-md tracking-tight uppercase" style={{ color: COLORS.button }}>
               Debbie Thomson Therapy
@@ -98,7 +96,6 @@ const HomeView = ({ navigateTo }) => (
                 Providing a safe, nurturing space in Willerby, East Yorkshire, to help you navigate life's challenges and improve your emotional wellbeing.
               </p>
             </div>
-            {/* Desktop-only button */}
             <div className="hidden md:block pt-4">
               <PrimaryButton onClick={() => navigateTo('contact')}>
                 Begin Your Journey
@@ -106,7 +103,6 @@ const HomeView = ({ navigateTo }) => (
             </div>
           </div>
 
-          {/* Portrait Image */}
           <div className="w-full md:w-1/2 flex justify-center animate-float">
             <div className="relative w-full max-w-sm lg:max-w-md aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border border-white/20 bg-white/5 backdrop-blur-sm">
               <img 
@@ -118,7 +114,6 @@ const HomeView = ({ navigateTo }) => (
             </div>
           </div>
 
-          {/* Mobile-only button */}
           <div className="md:hidden w-full flex justify-center pt-4">
             <PrimaryButton onClick={() => navigateTo('contact')}>
               Begin Your Journey
@@ -130,7 +125,7 @@ const HomeView = ({ navigateTo }) => (
 );
 
 const AboutView = () => (
-  <div className="max-w-5xl mx-auto px-6 py-20 animate-fadeIn text-white">
+  <div className="max-w-5xl mx-auto px-6 py-20 animate-ink text-white">
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-20 drop-shadow-md uppercase tracking-tight">About Debbie</h1>
     <div className="flex flex-col md:flex-row gap-16 items-center">
       <div className="w-full md:w-2/5 flex justify-center">
@@ -162,7 +157,7 @@ const AboutView = () => (
 );
 
 const ServicesView = () => (
-  <div className="max-w-5xl mx-auto px-6 py-20 animate-fadeIn text-white">
+  <div className="max-w-5xl mx-auto px-6 py-20 animate-ink text-white">
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Services</h1>
     <div className="grid md:grid-cols-2 gap-12">
       <div className="bg-white/10 backdrop-blur-md p-10 rounded-3xl border border-white/20 text-center">
@@ -188,31 +183,26 @@ const ServicesView = () => (
 const AssociatesView = ({ navigateTo }) => {
   const [selectedAssociate, setSelectedAssociate] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [lang, setLang] = useState('ENG');
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const associates = [
     {
       id: 'kim',
       name: "Kim Jones",
       logo: "/kimlogo.webp",
-      titles: [
-        "UKCP Psychotherapist & Clinical Supervisor",
-        "RTM Licenced Clinician",
-        "Eco Coach/Therapist",
-        "Advanced Practitioner of Emotional Freedom Technique"
-      ],
-      tagline: "Creating more choices and empowering minds leads to positive changes both personally and professionally.",
-      about: [
-        "I am empathic, approachable, open minded, friendly and professional. In my work I provide therapeutic solutions, build confidence, enable clients to realise their potential, develop awareness of their innate ability to perceive and resolve problems from a different perspective as well as help re-discover the true inner version of themselves.",
-        "I work with adults and businesses, with a varied range of social, behavioural, and mental health issues, within local authorities, charities, privately and businesses.",
-        "I am passionate about working within a range of areas and clients, ensuring I remain versatile and multi-faceted in my work. My mission to empower you, to remind you that you are enough, always, and to help you re-discover the true inner you.",
-        "I abide by confidentiality and have the utmost respect for who you are.",
-        "Having made an enquiry, we will arrange a convenient time for an initial consultation where I will learn more about you. Together we will outline a flexible schedule, within which we will aim for your goals to be met, we will work together to facilitate positive changes to ensure you get the results that you want."
-      ],
-      principles: [
-        "I operate judgement free across all services, in a safe, comfortable and a protective environment in which we explore and resolve the things that you want to change.",
-        "I adopt principles of empathy, understanding and support as you begin to find the real and authentic you."
-      ],
-      interests: ["Abuse", "Anger management", "Anxiety", "Bullying", "PTSD/CPTSD", "Depression", "Divorce", "Domestic abuse", "Relationships", "Stress", "Trauma"],
+      titles: { ENG: ["UKCP Psychotherapist & Clinical Supervisor", "RTM Licenced Clinician", "Eco Coach/Therapist", "Advanced Practitioner of Emotional Freedom Technique"] },
+      tagline: { ENG: "Creating more choices and empowering minds leads to positive changes both personally and professionally." },
+      about: {
+        ENG: [
+          "I am empathic, approachable, open minded, friendly and professional. In my work I provide therapeutic solutions, build confidence, enable clients to realise their potential, develop awareness of their innate ability to perceive and resolve problems from a different perspective as well as help re-discover the true inner version of themselves.",
+          "I work with adults and businesses, with a varied range of social, behavioural, and mental health issues, within local authorities, charities, privately and businesses.",
+          "I am passionate about working within a range of areas and clients, ensuring I remain versatile and multi-faceted in my work. My mission to empower you, to remind you that you are enough, always, and to help you re-discover the true inner you.",
+          "I abide by confidentiality and have the utmost respect for who you are.",
+          "Having made an enquiry, we will arrange a convenient time for an initial consultation where I will learn more about you. Together we will outline a flexible schedule, within which we will aim for your goals to be met, we will work together to facilitate positive changes to ensure you get the results that you want."
+        ]
+      },
+      interests: { ENG: ["Abuse", "Anger management", "Anxiety", "Bullying", "PTSD/CPTSD", "Depression", "Divorce", "Domestic abuse", "Relationships", "Stress", "Trauma"] },
       worksWith: "Individual clients, groups, adult and young adults from 18+",
       methods: "Face-to-face, online & eco therapy",
       supervisees: "Yes",
@@ -225,25 +215,25 @@ const AssociatesView = ({ navigateTo }) => {
       id: 'kiran',
       name: "Kiran Nagra",
       logo: "/kiranlogo.webp",
-      titles: [
-        "Transactional Analysis (TA) Psychotherapist",
-        "Imago Relationship Therapist (in training)",
-        "UKCP trainee member & NCPS registered"
-      ],
-      tagline: "A thoughtful and psychologically grounded space for individuals and couples.",
-      about: [
-        "I offer a thoughtful and psychologically grounded space for individuals and couples who are ready to explore the patterns beneath their struggles.",
-        "I am a psychotherapist and UKCP Trainee Member, registered with the NCPS, with specialist training in Transactional Analysis (TA). I am also an Imago Relationship Therapy practitioner in training.",
-        "My approach is warm, collaborative and reflective. I work in a trauma-informed way, recognising how past experiences particularly relational trauma which can shape present emotional responses, attachment patterns and self-beliefs.",
-        "Transactional Analysis provides a clear and practical framework for understanding how early experiences shape our internal “scripts.” These patterns often influence how we relate to others, manage conflict, and experience ourselves.",
-        "Together, we explore these dynamics at your pace, supporting greater awareness, emotional resilience and meaningful choice."
-      ],
-      interests: [
-        "Relationship difficulties", "Couples therapy", "Imago Therapy", "Low self-esteem", "Anxiety", "Stress", 
-        "Identity", "Childhood neglect", "Inner child work", "Life transitions", "Family dynamics", "Boundaries",
-        "Cultural identity", "Narcissistic abuse", "Trauma recovery", "Somatic awareness", "Depression", 
-        "Inner critic", "Parenting", "Grief & loss"
-      ],
+      titles: { ENG: ["Transactional Analysis (TA) Psychotherapist", "Imago Relationship Therapist (in training)", "UKCP trainee member & NCPS registered"] },
+      tagline: { ENG: "A thoughtful and psychologically grounded space for individuals and couples." },
+      about: {
+        ENG: [
+          "I offer a thoughtful and psychologically grounded space for individuals and couples who are ready to explore the patterns beneath their struggles.",
+          "I am a psychotherapist and UKCP Trainee Member, registered with the NCPS, with specialist training in Transactional Analysis (TA). I am also an Imago Relationship Therapy practitioner in training.",
+          "My approach is warm, collaborative and reflective. I work in a trauma-informed way, recognising how past experiences particularly relational trauma which can shape present emotional responses, attachment patterns and self-beliefs.",
+          "Transactional Analysis provides a clear and practical framework for understanding how early experiences shape our internal “scripts.” These patterns often influence how we relate to others, manage conflict, and experience ourselves.",
+          "Together, we explore these dynamics at your pace, supporting greater awareness, emotional resilience and meaningful choice."
+        ]
+      },
+      interests: {
+        ENG: [
+          "Relationship difficulties", "Couples therapy", "Imago Therapy", "Low self-esteem", "Anxiety", "Stress", 
+          "Identity", "Childhood neglect", "Inner child work", "Life transitions", "Family dynamics", "Boundaries",
+          "Cultural identity", "Narcissistic abuse", "Trauma recovery", "Somatic awareness", "Depression", 
+          "Inner critic", "Parenting", "Grief & loss"
+        ]
+      },
       worksWith: "Adult individuals & couples (18+)",
       methods: "Face-to-face & online",
       supervisees: "No",
@@ -258,21 +248,32 @@ const AssociatesView = ({ navigateTo }) => {
       name: "Letisia Vela",
       logo: "/letisalogo.webp",
       badge: "Bilingual (Spanish)",
-      titles: [
-        "Transactional Analysis (TA) Advanced Trainee",
-        "Bilingual Therapist (English/Spanish)"
-      ],
-      tagline: "I welcome clients who may not have a specific 'label' but simply know that something doesn't feel right.",
-      about: [
-        "As an advanced trainee therapist, I am warm, thoughtful and relational in my approach. I believe meaningful change happens through a safe, collaborative therapeutic relationship where you feel genuinely heard and understood.",
-        "My clinical experience includes placements with Humberside Police and Valued Minds (Space2BHeard), where I have supported adults facing anxiety, low mood, trauma-related difficulties, and complex life challenges.",
-        "Grounded in Transactional Analysis, my work explores patterns in how you relate to yourself and others, helping you understand where certain beliefs or behaviours may have developed and how they might be affecting you now.",
-        "As a bilingual therapist (English and Spanish), I aim to offer a culturally sensitive and inclusive space where all parts of your identity are welcome. As a UKCP trainee, I bring curiosity, up-to-date training, and dedicated supervision, alongside a strong commitment to ethical and reflective practice."
-      ],
-      interests: [
-        "Anxiety", "Low mood", "Relationship difficulties", "Repeating patterns", "Inner world exploration",
-        "Cultural identity", "Trauma-related difficulties", "Ethical practice"
-      ],
+      titles: {
+        ENG: ["Transactional Analysis (TA) Advanced Trainee", "Bilingual Therapist (English/Spanish)"],
+        ESP: ["Psicoterapeuta en formación avanzada (AT)", "Terapeuta Bilingüe (Inglés/Español)"]
+      },
+      tagline: {
+        ENG: "I welcome clients who may not have a specific 'label' but simply know that something doesn't feel right.",
+        ESP: "Doy la bienvenida a clientes que tal vez no tengan una 'etiqueta' específica, pero simplemente saben que algo no va bien."
+      },
+      about: {
+        ENG: [
+          "As an advanced trainee therapist, I am warm, thoughtful and relational in my approach. I believe meaningful change happens through a safe, collaborative therapeutic relationship where you feel genuinely heard and understood.",
+          "My clinical experience includes placements with Humberside Police and Valued Minds (Space2BHeard), where I have supported adults facing anxiety, low mood, trauma-related difficulties, and complex life challenges.",
+          "Grounded in Transactional Analysis, my work explores patterns in how you relate to yourself and others, helping you understand where certain beliefs or behaviours may have developed and how they might be affecting you now.",
+          "As a bilingual therapist (English and Spanish), I aim to offer a culturally sensitive and inclusive space where all parts of your identity are welcome."
+        ],
+        ESP: [
+          "Como terapeuta avanzada en formación, soy cálida, reflexiva y relacional en mi enfoque. Creo que el cambio significativo ocurre a través de una relación terapéutica segura y colaborativa donde te sientas genuinamente escuchado y comprendido.",
+          "Mi experiencia clínica incluye prácticas con la Policía de Humberside y Valued Minds (Space2BHeard), donde he apoyado a adultos que enfrentan ansiedad, bajo estado de ánimo, dificultades relacionadas con el trauma y desafíos vitales complejos.",
+          "Basado en el Análisis Transaccional, mi trabajo explora patrones en cómo te relacionas contigo mismo y con los demás, ayudándote a comprender dónde pueden haberse desarrollado ciertas creencias o comportamientos.",
+          "Como terapeuta bilingüe (inglés y español), mi objetivo es ofrecer un espacio culturalmente sensible e inclusivo donde todas las partes de tu identidad sean bienvenidas."
+        ]
+      },
+      interests: {
+        ENG: ["Anxiety", "Low mood", "Relationship difficulties", "Repeating patterns", "Inner world exploration", "Cultural identity", "Trauma-related difficulties", "Ethical practice"],
+        ESP: ["Ansiedad", "Bajo ánimo", "Dificultades en relaciones", "Patrones repetitivos", "Exploración interior", "Identidad cultural", "Dificultades por trauma", "Práctica ética"]
+      },
       worksWith: "Individuals & Adults",
       methods: "Face-to-face & online",
       supervisees: "No",
@@ -283,6 +284,14 @@ const AssociatesView = ({ navigateTo }) => {
       img: "/letisa.webp"
     }
   ];
+
+  const handleLangToggle = (newLang) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setLang(newLang);
+      setIsTransitioning(false);
+    }, 300);
+  };
 
   const nextSlide = () => {
     const visibleCount = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
@@ -296,51 +305,33 @@ const AssociatesView = ({ navigateTo }) => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 animate-fadeIn text-white relative min-h-[80vh]">
+    <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 animate-ink text-white relative min-h-[80vh]">
       {!selectedAssociate ? (
         <>
           <h1 className="text-5xl md:text-7xl font-serif text-center mb-10 uppercase tracking-tight">Associates</h1>
-          
           <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md p-8 md:p-12 rounded-[2.5rem] border border-white/20 shadow-2xl mb-16 text-center">
             <h2 className="text-3xl font-serif mb-6" style={{ color: COLORS.button }}>Announcement</h2>
-            <p className="text-xl md:text-2xl font-subtitle mb-6 leading-relaxed text-white">
-              I am excited to announce the launch of my Associate Therapist Service!
-            </p>
-            <p className="text-lg opacity-90 mb-0 leading-relaxed text-white">
-              If I am full in my caseload, I can recommend other therapists who may be able to work with you and meet your needs.
-            </p>
+            <p className="text-xl md:text-2xl font-subtitle mb-6 leading-relaxed text-white">I am excited to announce the launch of my Associate Therapist Service!</p>
+            <p className="text-lg opacity-90 mb-0 leading-relaxed text-white">If I am full in my caseload, I can recommend other therapists who may be able to work with you.</p>
           </div>
-
           <div className="relative group">
-            {/* Improved Associate Carousel for Pixel 8 Pro: Adjusted card width and center-snapping */}
             <div className="overflow-x-auto lg:overflow-hidden pb-10 scrollbar-hide snap-x snap-mandatory flex">
-              <div 
-                className="flex transition-transform duration-700 ease-in-out md:translate-x-0" 
-                style={{ transform: window.innerWidth >= 1024 ? `translateX(-${currentSlide * 33.33}%)` : 'none' }}
-              >
+              <div className="flex transition-transform duration-700 ease-in-out md:translate-x-0" style={{ transform: window.innerWidth >= 1024 ? `translateX(-${currentSlide * 33.33}%)` : 'none' }}>
                 {associates.map((associate) => (
                   <div key={associate.id} className="w-[82vw] sm:w-1/2 lg:w-1/3 flex-shrink-0 px-2 sm:px-3 relative snap-center">
-                    <div 
-                      onClick={() => { setSelectedAssociate(associate); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                      className="cursor-pointer bg-white/10 backdrop-blur-md p-6 sm:p-8 rounded-[2rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[520px] md:h-[620px] justify-between overflow-hidden relative"
-                    >
-                      {associate.badge && (
-                        <div className="absolute top-4 right-4 bg-[#b28c8e] text-white text-[9px] font-bold px-2 py-1 rounded-full uppercase tracking-widest shadow-md z-20">
-                          {associate.badge}
-                        </div>
-                      )}
-                      
+                    <div onClick={() => { setSelectedAssociate(associate); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="cursor-pointer bg-white/10 backdrop-blur-md p-6 sm:p-8 rounded-[2rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[520px] md:h-[620px] justify-between overflow-hidden relative">
+                      {associate.badge && <div className="absolute top-4 right-4 bg-[#b28c8e] text-white text-[9px] font-bold px-2 py-1 rounded-full uppercase tracking-widest shadow-md z-20">{associate.badge}</div>}
                       <div className="flex flex-col items-center w-full">
                         <div className="w-28 h-28 md:w-44 md:h-44 rounded-2xl mb-4 md:mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
                           <img src={associate.img} className="w-full h-full object-cover object-center" alt={associate.name} />
                         </div>
                         <h3 className="text-2xl md:text-3xl font-serif mb-1 md:mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
                         <div className="space-y-1 mb-4 h-10 md:h-12 overflow-hidden flex-shrink-0">
-                          {associate.titles.slice(0, 1).map((t, i) => (
+                          {associate.titles.ENG.slice(0, 1).map((t, i) => (
                             <p key={i} className="text-[9px] md:text-[10px] opacity-60 uppercase tracking-widest font-bold px-4 text-white line-clamp-2">{t}</p>
                           ))}
                         </div>
-                        <p className="font-subtitle text-lg md:text-xl text-white mb-4 md:mb-6 leading-snug px-2 line-clamp-4">"{associate.tagline}"</p>
+                        <p className="font-subtitle text-lg md:text-xl text-white mb-4 md:mb-6 leading-snug px-2 line-clamp-4">"{associate.tagline.ENG}"</p>
                       </div>
                       <div className="w-full px-2 mt-auto">
                         <PrimaryButton className="pointer-events-none scale-75 md:scale-90 w-full py-3">View Profile</PrimaryButton>
@@ -350,22 +341,17 @@ const AssociatesView = ({ navigateTo }) => {
                 ))}
               </div>
             </div>
-
             {associates.length > 3 && (
               <div className="hidden lg:block">
-                <button onClick={prevSlide} className="absolute left-0 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
-                  <Icons.ChevronLeft />
-                </button>
-                <button onClick={nextSlide} className="absolute right-0 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
-                  <Icons.ChevronRight />
-                </button>
+                <button onClick={prevSlide} className="absolute left-0 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100"><Icons.ChevronLeft /></button>
+                <button onClick={nextSlide} className="absolute right-0 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100"><Icons.ChevronRight /></button>
               </div>
             )}
           </div>
         </>
       ) : (
-        /* FULL-VIEW PROFILE DETAIL */
-        <div className="animate-fadeIn relative z-[10] min-h-[80vh] w-full">
+        /* FULL-VIEW PROFILE DETAIL: logos removed, enquire button at bottom */
+        <div className="animate-ink relative z-[10] min-h-[80vh] w-full">
           <div className="absolute inset-x-0 top-0 h-full overflow-hidden pointer-events-none opacity-10 -z-0">
              <div className="flex whitespace-nowrap animate-marquee-ltr py-10 mt-20">
                {[...Array(12)].map((_, i) => (
@@ -377,45 +363,30 @@ const AssociatesView = ({ navigateTo }) => {
           </div>
 
           <div className="relative w-full bg-white/15 rounded-[2.5rem] md:rounded-[4rem] border border-white/30 shadow-2xl overflow-hidden flex flex-col backdrop-blur-3xl p-6 md:p-16">
-            <button 
-              onClick={() => setSelectedAssociate(null)}
-              className="absolute top-4 right-4 md:top-8 md:right-8 p-3 md:p-4 bg-white/20 rounded-full hover:bg-white/40 transition-all z-[110] active:scale-90"
-            >
-              <Icons.X />
-            </button>
+            <button onClick={() => { setSelectedAssociate(null); setLang('ENG'); }} className="absolute top-4 right-4 md:top-8 md:right-8 p-3 md:p-4 bg-white/20 rounded-full hover:bg-white/40 transition-all z-[110] active:scale-90"><Icons.X /></button>
 
             <div className="flex flex-col lg:flex-row gap-8 md:gap-16 items-start relative z-10">
-              
               <div className="w-full lg:w-1/3 space-y-6 md:space-y-8 lg:sticky lg:top-8">
-                
                 <div className="relative group w-full aspect-square rounded-2xl md:rounded-[2.5rem] overflow-hidden border-4 md:border-8 border-white/20 shadow-2xl bg-white/5">
                   <img src={selectedAssociate.img} className="w-full h-full object-cover object-center" alt={selectedAssociate.name} />
                 </div>
                 
                 <div className="space-y-4 text-center lg:text-left pt-2">
-                  <div className="flex flex-col lg:flex-row items-center lg:items-end gap-6">
-                    <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight leading-none">
-                      Work with {selectedAssociate.name.split(' ')[0]}
+                  <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+                    <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight leading-none mb-6">
+                      {lang === 'ENG' ? `Work with ${selectedAssociate.name.split(' ')[0]}` : `Trabaja con ${selectedAssociate.name.split(' ')[0]}`}
                     </h2>
-                    {selectedAssociate.logo && (
-                      <div className="h-32 md:h-52 lg:h-72 shrink-0 flex items-center">
-                        <img 
-                          src={selectedAssociate.logo} 
-                          className="h-full w-auto object-contain" 
-                          alt={`${selectedAssociate.name} Logo`} 
-                        />
-                      </div>
-                    )}
                   </div>
                   
-                  {selectedAssociate.badge && (
-                    <span className="inline-block bg-[#b28c8e] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md mb-2">
-                      {selectedAssociate.badge}
-                    </span>
+                  {selectedAssociate.id === 'letisia' && (
+                    <div className="flex justify-center lg:justify-start gap-4 p-1 bg-white/10 rounded-full w-fit mx-auto lg:mx-0 backdrop-blur-md border border-white/10">
+                      <button onClick={() => handleLangToggle('ENG')} className={`px-4 py-1 rounded-full text-xs font-bold transition-all ${lang === 'ENG' ? 'bg-[#b28c8e] text-white shadow-lg' : 'text-white/50'}`}>ENG</button>
+                      <button onClick={() => handleLangToggle('ESP')} className={`px-4 py-1 rounded-full text-xs font-bold transition-all ${lang === 'ESP' ? 'bg-[#b28c8e] text-white shadow-lg' : 'text-white/50'}`}>ESP</button>
+                    </div>
                   )}
                   
-                  <div className="space-y-2 pt-2">
-                    {selectedAssociate.titles.map((t, i) => (
+                  <div className={`space-y-2 pt-2 transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+                    {(selectedAssociate.titles[lang] || selectedAssociate.titles['ENG']).map((t, i) => (
                       <p key={i} className="text-[11px] md:text-xs font-bold opacity-80 uppercase tracking-widest leading-tight text-white">{t}</p>
                     ))}
                   </div>
@@ -427,57 +398,29 @@ const AssociatesView = ({ navigateTo }) => {
                   <div className="flex items-start gap-3"><Icons.User className="shrink-0 mt-1" /> <span><strong>Works With:</strong> {selectedAssociate.worksWith}</span></div>
                   <div className="flex items-start gap-3"><Icons.Calendar className="shrink-0 mt-1" /> <span><strong>Methods:</strong> {selectedAssociate.methods}</span></div>
                   <div className="flex items-start gap-3"><Icons.Users className="shrink-0 mt-1" /> <span><strong>Supervisees:</strong> {selectedAssociate.supervisees}</span></div>
-                  {selectedAssociate.insurance && (
-                    <div className="flex items-start gap-3"><Icons.Check className="shrink-0 mt-1" /> <span><strong>Insurance:</strong> {selectedAssociate.insurance}</span></div>
-                  )}
                   <div className="pt-4 border-t border-white/10">
-                    <p className="font-bold text-lg mb-2">Fees</p>
+                    <p className="font-bold text-lg mb-2">{lang === 'ENG' ? 'Fees' : 'Tarifas'}</p>
                     <p className="opacity-90 leading-relaxed text-xs whitespace-pre-line">{selectedAssociate.fees}</p>
                   </div>
                 </div>
-
-                <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')} className="w-full">
-                  Enquire Now <Icons.ExternalLink />
-                </PrimaryButton>
               </div>
 
-              <div className="w-full lg:w-2/3 space-y-12 md:space-y-16 pt-8 lg:pt-0">
-                <section>
-                  <p className="font-subtitle text-3xl md:text-5xl leading-tight text-white">"{selectedAssociate.tagline}"</p>
-                </section>
-
+              <div className={`w-full lg:w-2/3 space-y-12 md:space-y-16 pt-8 lg:pt-0 transition-all duration-300 ${isTransitioning ? 'opacity-0 blur-sm' : 'opacity-100 blur-0'}`}>
+                <section><p className="font-subtitle text-3xl md:text-5xl leading-tight text-white">"{selectedAssociate.tagline[lang] || selectedAssociate.tagline['ENG']}"</p></section>
                 <section className="space-y-6 md:space-y-8">
-                  <h4 className="font-serif text-3xl md:text-4xl flex items-center gap-4 text-white">About <div className="h-px bg-white/20 flex-grow"></div></h4>
-                  <div className="space-y-6">
-                    {selectedAssociate.about.map((p, i) => (
-                      <p key={i} className="text-lg md:text-xl opacity-90 leading-relaxed text-white">{p}</p>
-                    ))}
-                  </div>
+                  <h4 className="font-serif text-3xl md:text-4xl flex items-center gap-4 text-white">{lang === 'ENG' ? 'About' : 'Sobre mí'} <div className="h-px bg-white/20 flex-grow"></div></h4>
+                  <div className="space-y-6">{(selectedAssociate.about[lang] || selectedAssociate.about['ENG']).map((p, i) => <p key={i} className="text-lg md:text-xl opacity-90 leading-relaxed text-white">{p}</p>)}</div>
                 </section>
-
-                {selectedAssociate.principles && (
-                  <section className="space-y-6">
-                    <ul className="space-y-4 md:space-y-6">
-                      {selectedAssociate.principles.map((p, i) => (
-                        <li key={i} className="flex gap-4 items-start text-lg md:text-xl opacity-90 leading-relaxed text-white">
-                          <span className="mt-2 shrink-0 bg-white/20 p-1 rounded-full"><Icons.Check /></span>
-                          <span>{p}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                )}
-
                 <section className="space-y-6 md:space-y-8 pb-12">
-                  <h4 className="font-serif text-3xl md:text-4xl flex items-center gap-4 text-white">Areas of Interest <div className="h-px bg-white/20 flex-grow"></div></h4>
-                  <div className="flex flex-wrap gap-2 md:gap-3">
-                    {selectedAssociate.interests.map((interest) => (
-                      <span key={interest} className="px-4 md:px-6 py-2 md:py-3 bg-white/10 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase border border-white/10 text-white hover:bg-white/20 transition-colors">
-                        {interest}
-                      </span>
-                    ))}
-                  </div>
+                  <h4 className="font-serif text-3xl md:text-4xl flex items-center gap-4 text-white">{lang === 'ENG' ? 'Areas of Interest' : 'Áreas de interés'} <div className="h-px bg-white/20 flex-grow"></div></h4>
+                  <div className="flex flex-wrap gap-2 md:gap-3">{(selectedAssociate.interests[lang] || selectedAssociate.interests['ENG']).map((interest) => <span key={interest} className="px-4 md:px-6 py-2 md:py-3 bg-white/10 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase border border-white/10 text-white hover:bg-white/20 transition-colors">{interest}</span>)}</div>
                 </section>
+                
+                <div className="pt-12 border-t border-white/10">
+                  <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')} className="w-full">
+                    {lang === 'ENG' ? 'Enquire Now' : 'Consultar Ahora'} <Icons.ExternalLink />
+                  </PrimaryButton>
+                </div>
               </div>
             </div>
           </div>
@@ -487,7 +430,6 @@ const AssociatesView = ({ navigateTo }) => {
   );
 };
 
-// Reworked RoomRentalView with Scroll-based Mobile Support
 const RoomRentalView = () => {
   const images = ['/1.webp', '/2.webp', '/3.webp', '/4.webp', '/5.webp', '/6.webp'];
   const scrollRef = useRef(null);
@@ -509,63 +451,24 @@ const RoomRentalView = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-20 animate-fadeIn text-white">
+    <div className="max-w-7xl mx-auto px-6 py-20 animate-ink text-white">
       <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Room Rental</h1>
-      
       <div className="bg-white/10 backdrop-blur-md rounded-[40px] overflow-hidden border border-white/20 shadow-2xl flex flex-col md:flex-row">
-        
-        {/* Left Side: Native Scroll Carousel */}
         <div className="md:w-1/2 min-h-[400px] md:min-h-[500px] relative group bg-black/20">
-          <div 
-            ref={scrollRef}
-            onScroll={handleScroll}
-            className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide"
-          >
-            {images.map((src, idx) => (
-              <div key={idx} className="w-full h-full flex-shrink-0 snap-center">
-                <img src={src} alt={`Therapy Room ${idx + 1}`} className="w-full h-full object-cover" />
-              </div>
-            ))}
+          <div ref={scrollRef} onScroll={handleScroll} className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+            {images.map((src, idx) => <div key={idx} className="w-full h-full flex-shrink-0 snap-center"><img src={src} alt={`Therapy Room ${idx + 1}`} className="w-full h-full object-cover" /></div>)}
           </div>
-          
-          <button 
-            onClick={() => scrollToIndex((currentSlide - 1 + images.length) % images.length)} 
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10"
-          >
-            <Icons.ChevronLeft />
-          </button>
-          <button 
-            onClick={() => scrollToIndex((currentSlide + 1) % images.length)} 
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10"
-          >
-            <Icons.ChevronRight />
-          </button>
-          
+          <button onClick={() => scrollToIndex((currentSlide - 1 + images.length) % images.length)} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10"><Icons.ChevronLeft /></button>
+          <button onClick={() => scrollToIndex((currentSlide + 1) % images.length)} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-all z-10"><Icons.ChevronRight /></button>
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10">
-            {images.map((_, idx) => (
-              <button 
-                key={idx} 
-                onClick={() => scrollToIndex(idx)}
-                className={`h-2 rounded-full transition-all duration-500 shadow-md ${currentSlide === idx ? 'bg-white w-8' : 'bg-white/50 w-2'}`} 
-              />
-            ))}
+            {images.map((_, idx) => <button key={idx} onClick={() => scrollToIndex(idx)} className={`h-2 rounded-full transition-all duration-500 shadow-md ${currentSlide === idx ? 'bg-white w-8' : 'bg-white/50 w-2'}`} />)}
           </div>
         </div>
-
-        {/* Right Side */}
         <div className="md:w-1/2 p-8 md:p-16 flex flex-col justify-center">
           <h2 className="text-4xl font-serif mb-6" style={{ color: COLORS.button }}>Practice Space</h2>
-          
-          <p className="text-xl md:text-2xl font-subtitle opacity-90 mb-6 leading-relaxed">
-            My therapy room is in the heart of Willerby Square, East Yorkshire.
-          </p>
-          <p className="text-lg opacity-80 mb-10 leading-relaxed">
-            I also have a smaller therapy room available to rent if you are a therapist looking for a new space to work from.
-          </p>
-          
-          <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')} className="self-start">
-            Get in touch <Icons.ExternalLink />
-          </PrimaryButton>
+          <p className="text-xl md:text-2xl font-subtitle opacity-90 mb-6 leading-relaxed">My therapy room is in the heart of Willerby Square, East Yorkshire.</p>
+          <p className="text-lg opacity-80 mb-10 leading-relaxed">I also have a smaller therapy room available to rent if you are a therapist looking for a new space to work from.</p>
+          <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')} className="self-start">Get in touch <Icons.ExternalLink /></PrimaryButton>
         </div>
       </div>
     </div>
@@ -573,9 +476,9 @@ const RoomRentalView = () => {
 };
 
 const FAQView = () => (
-  <div className="max-w-3xl mx-auto px-6 py-20 animate-fadeIn text-white">
+  <div className="max-w-3xl mx-auto px-6 py-20 animate-ink text-white">
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">FAQ</h1>
-    <div className="space-y-6">
+    <div className="space-y-4">
       {[
         { q: "How long is a standard session?", a: "Individual sessions are 60 minutes long. Couples sessions are 90 minutes." },
         { q: "Where is the practice located?", a: "The practice is centrally located in Willerby Square, East Yorkshire." },
@@ -591,9 +494,8 @@ const FAQView = () => (
 );
 
 const ContactView = () => (
-  <div className="max-w-5xl mx-auto px-6 py-20 animate-fadeIn text-white">
+  <div className="max-w-5xl mx-auto px-4 py-20 animate-ink text-white">
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Contact</h1>
-    
     <div className="bg-white/10 backdrop-blur-md p-10 rounded-[40px] border border-white/20 shadow-2xl">
       <div className="grid md:grid-cols-2 gap-16">
         <div className="space-y-8">
@@ -603,21 +505,14 @@ const ContactView = () => (
             <div className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity"><Icons.Phone /> 07883 393590</div>
             <div className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity"><Icons.MapPin /> Willerby Square, East Yorks</div>
           </div>
-
           <div className="pt-8 border-t border-white/10">
             <p className="mb-6 opacity-90 text-lg">Use our digital form for a quick enquiry:</p>
-            <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')} className="w-full">
-              Open Enquiry Form <Icons.ExternalLink />
-            </PrimaryButton>
+            <PrimaryButton onClick={() => window.open(ENQUIRY_FORM_URL, '_blank')} className="w-full">Open Enquiry Form <Icons.ExternalLink /></PrimaryButton>
           </div>
         </div>
-
         <form className="space-y-6" name="contact" method="POST" data-netlify="true">
           <p className="text-center font-serif text-xl mb-4">Or send a message below</p>
-          <input type="hidden" name="form-name" value="contact" />
-          <input className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2 text-white" style={{ ringColor: COLORS.button }} placeholder="Name" name="name" required />
-          <input className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2 text-white" style={{ ringColor: COLORS.button }} placeholder="Email" name="email" type="email" required />
-          <textarea className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2 text-white" style={{ ringColor: COLORS.button }} placeholder="Message" name="message" rows="5" required></textarea>
+          <input type="hidden" name="form-name" value="contact" /><input className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2 text-white" style={{ ringColor: COLORS.button }} placeholder="Name" name="name" required /><input className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2 text-white" style={{ ringColor: COLORS.button }} placeholder="Email" name="email" type="email" required /><textarea className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2 text-white" style={{ ringColor: COLORS.button }} placeholder="Message" name="message" rows="5" required></textarea>
           <PrimaryButton type="submit" className="w-full">Send Message</PrimaryButton>
         </form>
       </div>
@@ -641,16 +536,10 @@ export default function App() {
     const handleScroll = () => {
       setIsScrolling(true);
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
-      scrollTimeout.current = setTimeout(() => {
-        setIsScrolling(false);
-      }, 150); 
+      scrollTimeout.current = setTimeout(() => setIsScrolling(false), 1000); 
     };
-
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
-    };
+    return () => { window.removeEventListener('scroll', handleScroll); if (scrollTimeout.current) clearTimeout(scrollTimeout.current); };
   }, []);
 
   const navLinks = [
@@ -670,10 +559,15 @@ export default function App() {
         .font-serif { font-family: 'Kalam', cursive !important; }
         .font-sans { font-family: 'Patrick Hand', cursive !important; }
         .font-subtitle { font-family: 'Caveat', cursive !important; font-size: 2.2rem !important; line-height: 1.2 !important; }
-        .animate-fadeIn { animation: fadeIn 0.5s ease-out forwards; }
+        
+        .animate-ink { animation: inkReveal 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        @keyframes inkReveal {
+          0% { filter: blur(30px); opacity: 0; transform: scale(1.05); }
+          100% { filter: blur(0); opacity: 1; transform: scale(1); }
+        }
+
         .animate-float { animation: float 6s ease-in-out infinite; }
         .animate-marquee-ltr { animation: marquee-ltr 60s linear infinite; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0%, 100% { transform: translateY(0px) rotate(3deg); } 50% { transform: translateY(-15px) rotate(1deg); } }
         @keyframes marquee-ltr { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         ::-webkit-scrollbar { width: 6px; }
@@ -689,60 +583,31 @@ export default function App() {
           <div className="cursor-pointer group flex items-center shrink-0" onClick={() => navigateTo('home')}>
             <img src="/debbielogo.webp" alt="Logo" className="h-24 sm:h-32 md:h-40 lg:h-48 w-auto transition-transform hover:scale-105 duration-500" />
           </div>
-          
           <div className="hidden lg:flex items-center gap-12">
             <div className="relative group">
-              <button className="flex items-center gap-3 text-xl uppercase tracking-widest font-bold opacity-90 hover:opacity-100 transition-opacity py-2">
-                Menu <Icons.ChevronDown size={22} />
-              </button>
+              <button className="flex items-center gap-3 text-xl uppercase tracking-widest font-bold opacity-90 hover:opacity-100 transition-opacity py-2">Menu <Icons.ChevronDown size={22} /></button>
               <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-64 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden flex flex-col">
                 {navLinks.filter(l => l.id !== 'contact').map((link) => (
-                  <button 
-                    key={link.id} 
-                    onClick={() => navigateTo(link.id)} 
-                    className="w-full text-left px-8 py-5 hover:bg-white/10 transition-colors text-lg uppercase tracking-widest font-bold border-b border-white/5 last:border-0"
-                  >
-                    {link.label}
-                  </button>
+                  <button key={link.id} onClick={() => navigateTo(link.id)} className="w-full text-left px-8 py-5 hover:bg-white/10 transition-colors text-lg uppercase tracking-widest font-bold border-b border-white/5 last:border-0">{link.label}</button>
                 ))}
               </div>
             </div>
-
-            <button 
-              onClick={() => navigateTo('contact')} 
-              className={`text-xl uppercase tracking-widest font-bold transition-all magnet-effect ${currentPage === 'contact' ? 'border-b-4 border-white pb-1' : 'opacity-90 hover:opacity-100'}`}
-            >
-              Contact
-            </button>
+            <button onClick={() => navigateTo('contact')} className={`text-xl uppercase tracking-widest font-bold transition-all magnet-effect ${currentPage === 'contact' ? 'border-b-4 border-white pb-1' : 'opacity-90 hover:opacity-100'}`}>Contact</button>
           </div>
-
           <div className="lg:hidden mobile-hamburger-fixed">
-            <button 
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
-              className="p-3 bg-white/10 backdrop-blur-xl rounded-xl border border-white/20 shadow-xl"
-            >
-              {isMobileMenuOpen ? <Icons.X /> : <Icons.Menu />}
-            </button>
+            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-3 bg-white/10 backdrop-blur-xl rounded-xl border border-white/20 shadow-xl">{isMobileMenuOpen ? <Icons.X /> : <Icons.Menu />}</button>
           </div>
         </div>
-
         {isMobileMenuOpen && (
           <div className="lg:hidden fixed inset-0 z-[90] bg-white/10 backdrop-blur-3xl flex flex-col pt-32 p-6 space-y-2 animate-fadeIn overflow-y-auto">
              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent pointer-events-none"></div>
-            {navLinks.map((link) => (
-              <button 
-                key={link.id} 
-                onClick={() => navigateTo(link.id)} 
-                className="relative z-10 py-5 uppercase tracking-widest text-2xl font-bold text-left border-b border-white/10"
-              >
-                {link.label}
-              </button>
-            ))}
+            {navLinks.map((link) => <button key={link.id} onClick={() => navigateTo(link.id)} className="relative z-10 py-5 uppercase tracking-widest text-2xl font-bold text-left border-b border-white/10">{link.label}</button>)}
           </div>
         )}
       </nav>
 
-      <main className="flex-grow pb-48 md:pb-64">
+      {/* Main Content Area: Key forces a re-mount for the ink animation */}
+      <main key={currentPage} className="flex-grow pb-48 md:pb-64">
         {currentPage === 'home' && <HomeView navigateTo={navigateTo} />}
         {currentPage === 'about' && <AboutView />}
         {currentPage === 'services' && <ServicesView />}
@@ -753,22 +618,14 @@ export default function App() {
       </main>
 
       <footer 
-        className={`fixed bottom-0 left-0 right-0 z-20 py-6 flex flex-col items-center bg-white/10 backdrop-blur-xl transition-transform duration-300 ease-in-out ${isScrolling ? 'translate-y-[100%]' : 'translate-y-0'}`}
+        className={`fixed bottom-0 left-0 right-0 z-20 py-6 flex flex-col items-center bg-white/10 backdrop-blur-xl transition-transform duration-1000 ease-in-out ${isScrolling ? 'translate-y-[100%]' : 'translate-y-0'}`}
       >
         <div className="flex gap-10 mb-6">
-          <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect">
-            <Icons.LinkedIn size={44} />
-          </a>
-          <a href="https://www.facebook.com/Debbiettherapy" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect">
-            <Icons.Facebook size={44} />
-          </a>
-          <a href="https://www.instagram.com/debbiettherapy/" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect">
-            <Icons.Instagram size={44} />
-          </a>
+          <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect"><Icons.LinkedIn size={44} /></a>
+          <a href="https://www.facebook.com/Debbiettherapy" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect"><Icons.Facebook size={44} /></a>
+          <a href="https://www.instagram.com/debbiettherapy/" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect"><Icons.Instagram size={44} /></a>
         </div>
-        
         <p className="opacity-70 mb-4 max-w-xs mx-auto text-sm text-center text-white">Providing a safe space in Willerby Square.</p>
-        
         <div className="flex flex-col items-center gap-2 text-[10px] opacity-60 font-sans tracking-widest uppercase text-white">
           <span>&copy; {new Date().getFullYear()} All rights reserved.</span>
           <a href="https://builtbyliam.uk/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline decoration-white/30 underline-offset-4">Built By Liam</a>

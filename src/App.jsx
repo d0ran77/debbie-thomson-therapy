@@ -623,7 +623,7 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen font-sans text-white overflow-x-hidden transition-colors duration-700" style={{ backgroundColor: COLORS.main }}>
+    <div className="min-h-screen font-sans text-white overflow-x-hidden flex flex-col" style={{ backgroundColor: COLORS.main }}>
       <style dangerouslySetInnerHTML={{__html: `
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap');
         .font-serif { font-family: 'Kalam', cursive !important; }
@@ -640,25 +640,27 @@ export default function App() {
         .scrollbar-hide::-webkit-scrollbar { display: none; }
       `}} />
 
-      {/* Header: Completely transparent and shadow-free */}
+      {/* Header: Transparent, shadow-free, enlarged logo and bigger menu/contact text */}
       <nav className="sticky top-0 z-50 bg-transparent">
-        <div className="max-w-6xl mx-auto px-4 h-24 md:h-32 flex justify-between items-center text-white">
+        <div className="max-w-6xl mx-auto px-4 h-24 md:h-32 lg:h-40 flex justify-between items-center text-white">
           <div className="cursor-pointer group flex items-center shrink-0" onClick={() => navigateTo('home')}>
-            {/* Enlarged Header Logo */}
-            <img src="/debbielogo.webp" alt="Logo" className="h-20 sm:h-24 md:h-32 lg:h-36 w-auto" />
+            {/* Logo: Larger and no shadows */}
+            <img src="/debbielogo.webp" alt="Logo" className="h-24 sm:h-32 md:h-40 lg:h-48 w-auto transition-transform hover:scale-105 duration-500" />
           </div>
           
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-12">
             <div className="relative group">
-              <button className="flex items-center gap-2 text-sm uppercase tracking-widest font-bold opacity-80 hover:opacity-100 transition-opacity py-2">
-                Menu <Icons.ChevronDown size={16} />
+              {/* Menu Text: Bigger (text-xl) */}
+              <button className="flex items-center gap-3 text-xl uppercase tracking-widest font-bold opacity-90 hover:opacity-100 transition-opacity py-2">
+                Menu <Icons.ChevronDown size={22} />
               </button>
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-[#7a9d9b] border border-white/20 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden flex flex-col">
+              {/* Dropdown: Glassmorphism effect */}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-64 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden flex flex-col">
                 {navLinks.filter(l => l.id !== 'contact').map((link) => (
                   <button 
                     key={link.id} 
                     onClick={() => navigateTo(link.id)} 
-                    className="w-full text-left px-6 py-4 hover:bg-white/10 transition-colors text-sm uppercase tracking-widest font-bold border-b border-white/5 last:border-0"
+                    className="w-full text-left px-8 py-5 hover:bg-white/10 transition-colors text-lg uppercase tracking-widest font-bold border-b border-white/5 last:border-0"
                   >
                     {link.label}
                   </button>
@@ -666,25 +668,27 @@ export default function App() {
               </div>
             </div>
 
+            {/* Contact Text: Bigger (text-xl) */}
             <button 
               onClick={() => navigateTo('contact')} 
-              className={`text-sm uppercase tracking-widest font-bold transition-all ${currentPage === 'contact' ? 'border-b-2 border-white pb-1' : 'opacity-80 hover:opacity-100'}`}
+              className={`text-xl uppercase tracking-widest font-bold transition-all ${currentPage === 'contact' ? 'border-b-4 border-white pb-1' : 'opacity-90 hover:opacity-100'}`}
             >
               Contact
             </button>
           </div>
 
           <div className="lg:hidden">
-            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 bg-white/10 rounded-xl">
+            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-3 bg-white/10 rounded-xl">
               {isMobileMenuOpen ? <Icons.X /> : <Icons.Menu />}
             </button>
           </div>
         </div>
 
+        {/* Mobile Dropdown */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 w-full bg-[#8cb2b0] border-t border-white/10 text-white animate-fadeIn shadow-2xl p-6 flex flex-col space-y-2">
+          <div className="lg:hidden absolute top-full left-0 w-full bg-white/10 backdrop-blur-2xl border-t border-white/10 text-white animate-fadeIn shadow-2xl p-6 flex flex-col space-y-2">
             {navLinks.map((link) => (
-              <button key={link.id} onClick={() => navigateTo(link.id)} className="py-4 uppercase tracking-widest text-lg font-bold">
+              <button key={link.id} onClick={() => navigateTo(link.id)} className="py-4 uppercase tracking-widest text-xl font-bold">
                 {link.label}
               </button>
             ))}
@@ -702,22 +706,23 @@ export default function App() {
         {currentPage === 'contact' && <ContactView />}
       </main>
 
-      <footer className="mt-12 pt-12 pb-16 border-t border-white/10 flex flex-col items-center relative z-20">
-        <div className="flex gap-8 mb-10">
+      {/* Footer: Sticky, body-color match, enlarged icons, no separator line */}
+      <footer className="sticky bottom-0 mt-auto pt-10 pb-12 flex flex-col items-center relative z-20">
+        <div className="flex gap-10 mb-8">
           <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">
-            <Icons.LinkedIn size={48} />
+            <Icons.LinkedIn size={54} />
           </a>
           <a href="https://www.facebook.com/Debbiettherapy" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">
-            <Icons.Facebook size={48} />
+            <Icons.Facebook size={54} />
           </a>
           <a href="https://www.instagram.com/debbiettherapy/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">
-            <Icons.Instagram size={48} />
+            <Icons.Instagram size={54} />
           </a>
         </div>
         
-        <p className="opacity-70 mb-8 max-w-xs mx-auto text-sm text-center text-white">Providing a safe space in Willerby Square.</p>
+        <p className="opacity-70 mb-6 max-w-xs mx-auto text-base text-center text-white">Providing a safe space in Willerby Square.</p>
         
-        <div className="flex flex-col items-center gap-3 text-[11px] opacity-50 font-sans tracking-widest uppercase text-white">
+        <div className="flex flex-col items-center gap-3 text-[12px] opacity-60 font-sans tracking-widest uppercase text-white">
           <span>&copy; {new Date().getFullYear()} All rights reserved.</span>
           <a href="https://builtbyliam.uk/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline decoration-white/30 underline-offset-4">Built By Liam</a>
         </div>

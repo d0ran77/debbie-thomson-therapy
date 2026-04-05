@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 // --- STYLING CONSTANTS ---
 const COLORS = {
-  main: '#8cb2b0', // Updated Main Body Color
+  main: '#8cb2b0', // Your main body color
   button: '#b28c8e', // Your Dusty Rose
   textWhite: '#ffffff',
 };
@@ -40,10 +40,11 @@ const Icons = {
 
 // --- SUB-COMPONENTS ---
 
-const PrimaryButton = ({ children, onClick, className = '' }) => (
+const PrimaryButton = ({ children, onClick, className = '', type = "button" }) => (
   <button
+    type={type}
     onClick={onClick}
-    className={`px-8 py-4 rounded-full font-serif text-xl transition-all duration-500 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 active:scale-95 ${className}`}
+    className={`px-8 py-4 rounded-full font-serif text-lg md:text-xl transition-all duration-500 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 active:scale-95 ${className}`}
     style={{ backgroundColor: COLORS.button, color: COLORS.textWhite }}
   >
     {children}
@@ -51,24 +52,22 @@ const PrimaryButton = ({ children, onClick, className = '' }) => (
 );
 
 const HomeView = ({ navigateTo }) => (
-  <div className="animate-fadeIn">
-    {/* Hero Section */}
-    <div className="relative overflow-hidden min-h-[700px] flex items-center">
-       {/* Background Depth Effect */}
+  <div className="animate-fadeIn px-4">
+    <div className="relative overflow-hidden min-h-[600px] md:min-h-[700px] flex items-center">
        <div className="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
        
-       <div className="relative z-10 max-w-6xl mx-auto px-4 py-12 flex flex-col md:flex-row items-center gap-12 lg:gap-24">
+       <div className="relative z-10 max-w-6xl mx-auto py-12 md:py-20 flex flex-col md:flex-row items-center gap-10 lg:gap-24">
           <div className="w-full md:w-3/5 text-center md:text-left text-white">
-            <h1 className="text-6xl md:text-8xl font-serif mb-6 leading-tight drop-shadow-md tracking-tight uppercase" style={{ color: COLORS.button }}>
+            <h1 className="text-4xl sm:text-6xl md:text-8xl font-serif mb-4 md:mb-6 leading-tight drop-shadow-md tracking-tight uppercase" style={{ color: COLORS.button }}>
               DEBBIE THOMSON THERAPY
             </h1>
-            <p className="font-subtitle text-3xl mb-8 opacity-90 drop-shadow-sm tracking-[0.2em] uppercase">
+            <p className="font-subtitle text-2xl sm:text-3xl mb-6 md:mb-8 opacity-90 drop-shadow-sm tracking-[0.1em] md:tracking-[0.2em] uppercase">
               PRIVATE PSYCHOTHERAPIST
             </p>
             
-            <div className="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/20 shadow-2xl mb-10 transform hover:scale-[1.02] transition-transform duration-500 text-white">
-              <h2 className="text-3xl font-serif mb-4">Hello & welcome</h2>
-              <p className="text-xl leading-relaxed opacity-95">
+            <div className="bg-white/10 backdrop-blur-md p-6 md:p-8 rounded-3xl border border-white/20 shadow-2xl mb-8 md:mb-10 transform hover:scale-[1.01] transition-transform duration-500 text-white text-left">
+              <h2 className="text-2xl sm:text-3xl font-serif mb-4">Hello & welcome</h2>
+              <p className="text-lg md:text-xl leading-relaxed opacity-95">
                 I provide counselling and psychotherapy in Willerby, East Yorkshire. I help people to work through difficulties they are facing in life and to improve their mental health and emotional wellbeing.
               </p>
             </div>
@@ -78,39 +77,20 @@ const HomeView = ({ navigateTo }) => (
             </PrimaryButton>
           </div>
 
-          <div className="w-full md:w-2/5 flex justify-center">
+          <div className="w-full md:w-2/5 flex justify-center mt-4 md:mt-0">
             <div className="relative animate-float">
-              {/* Animated soft glow behind image */}
-              <div className="absolute -inset-8 rounded-full opacity-30 blur-3xl animate-pulse" style={{ backgroundColor: COLORS.button }}></div>
-              
-              <div className="relative w-72 h-72 md:w-[450px] md:h-[450px] rounded-[3rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-8 border-white/30 backdrop-blur-sm rotate-3 hover:rotate-0 transition-all duration-700">
+              <div className="absolute -inset-6 md:-inset-8 rounded-full opacity-30 blur-3xl animate-pulse" style={{ backgroundColor: COLORS.button }}></div>
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[450px] md:h-[450px] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-4 md:border-8 border-white/30 backdrop-blur-sm rotate-3 hover:rotate-0 transition-all duration-700">
                 <img 
                   src="/debbie.webp" 
-                  alt="Debbie Thomson - Psychotherapist in Willerby" 
-                  className="w-full h-full object-cover scale-110 hover:scale-100 transition-transform duration-700" 
+                  alt="Debbie Thomson" 
+                  className="w-full h-full object-cover scale-110" 
                   onError={(e) => e.target.src = 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800'} 
                 />
               </div>
             </div>
           </div>
        </div>
-    </div>
-    
-    {/* Key Services Grid */}
-    <div className="max-w-6xl mx-auto px-4 py-24">
-      <div className="grid md:grid-cols-3 gap-8">
-         {[
-           { icon: <Icons.User />, title: 'Individual', desc: '1-on-1 therapeutic support tailored to your unique life script.' },
-           { icon: <Icons.Users />, title: 'Couples', desc: 'Reconnect and heal using the Imago Relationship model.' },
-           { icon: <Icons.Calendar />, title: 'Groups', desc: 'Professional therapy groups for UKCP trainee therapists.' }
-         ].map((service, index) => (
-           <div key={index} className="p-10 bg-white/5 backdrop-blur-sm rounded-[2.5rem] border border-white/10 text-white text-center hover:bg-white/10 transition-all duration-500 hover:shadow-2xl group">
-             <div className="flex justify-center mb-6 group-hover:scale-110 transition-transform duration-500">{service.icon}</div>
-             <h3 className="font-serif text-3xl mb-4">{service.title}</h3>
-             <p className="opacity-80 leading-relaxed text-lg">{service.desc}</p>
-           </div>
-         ))}
-      </div>
     </div>
   </div>
 );
@@ -147,54 +127,136 @@ const AboutView = () => (
   </div>
 );
 
+const ServicesView = ({ navigateTo }) => (
+  <div className="max-w-5xl mx-auto px-4 py-20 animate-fadeIn text-white">
+    <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Services</h1>
+    <div className="grid md:grid-cols-2 gap-12">
+      <div className="bg-white/10 backdrop-blur-md p-10 rounded-3xl border border-white/20 text-center">
+        <h2 className="text-3xl font-serif mb-4" style={{ color: COLORS.button }}>Individual Therapy</h2>
+        <p className="opacity-80 mb-8">Face-to-face or online sessions focusing on anxiety, depression, and personal scripts.</p>
+        <p className="text-3xl font-bold mb-8">£60 / hour</p>
+        <PrimaryButton onClick={() => navigateTo('contact')} className="w-full">Enquire</PrimaryButton>
+      </div>
+      <div className="bg-white/10 backdrop-blur-md p-10 rounded-3xl border border-white/20 text-center">
+        <h2 className="text-3xl font-serif mb-4" style={{ color: COLORS.button }}>Couples Therapy</h2>
+        <p className="opacity-80 mb-8">Specialised Imago sessions to deepen connection and resolve conflict. Face-to-face only.</p>
+        <p className="text-3xl font-bold mb-8">£120 / 90 mins</p>
+        <PrimaryButton onClick={() => navigateTo('contact')} className="w-full">Enquire</PrimaryButton>
+      </div>
+    </div>
+  </div>
+);
+
+const AssociatesView = ({ navigateTo }) => (
+  <div className="max-w-5xl mx-auto px-4 py-20 animate-fadeIn text-white">
+    <h1 className="text-5xl md:text-7xl font-serif text-center mb-10 uppercase tracking-tight">Associates</h1>
+    
+    <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md p-8 md:p-12 rounded-[2.5rem] border border-white/20 shadow-2xl mb-16 text-center">
+      <h2 className="text-3xl font-serif mb-6" style={{ color: COLORS.button }}>Announcement</h2>
+      <p className="text-xl md:text-2xl font-subtitle mb-6 leading-relaxed">
+        I am excited to announce the launch of my Associate Therapist Service!
+      </p>
+      <p className="text-lg opacity-90 mb-8 leading-relaxed">
+        If I am full in my caseload, I can recommend other therapists who may be able to work with you and meet your needs.
+        Have a look through my associates and get in touch if you would like to be connected with an associate therapist or have any questions.
+      </p>
+      <PrimaryButton onClick={() => navigateTo('contact')}>Contact to Connect</PrimaryButton>
+    </div>
+
+    <div className="grid md:grid-cols-2 gap-12">
+      {[
+        { name: "Kim Jones", title: "UKCP Psychotherapist", fees: "£85 / hour", desc: "My mission is to empower you to realise your full potential.", img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200" },
+        { name: "Kiran Nagra", title: "TA Psychotherapist", fees: "£55 / 50 mins", desc: "A thoughtful and psychologically grounded space for individuals and couples.", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200" }
+      ].map((associate, index) => (
+        <div key={index} className="bg-white/10 backdrop-blur-md p-10 rounded-3xl border border-white/20 text-center flex flex-col items-center">
+          <div className="w-24 h-24 rounded-full bg-slate-100 mb-6 overflow-hidden shadow-md">
+            <img src={associate.img} className="w-full h-full object-cover" alt={associate.name} />
+          </div>
+          <h3 className="text-3xl font-serif mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
+          <p className="text-sm opacity-60 mb-4 uppercase tracking-widest">{associate.title}</p>
+          <p className="opacity-80 mb-8 italic">"{associate.desc}"</p>
+          <div className="bg-black/10 w-full p-4 rounded-xl mb-8">
+            <strong>Fees:</strong> {associate.fees}
+          </div>
+          <PrimaryButton onClick={() => navigateTo('contact')} className="w-full">Work with {associate.name.split(' ')[0]}</PrimaryButton>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const RoomRentalView = () => (
+  <div className="max-w-5xl mx-auto px-4 py-20 animate-fadeIn text-white">
+    <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Room Rental</h1>
+    <div className="bg-white/10 backdrop-blur-md rounded-[40px] overflow-hidden border border-white/20 shadow-2xl flex flex-col md:flex-row">
+      <div className="md:w-1/2 min-h-[300px]">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover" alt="Therapy Room" />
+      </div>
+      <div className="md:w-1/2 p-12 flex flex-col justify-center">
+        <h2 className="text-3xl font-serif mb-6" style={{ color: COLORS.button }}>Practice Space</h2>
+        <p className="text-lg opacity-90 mb-8 leading-relaxed">
+          Centrally located in Willerby Square, this bespoke therapy room offers a quiet and professional environment for private practitioners.
+        </p>
+        <ul className="space-y-4 text-sm opacity-80 mb-10">
+          <li className="flex items-center gap-3"><Icons.Check /> Waiting area for clients</li>
+          <li className="flex items-center gap-3"><Icons.Check /> Quiet, soundproofed space</li>
+          <li className="flex items-center gap-3"><Icons.Check /> High-speed internet included</li>
+        </ul>
+        <PrimaryButton onClick={() => window.location.href = 'mailto:dthomsonta@outlook.com'}>Enquire Now</PrimaryButton>
+      </div>
+    </div>
+  </div>
+);
+
+const FAQView = () => (
+  <div className="max-w-3xl mx-auto px-4 py-20 animate-fadeIn text-white">
+    <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">FAQ</h1>
+    <div className="space-y-6">
+      {[
+        { q: "Where is the practice located?", a: "The practice is centrally located in Willerby Square, East Yorkshire." },
+        { q: "Do you offer online sessions?", a: "Yes, I offer online sessions for individuals. Couples therapy is face-to-face only." },
+        { q: "How long is a standard session?", a: "Individual sessions are 60 minutes. Couples sessions are 90 minutes." }
+      ].map((item, i) => (
+        <div key={i} className="p-8 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20">
+          <h3 className="text-2xl font-serif mb-3" style={{ color: COLORS.button }}>{item.q}</h3>
+          <p className="opacity-80 leading-relaxed">{item.a}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const ContactView = () => (
+  <div className="max-w-5xl mx-auto px-4 py-20 animate-fadeIn text-white">
+    <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">Contact</h1>
+    <div className="bg-white/10 backdrop-blur-md p-10 rounded-[40px] border border-white/20 shadow-2xl">
+      <div className="grid md:grid-cols-2 gap-16">
+        <div className="space-y-8">
+          <p className="text-3xl font-subtitle" style={{ color: COLORS.button }}>I'm here to help.</p>
+          <div className="space-y-6">
+            <div className="flex items-center gap-4"><Icons.Mail /> dthomsonta@outlook.com</div>
+            <div className="flex items-center gap-4"><Icons.Phone /> 07883 393590</div>
+            <div className="flex items-center gap-4"><Icons.MapPin /> Willerby Square, East Yorks</div>
+          </div>
+        </div>
+        {/* Netlify Form Handling */}
+        <form className="space-y-6" name="contact" method="POST" data-netlify="true">
+          <input type="hidden" name="form-name" value="contact" />
+          <input className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2" style={{ ringColor: COLORS.button }} placeholder="Name" name="name" required />
+          <input className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2" style={{ ringColor: COLORS.button }} placeholder="Email" name="email" type="email" required />
+          <textarea className="w-full p-4 rounded-2xl bg-white/5 border border-white/20 focus:outline-none focus:ring-2" style={{ ringColor: COLORS.button }} placeholder="Message" name="message" rows="5" required></textarea>
+          <PrimaryButton type="submit" className="w-full">Send Message</PrimaryButton>
+        </form>
+      </div>
+    </div>
+  </div>
+);
+
 // --- MAIN APP COMPONENT ---
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  // --- SEO & SCHEMA INJECTION ---
-  useEffect(() => {
-    // Meta Data
-    document.title = "Debbie Thomson Therapy | Psychotherapist in Willerby, East Yorkshire";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Professional counselling and psychotherapy in Willerby by Debbie Thomson. Specializing in TA, Individual, and Couples therapy.");
-    }
-
-    // Schema.org Markup
-    const schemaData = {
-      "@context": "https://schema.org",
-      "@type": "PsychologicalTreatment",
-      "name": "Debbie Thomson Therapy",
-      "image": "https://debbiethomsontherapy.com/debbie.webp",
-      "description": "Counselling and psychotherapy in Willerby, East Yorkshire. UKCP Accredited support for individuals and couples.",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Willerby",
-        "addressRegion": "East Yorkshire",
-        "addressCountry": "UK"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "53.7600",
-        "longitude": "-0.4400"
-      },
-      "url": "https://debbiethomsontherapy.com",
-      "telephone": "07883 393590"
-    };
-
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.innerHTML = JSON.stringify(schemaData);
-    document.head.appendChild(script);
-
-    return () => {
-      if (script.parentNode) {
-        document.head.removeChild(script);
-      }
-    };
-  }, []);
 
   const navigateTo = (page) => {
     setCurrentPage(page);
@@ -216,66 +278,43 @@ export default function App() {
     <div className="min-h-screen font-sans text-white overflow-x-hidden transition-colors duration-700" style={{ backgroundColor: COLORS.main }}>
       <style dangerouslySetInnerHTML={{__html: `
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap');
-        
-        body { font-size: 1.1rem; }
         .font-serif { font-family: 'Kalam', cursive !important; }
         .font-sans { font-family: 'Patrick Hand', cursive !important; }
-        .font-subtitle { 
-          font-family: 'Caveat', cursive !important; 
-          font-size: 2.2rem !important; 
-          line-height: 1.2 !important;
-        }
-
+        .font-subtitle { font-family: 'Caveat', cursive !important; font-size: 2.2rem !important; line-height: 1.2 !important; }
         .animate-fadeIn { animation: fadeIn 1s ease-out forwards; }
         .animate-float { animation: float 6s ease-in-out infinite; }
-
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(3deg); }
-          50% { transform: translateY(-20px) rotate(1deg); }
-        }
-
-        /* Scrollbar styling */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px) rotate(3deg); } 50% { transform: translateY(-15px) rotate(1deg); } }
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
       `}} />
 
-      {/* Navigation */}
       <nav className="sticky top-0 z-50 shadow-2xl backdrop-blur-xl bg-white/5 border-b border-white/10">
-        <div className="max-w-6xl mx-auto px-4 h-24 flex justify-between items-center text-white">
-          <div className="cursor-pointer group flex items-center" onClick={() => navigateTo('home')}>
-            <img src="/logo.png" alt="Debbie Thomson Therapy Logo" className="h-14 md:h-16 w-auto" />
+        <div className="max-w-6xl mx-auto px-4 h-20 md:h-24 flex justify-between items-center text-white">
+          <div className="cursor-pointer group flex items-center shrink-0" onClick={() => navigateTo('home')}>
+            <img src="/logo.png" alt="Logo" className="h-10 sm:h-12 md:h-16 w-auto" />
           </div>
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden lg:flex space-x-6 xl:space-x-8">
             {navLinks.map((link) => (
               <button 
                 key={link.id} 
                 onClick={() => navigateTo(link.id)} 
-                className={`text-sm uppercase tracking-widest font-bold transition-all hover:scale-110 ${currentPage === link.id ? 'border-b-2 border-white pb-1' : 'opacity-60 hover:opacity-100'}`}
+                className={`text-xs xl:text-sm uppercase tracking-widest font-bold transition-all ${currentPage === link.id ? 'border-b-2 border-white pb-1' : 'opacity-70 hover:opacity-100'}`}
               >
                 {link.label}
               </button>
             ))}
           </div>
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 bg-white/10 rounded-xl">
               {isMobileMenuOpen ? <Icons.X /> : <Icons.Menu />}
             </button>
           </div>
         </div>
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-[#8cb2b0] border-t border-white/10 text-white animate-fadeIn pb-8">
+          <div className="lg:hidden absolute top-full left-0 w-full bg-[#8cb2b0] border-t border-white/10 text-white animate-fadeIn shadow-2xl p-6 flex flex-col space-y-2">
             {navLinks.map((link) => (
-              <button 
-                key={link.id} 
-                onClick={() => navigateTo(link.id)} 
-                className="block w-full text-center py-6 border-b border-white/5 uppercase tracking-widest text-lg font-bold"
-              >
+              <button key={link.id} onClick={() => navigateTo(link.id)} className="py-4 uppercase tracking-widest text-lg font-bold">
                 {link.label}
               </button>
             ))}
@@ -283,33 +322,20 @@ export default function App() {
         )}
       </nav>
 
-      {/* Main Content */}
-      <main className="flex-grow">
+      <main className="flex-grow min-h-[60vh]">
         {currentPage === 'home' && <HomeView navigateTo={navigateTo} />}
         {currentPage === 'about' && <AboutView />}
-        
-        {/* Simple Page Handler for others */}
-        {['services', 'associates', 'room-rental', 'faq', 'contact'].includes(currentPage) && (
-          <div className="max-w-4xl mx-auto px-4 py-32 text-center animate-fadeIn text-white">
-             <h1 className="text-6xl font-serif mb-8 drop-shadow-md uppercase tracking-tight" style={{ color: COLORS.button }}>{currentPage.replace('-', ' ')}</h1>
-             <p className="font-subtitle opacity-80 mb-12">Professional therapeutic services in a calm environment.</p>
-             <PrimaryButton onClick={() => navigateTo('home')}>Return to Welcome</PrimaryButton>
-          </div>
-        )}
+        {currentPage === 'services' && <ServicesView navigateTo={navigateTo} />}
+        {currentPage === 'associates' && <AssociatesView navigateTo={navigateTo} />}
+        {currentPage === 'room-rental' && <RoomRentalView />}
+        {currentPage === 'faq' && <FAQView />}
+        {currentPage === 'contact' && <ContactView />}
       </main>
 
-      {/* Footer */}
-      <footer className="mt-20 py-20 text-center border-t border-white/10 bg-black/5">
-        <div className="max-w-4xl mx-auto px-4">
-          <h3 className="font-serif text-3xl mb-6 uppercase tracking-widest">Debbie Thomson Therapy</h3>
-          <p className="opacity-60 mb-8 max-w-md mx-auto text-lg">Providing a nurturing, safe, and confidential space in the heart of Willerby Square.</p>
-          <div className="flex justify-center gap-6 mb-12 opacity-60 font-bold uppercase text-xs tracking-widest">
-             <button onClick={() => navigateTo('faq')}>FAQ</button>
-             <button onClick={() => navigateTo('contact')}>Contact</button>
-             <span>Privacy</span>
-          </div>
-          <p className="text-xs opacity-40 font-sans tracking-widest uppercase">&copy; {new Date().getFullYear()} Debbie Thomson Therapy. All rights reserved.</p>
-        </div>
+      <footer className="mt-12 py-12 text-center border-t border-white/10 bg-black/5">
+        <h3 className="font-serif text-2xl uppercase tracking-widest mb-4">Debbie Thomson Therapy</h3>
+        <p className="opacity-40 mb-6 max-w-xs mx-auto text-sm">Providing a safe space in Willerby Square.</p>
+        <p className="text-[10px] opacity-40 font-sans tracking-widest uppercase">&copy; {new Date().getFullYear()} Debbie Thomson Therapy. All rights reserved.</p>
       </footer>
     </div>
   );

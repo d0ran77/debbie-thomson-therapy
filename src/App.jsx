@@ -209,7 +209,7 @@ const AssociatesView = ({ navigateTo }) => {
       hours: "Monday 1-7pm; Tuesday/Wednesday/Thursday 8.45am-6.30pm; Friday 8.45am-1pm. (Flexible when required)",
       fees: "Individual: £85/hr; Trainees: Reduced rates; Supervisees: £60/hr; Groups: On application.",
       location: "Howden",
-      img: "/kim.svg"
+      img: "/kim.webp"
     },
     {
       id: 'kiran',
@@ -271,33 +271,22 @@ const AssociatesView = ({ navigateTo }) => {
       location: "Willerby",
       insurance: "Balens Ltd",
       img: "/letisa.webp"
-    },
-    {
-      id: 'james',
-      name: "James Wilson",
-      titles: ["CBT Specialist", "Mental Health Practitioner"],
-      tagline: "Practical tools and cognitive strategies for sustainable mental health.",
-      about: ["My work centers on Cognitive Behavioural Therapy, providing clients with tangible tools to challenge negative thought patterns."],
-      interests: ["Phobias", "Social Anxiety", "OCD"],
-      worksWith: "Adults and Teens (16+)",
-      methods: "Online only",
-      supervisees: "No",
-      hours: "Tue-Thu 9am-5pm",
-      fees: "£50 / 50 mins",
-      location: "Remote",
-      img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400"
     }
   ];
 
   const nextSlide = () => {
     const visibleCount = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
     const max = associates.length - visibleCount;
-    setCurrentSlide((prev) => (prev >= max ? 0 : prev + 1));
+    if (max > 0) {
+      setCurrentSlide((prev) => (prev >= max ? 0 : prev + 1));
+    }
   };
   const prevSlide = () => {
     const visibleCount = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
     const max = associates.length - visibleCount;
-    setCurrentSlide((prev) => (prev <= 0 ? max : prev - 1));
+    if (max > 0) {
+      setCurrentSlide((prev) => (prev <= 0 ? max : prev - 1));
+    }
   };
 
   return (
@@ -335,7 +324,8 @@ const AssociatesView = ({ navigateTo }) => {
                       )}
                       
                       <div className="flex flex-col items-center w-full">
-                        <div className="w-32 h-32 md:w-44 md:h-44 rounded-full mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
+                        {/* Fixed profile frames: Changed from circular to square with rounded corners, applying object-cover for a perfect fit */}
+                        <div className="w-32 h-32 md:w-44 md:h-44 rounded-2xl mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
                           <img src={associate.img} className="w-full h-full object-cover object-center" alt={associate.name} />
                         </div>
                         <h3 className="text-3xl font-serif mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
@@ -355,12 +345,17 @@ const AssociatesView = ({ navigateTo }) => {
               </div>
             </div>
 
-            <button onClick={prevSlide} className="absolute left-0 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
-              <Icons.ChevronLeft />
-            </button>
-            <button onClick={nextSlide} className="absolute right-0 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
-              <Icons.ChevronRight />
-            </button>
+            {/* Only show carousel arrows if there are more associates than fit on screen */}
+            {associates.length > (window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1) && (
+              <>
+                <button onClick={prevSlide} className="absolute left-0 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
+                  <Icons.ChevronLeft />
+                </button>
+                <button onClick={nextSlide} className="absolute right-0 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all z-10 opacity-0 group-hover:opacity-100">
+                  <Icons.ChevronRight />
+                </button>
+              </>
+            )}
           </div>
         </>
       ) : (
@@ -391,20 +386,20 @@ const AssociatesView = ({ navigateTo }) => {
               {/* Profile Card Column */}
               <div className="w-full lg:w-1/3 space-y-6 md:space-y-8 lg:sticky lg:top-8">
                 
-                {/* Reworked Image Frame to Portrait Aspect Ratio [4/5] to fit photos naturally without chopping heads */}
-                <div className="w-full aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl bg-white/5">
+                {/* Reworked Image Frame to a soft square to fit photos perfectly */}
+                <div className="relative group w-full aspect-square rounded-2xl md:rounded-[2.5rem] overflow-hidden border-4 md:border-8 border-white/20 shadow-2xl bg-white/5">
                   <img src={selectedAssociate.img} className="w-full h-full object-cover object-center" alt={selectedAssociate.name} />
                 </div>
                 
                 <div className="space-y-4 text-center lg:text-left">
-                  {/* Reworked Logo Placement: Sits next to the name inside a white pill, not hovering over the photo */}
-                  <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4">
+                  {/* Reworked Logo Placement: Sits next to the name, with NO white background, just a drop shadow */}
+                  <div className="flex flex-col lg:flex-row items-center lg:items-end gap-4">
                     <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight leading-none">
                       Work with {selectedAssociate.name.split(' ')[0]}
                     </h2>
                     {selectedAssociate.logo && (
-                      <div className="h-12 md:h-14 px-3 bg-white rounded-xl shadow-lg flex items-center justify-center shrink-0">
-                        <img src={selectedAssociate.logo} className="h-full w-auto object-contain py-1" alt={`${selectedAssociate.name} Logo`} />
+                      <div className="h-12 md:h-16 shrink-0 pb-1">
+                        <img src={selectedAssociate.logo} className="h-full w-auto object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]" alt={`${selectedAssociate.name} Logo`} />
                       </div>
                     )}
                   </div>
@@ -647,7 +642,8 @@ export default function App() {
       <nav className="sticky top-0 z-50 shadow-2xl backdrop-blur-xl bg-white/5 border-b border-white/10">
         <div className="max-w-6xl mx-auto px-4 h-20 md:h-24 flex justify-between items-center text-white">
           <div className="cursor-pointer group flex items-center shrink-0" onClick={() => navigateTo('home')}>
-            <img src="/logo.png" alt="Logo" className="h-10 sm:h-12 md:h-16 w-auto" />
+            {/* Added strong drop-shadow to the main logo to make it stand out against the background */}
+            <img src="/logo.png" alt="Logo" className="h-10 sm:h-12 md:h-16 w-auto drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)] filter" />
           </div>
           
           {/* Minimized Desktop Header with Dropdown */}

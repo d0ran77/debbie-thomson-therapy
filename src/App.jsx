@@ -221,8 +221,7 @@ const AssociatesView = ({ navigateTo }) => {
           <div 
             key={associate.id} 
             onClick={() => setSelectedAssociate(associate)}
-            className="group relative cursor-pointer bg-white/10 backdrop-blur-md p-10 rounded-[3rem] border border-white/20 text-center flex flex-col items-center animate-float hover:scale-[1.03] hover:bg-white/15 transition-all duration-500 shadow-xl"
-            style={{ animationDelay: associate.id === 'kim' ? '0s' : '0.5s' }}
+            className="group relative cursor-pointer bg-white/10 backdrop-blur-md p-10 rounded-[3rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.05] active:scale-95 transition-all duration-500 shadow-xl"
           >
             <div className="w-32 h-32 rounded-full mb-8 overflow-hidden border-4 border-white/30 shadow-lg transition-transform group-hover:scale-110 duration-500 bg-white/5">
               <img src={associate.img} className="w-full h-full object-cover" alt={associate.name} />
@@ -241,12 +240,23 @@ const AssociatesView = ({ navigateTo }) => {
 
       {/* MODAL / EXPANDED VIEW */}
       {selectedAssociate && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-black/60 backdrop-blur-md animate-fadeIn">
-          <div className="relative w-full max-w-5xl max-h-[90vh] bg-[#7a9d9b] rounded-[3rem] border border-white/20 shadow-2xl overflow-hidden flex flex-col animate-fadeIn">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-[#8cb2b0]/40 backdrop-blur-2xl animate-fadeIn">
+          {/* Infinite Scroll Parallax Panel Layer */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
+             <div className="flex whitespace-nowrap animate-marquee py-10">
+               {[...Array(10)].map((_, i) => (
+                 <span key={i} className="text-[12rem] font-serif font-bold uppercase tracking-tighter mx-20 text-white">
+                   {selectedAssociate.name} • {selectedAssociate.name} •
+                 </span>
+               ))}
+             </div>
+          </div>
+
+          <div className="relative w-full max-w-5xl max-h-[90vh] bg-white/10 rounded-[3rem] border border-white/30 shadow-2xl overflow-hidden flex flex-col animate-fadeIn backdrop-blur-md">
             {/* Close Button */}
             <button 
               onClick={() => setSelectedAssociate(null)}
-              className="absolute top-6 right-6 p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors z-10"
+              className="absolute top-6 right-6 p-3 bg-white/20 rounded-full hover:bg-white/40 transition-colors z-[110]"
             >
               <Icons.X />
             </button>
@@ -255,20 +265,20 @@ const AssociatesView = ({ navigateTo }) => {
               <div className="flex flex-col md:flex-row gap-12 items-start">
                 {/* Side Info Column */}
                 <div className="w-full md:w-1/3 space-y-8">
-                  <div className="w-full aspect-square rounded-[3rem] overflow-hidden border-8 border-white/10 shadow-2xl bg-white/5">
+                  <div className="w-full aspect-square rounded-[3rem] overflow-hidden border-8 border-white/20 shadow-2xl bg-white/5">
                     <img src={selectedAssociate.img} className="w-full h-full object-cover" alt={selectedAssociate.name} />
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-4xl font-serif" style={{ color: COLORS.button }}>Work with {selectedAssociate.name.split(' ')[0]}</h2>
+                    <h2 className="text-4xl font-serif text-white">Work with {selectedAssociate.name.split(' ')[0]}</h2>
                     <div className="space-y-2">
                       {selectedAssociate.titles.map((t, i) => (
-                        <p key={i} className="text-xs font-bold opacity-70 uppercase tracking-widest leading-tight">{t}</p>
+                        <p key={i} className="text-xs font-bold opacity-70 uppercase tracking-widest leading-tight text-white">{t}</p>
                       ))}
                     </div>
                   </div>
 
-                  <div className="p-6 bg-white/10 rounded-3xl space-y-4 text-sm border border-white/5">
+                  <div className="p-6 bg-white/10 rounded-3xl space-y-4 text-sm border border-white/10">
                     <div className="flex items-center gap-3"><Icons.MapPin /> <span><strong>Location:</strong> {selectedAssociate.location}</span></div>
                     <div className="flex items-center gap-3"><Icons.Clock /> <span><strong>Hours:</strong> {selectedAssociate.hours}</span></div>
                     <div className="flex items-center gap-3"><Icons.User /> <span><strong>Works With:</strong> {selectedAssociate.worksWith}</span></div>
@@ -286,7 +296,7 @@ const AssociatesView = ({ navigateTo }) => {
                 {/* Content Column */}
                 <div className="w-full md:w-2/3 space-y-10">
                   <section>
-                    <p className="font-subtitle text-3xl md:text-4xl leading-snug" style={{ color: COLORS.button }}>"{selectedAssociate.tagline}"</p>
+                    <p className="font-subtitle text-3xl md:text-4xl leading-snug text-white">"{selectedAssociate.tagline}"</p>
                   </section>
 
                   <section className="space-y-6">
@@ -300,7 +310,7 @@ const AssociatesView = ({ navigateTo }) => {
                     <h4 className="font-serif text-3xl flex items-center gap-3">Areas of Interest <div className="h-px bg-white/20 flex-grow"></div></h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedAssociate.interests.map((interest, i) => (
-                        <span key={i} className="px-5 py-2 bg-white/10 rounded-full text-xs font-bold tracking-wide uppercase border border-white/5">{interest}</span>
+                        <span key={i} className="px-5 py-2 bg-white/10 rounded-full text-xs font-bold tracking-wide uppercase border border-white/10">{interest}</span>
                       ))}
                     </div>
                   </section>
@@ -411,8 +421,10 @@ export default function App() {
         .font-subtitle { font-family: 'Caveat', cursive !important; font-size: 2.2rem !important; line-height: 1.2 !important; }
         .animate-fadeIn { animation: fadeIn 0.5s ease-out forwards; }
         .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-marquee { animation: marquee 30s linear infinite; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0%, 100% { transform: translateY(0px) rotate(3deg); } 50% { transform: translateY(-15px) rotate(1deg); } }
+        @keyframes marquee { from { transform: translateX(-50%); } to { transform: translateX(0); } }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }

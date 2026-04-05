@@ -311,6 +311,7 @@ const AssociatesView = ({ navigateTo }) => {
             </p>
           </div>
 
+          {/* Reworked Associate Carousel with Condensed Mobile Cards */}
           <div className="relative group">
             <div className="overflow-x-auto lg:overflow-hidden pb-10 scrollbar-hide snap-x snap-mandatory flex">
               <div 
@@ -318,31 +319,31 @@ const AssociatesView = ({ navigateTo }) => {
                 style={{ transform: window.innerWidth >= 1024 ? `translateX(-${currentSlide * 33.33}%)` : 'none' }}
               >
                 {associates.map((associate) => (
-                  <div key={associate.id} className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 px-3 relative snap-center">
+                  <div key={associate.id} className="w-[88%] sm:w-1/2 lg:w-1/3 flex-shrink-0 px-2 sm:px-3 relative snap-center">
                     <div 
                       onClick={() => { setSelectedAssociate(associate); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                      className="cursor-pointer bg-white/10 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[680px] justify-between overflow-hidden pb-10 relative"
+                      className="cursor-pointer bg-white/10 backdrop-blur-md p-6 sm:p-8 rounded-[2rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[520px] md:h-[620px] justify-between overflow-hidden relative"
                     >
                       {associate.badge && (
-                        <div className="absolute top-6 right-6 bg-[#b28c8e] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md z-20">
+                        <div className="absolute top-4 right-4 bg-[#b28c8e] text-white text-[9px] font-bold px-2 py-1 rounded-full uppercase tracking-widest shadow-md z-20">
                           {associate.badge}
                         </div>
                       )}
                       
                       <div className="flex flex-col items-center w-full">
-                        <div className="w-32 h-32 md:w-44 md:h-44 rounded-2xl mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
+                        <div className="w-28 h-28 md:w-44 md:h-44 rounded-2xl mb-4 md:mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5 flex-shrink-0">
                           <img src={associate.img} className="w-full h-full object-cover object-center" alt={associate.name} />
                         </div>
-                        <h3 className="text-3xl font-serif mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
-                        <div className="space-y-1 mb-4 h-12 overflow-hidden flex-shrink-0">
+                        <h3 className="text-2xl md:text-3xl font-serif mb-1 md:mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
+                        <div className="space-y-1 mb-4 h-10 md:h-12 overflow-hidden flex-shrink-0">
                           {associate.titles.slice(0, 1).map((t, i) => (
-                            <p key={i} className="text-[10px] opacity-60 uppercase tracking-widest font-bold px-4 text-white line-clamp-2">{t}</p>
+                            <p key={i} className="text-[9px] md:text-[10px] opacity-60 uppercase tracking-widest font-bold px-4 text-white line-clamp-2">{t}</p>
                           ))}
                         </div>
-                        <p className="font-subtitle text-xl text-white mb-6 leading-snug px-2 line-clamp-4">"{associate.tagline}"</p>
+                        <p className="font-subtitle text-lg md:text-xl text-white mb-4 md:mb-6 leading-snug px-2 line-clamp-4">"{associate.tagline}"</p>
                       </div>
-                      <div className="w-full px-4 mt-auto">
-                        <PrimaryButton className="pointer-events-none scale-90 w-full">View Profile</PrimaryButton>
+                      <div className="w-full px-2 mt-auto">
+                        <PrimaryButton className="pointer-events-none scale-75 md:scale-90 w-full py-3">View Profile</PrimaryButton>
                       </div>
                     </div>
                   </div>
@@ -396,7 +397,6 @@ const AssociatesView = ({ navigateTo }) => {
                     <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight leading-none">
                       Work with {selectedAssociate.name.split(' ')[0]}
                     </h2>
-                    {/* Enlarged Associate Logos */}
                     {selectedAssociate.logo && (
                       <div className="h-24 md:h-44 lg:h-64 shrink-0 flex items-center">
                         <img 

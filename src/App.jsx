@@ -80,10 +80,11 @@ const PrimaryButton = ({ children, onClick, className = '', type = "button" }) =
 
 const HomeView = ({ navigateTo }) => (
   <div className="animate-ink px-6 md:px-8">
-    <div className="relative overflow-hidden min-h-[70vh] md:min-h-[85vh] flex items-center py-12 md:py-0 max-w-7xl mx-auto">
+    {/* Tightened layout: changed items-center to items-start and adjusted top padding */}
+    <div className="relative overflow-hidden min-h-[60vh] md:min-h-[75vh] flex items-start pt-8 md:pt-16 pb-12 max-w-7xl mx-auto">
        <div className="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
        
-       <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 lg:gap-24 w-full">
+       <div className="relative z-10 flex flex-col md:flex-row items-start gap-8 lg:gap-24 w-full">
           <div className="w-full md:w-1/2 text-center md:text-left text-white space-y-6 flex flex-col">
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif leading-tight drop-shadow-md tracking-tight uppercase" style={{ color: COLORS.button }}>
               Debbie Thomson Therapy
@@ -577,9 +578,9 @@ export default function App() {
       `}} />
 
       <nav className="sticky top-0 z-50 bg-transparent">
-        <div className="max-w-7xl mx-auto px-6 md:px-8 h-24 md:h-32 lg:h-40 flex justify-between items-center text-white">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 h-20 md:h-24 lg:h-28 flex justify-between items-center text-white">
           <div className="cursor-pointer group flex items-center shrink-0" onClick={() => navigateTo('home')}>
-            <img src="/debbielogo.webp" alt="Logo" className="h-24 sm:h-32 md:h-40 lg:h-48 w-auto transition-transform hover:scale-105 duration-500" />
+            <img src="/debbielogo.webp" alt="Logo" className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto transition-transform hover:scale-105 duration-500" />
           </div>
           <div className="hidden lg:flex items-center gap-12">
             <div className="relative group">

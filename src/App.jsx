@@ -174,7 +174,7 @@ const AssociatesView = ({ navigateTo }) => {
       about: [
         "I am empathic, approachable, open minded, friendly and professional. In my work I provide therapeutic solutions, build confidence, enable clients to realise their potential, develop awareness of their innate ability to perceive and resolve problems from a different perspective as well as help re-discover the true inner version of themselves.",
         "I work with adults and businesses, with a varied range of social, behavioural, and mental health issues, within local authorities, charities, privately and businesses.",
-        "I am passionate about working within a range of areas and clients, ensuring I remain versatile and multi-faceted in my work. My mission to empower you, to remind you that you are enough, always, and to help you re-discover the true inner you.",
+        "I am passionate about working within a range of areas and clients, ensuring I remain versatile and multi-faceted in my work. My mission is to empower you, to remind you that you are enough, always, and to help you re-discover the true inner you.",
         "I abide by confidentiality and have the utmost respect for who you are.",
         "Having made an enquiry, we will arrange a convenient time for an initial consultation where I will learn more about you. Together we will outline a flexible schedule, within which we will aim for your goals to be met, we will work together to facilitate positive changes to ensure you get the results that you want."
       ],
@@ -251,7 +251,7 @@ const AssociatesView = ({ navigateTo }) => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-20 animate-fadeIn text-white relative min-h-[80vh]">
+    <div className="max-w-7xl mx-auto px-4 py-12 md:py-20 animate-fadeIn text-white relative min-h-[80vh]">
       {!selectedAssociate ? (
         <>
           <h1 className="text-5xl md:text-7xl font-serif text-center mb-10 uppercase tracking-tight">Associates</h1>
@@ -266,7 +266,7 @@ const AssociatesView = ({ navigateTo }) => {
             </p>
           </div>
 
-          <div className="relative px-4 sm:px-12 group">
+          <div className="relative px-2 sm:px-12 group">
             <div className="overflow-hidden pb-10">
               <div 
                 className="flex transition-transform duration-700 ease-in-out" 
@@ -275,7 +275,7 @@ const AssociatesView = ({ navigateTo }) => {
                 {associates.map((associate) => (
                   <div key={associate.id} className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 px-3">
                     <div 
-                      onClick={() => setSelectedAssociate(associate)}
+                      onClick={() => { setSelectedAssociate(associate); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                       className="cursor-pointer bg-white/10 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[580px] justify-between overflow-hidden"
                     >
                       <div className="flex flex-col items-center w-full">
@@ -308,94 +308,97 @@ const AssociatesView = ({ navigateTo }) => {
           </div>
         </>
       ) : (
-        /* EXPANDED PROFILE VIEW */
-        <div className="animate-fadeIn relative z-[100] min-h-[70vh]">
-          {/* Parallax - Left to Right */}
-          <div className="absolute inset-x-0 top-0 h-full overflow-hidden pointer-events-none opacity-10 -z-10">
-             <div className="flex whitespace-nowrap animate-marquee-ltr py-10">
+        /* FULL-VIEW PROFILE DETAIL (FIXES MOBILE COLLISION) */
+        <div className="animate-fadeIn relative z-[10] min-h-[80vh] w-full">
+          {/* Parallax - Left to Right Background Layer */}
+          <div className="absolute inset-x-0 top-0 h-full overflow-hidden pointer-events-none opacity-10 -z-0">
+             <div className="flex whitespace-nowrap animate-marquee-ltr py-10 mt-20">
                {[...Array(12)].map((_, i) => (
-                 <span key={i} className="text-[14rem] font-serif font-bold uppercase tracking-tighter mx-20 text-white">
+                 <span key={i} className="text-[10rem] md:text-[14rem] font-serif font-bold uppercase tracking-tighter mx-10 md:mx-20 text-white">
                    {selectedAssociate.name} • {selectedAssociate.name} •
                  </span>
                ))}
              </div>
           </div>
 
-          <div className="relative w-full bg-white/15 rounded-[3rem] border border-white/30 shadow-2xl overflow-hidden flex flex-col backdrop-blur-3xl">
+          <div className="relative w-full bg-white/15 rounded-[2.5rem] md:rounded-[4rem] border border-white/30 shadow-2xl overflow-hidden flex flex-col backdrop-blur-3xl p-6 md:p-16">
+            {/* Back Button */}
             <button 
               onClick={() => setSelectedAssociate(null)}
-              className="absolute top-6 right-6 p-4 bg-white/20 rounded-full hover:bg-white/40 transition-all z-[110] active:scale-90"
+              className="absolute top-4 right-4 md:top-8 md:right-8 p-3 md:p-4 bg-white/20 rounded-full hover:bg-white/40 transition-all z-[110] active:scale-90"
             >
               <Icons.X />
             </button>
 
-            <div className="overflow-y-auto p-8 md:p-16 scrollbar-hide max-h-[85vh]">
-              <div className="flex flex-col md:flex-row gap-12 items-start">
-                {/* Side Info Column */}
-                <div className="w-full md:w-1/3 space-y-8 sticky top-0">
-                  <div className="w-full aspect-square rounded-[3rem] overflow-hidden border-8 border-white/20 shadow-2xl bg-white/5">
-                    <img src={selectedAssociate.img} className="w-full h-full object-cover" alt={selectedAssociate.name} />
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <h2 className="text-4xl font-serif text-white uppercase tracking-tight">Work with {selectedAssociate.name.split(' ')[0]}</h2>
-                    <div className="space-y-2">
-                      {selectedAssociate.titles.map((t, i) => (
-                        <p key={i} className="text-xs font-bold opacity-70 uppercase tracking-widest leading-tight text-white">{t}</p>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="p-6 bg-white/10 rounded-3xl space-y-4 text-sm border border-white/10 text-white">
-                    <div className="flex items-start gap-3"><Icons.MapPin className="shrink-0 mt-1" /> <span><strong>Location:</strong> {selectedAssociate.location}</span></div>
-                    <div className="flex items-start gap-3"><Icons.Clock className="shrink-0 mt-1" /> <span><strong>Hours:</strong> {selectedAssociate.hours}</span></div>
-                    <div className="flex items-start gap-3"><Icons.User className="shrink-0 mt-1" /> <span><strong>Works With:</strong> {selectedAssociate.worksWith}</span></div>
-                    <div className="flex items-start gap-3"><Icons.Calendar className="shrink-0 mt-1" /> <span><strong>Methods:</strong> {selectedAssociate.methods}</span></div>
-                    <div className="flex items-start gap-3"><Icons.Users className="shrink-0 mt-1" /> <span><strong>Supervisees:</strong> {selectedAssociate.supervisees}</span></div>
-                    <div className="pt-4 border-t border-white/10">
-                      <p className="font-bold text-base mb-2">Fees</p>
-                      <p className="opacity-80 leading-relaxed text-xs whitespace-pre-line">{selectedAssociate.fees}</p>
-                    </div>
-                  </div>
-
-                  <PrimaryButton onClick={() => { navigateTo('contact'); setSelectedAssociate(null); }} className="w-full">Enquire Now</PrimaryButton>
+            <div className="flex flex-col lg:flex-row gap-8 md:gap-16 items-start relative z-10">
+              {/* Profile Card Column (Sticky on Desktop) */}
+              <div className="w-full lg:w-1/3 space-y-6 md:space-y-8 lg:sticky lg:top-8">
+                <div className="w-full aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden border-4 md:border-8 border-white/20 shadow-2xl bg-white/5">
+                  <img src={selectedAssociate.img} className="w-full h-full object-cover" alt={selectedAssociate.name} />
                 </div>
-
-                {/* Content Column */}
-                <div className="w-full md:w-2/3 space-y-10">
-                  <section>
-                    <p className="font-subtitle text-3xl md:text-4xl leading-snug text-white">"{selectedAssociate.tagline}"</p>
-                  </section>
-
-                  <section className="space-y-6">
-                    <h4 className="font-serif text-3xl flex items-center gap-3 text-white">About <div className="h-px bg-white/20 flex-grow"></div></h4>
-                    {selectedAssociate.about.map((p, i) => (
-                      <p key={i} className="text-lg opacity-90 leading-relaxed text-white">{p}</p>
+                
+                <div className="space-y-3 md:space-y-4 text-center lg:text-left">
+                  <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight">Work with {selectedAssociate.name.split(' ')[0]}</h2>
+                  <div className="space-y-2">
+                    {selectedAssociate.titles.map((t, i) => (
+                      <p key={i} className="text-[11px] md:text-xs font-bold opacity-80 uppercase tracking-widest leading-tight text-white">{t}</p>
                     ))}
-                  </section>
-
-                  {selectedAssociate.principles && (
-                    <section className="space-y-4">
-                      <ul className="space-y-4">
-                        {selectedAssociate.principles.map((p, i) => (
-                          <li key={i} className="flex gap-4 items-start text-lg opacity-90 leading-relaxed text-white">
-                            <span className="mt-2 shrink-0"><Icons.Check /></span>
-                            <span>{p}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </section>
-                  )}
-
-                  <section className="space-y-6">
-                    <h4 className="font-serif text-3xl flex items-center gap-3 text-white">Areas of Interest <div className="h-px bg-white/20 flex-grow"></div></h4>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedAssociate.interests.map((interest, i) => (
-                        <span key={i} className="px-5 py-2 bg-white/10 rounded-full text-xs font-bold tracking-wide uppercase border border-white/10 text-white">{interest}</span>
-                      ))}
-                    </div>
-                  </section>
+                  </div>
                 </div>
+
+                <div className="p-5 md:p-8 bg-black/10 md:bg-white/10 rounded-[2rem] space-y-4 text-sm md:text-base border border-white/10 text-white">
+                  <div className="flex items-start gap-3"><Icons.MapPin className="shrink-0 mt-1" /> <span><strong>Location:</strong> {selectedAssociate.location}</span></div>
+                  <div className="flex items-start gap-3"><Icons.Clock className="shrink-0 mt-1" /> <span><strong>Hours:</strong> {selectedAssociate.hours}</span></div>
+                  <div className="flex items-start gap-3"><Icons.User className="shrink-0 mt-1" /> <span><strong>Works With:</strong> {selectedAssociate.worksWith}</span></div>
+                  <div className="flex items-start gap-3"><Icons.Calendar className="shrink-0 mt-1" /> <span><strong>Methods:</strong> {selectedAssociate.methods}</span></div>
+                  <div className="flex items-start gap-3"><Icons.Users className="shrink-0 mt-1" /> <span><strong>Supervisees:</strong> {selectedAssociate.supervisees}</span></div>
+                  <div className="pt-4 border-t border-white/10">
+                    <p className="font-bold text-lg mb-2">Fees</p>
+                    <p className="opacity-90 leading-relaxed whitespace-pre-line">{selectedAssociate.fees}</p>
+                  </div>
+                </div>
+
+                <PrimaryButton onClick={() => { navigateTo('contact'); setSelectedAssociate(null); }} className="w-full">Enquire Now</PrimaryButton>
+              </div>
+
+              {/* Detail Content Column (Fluid on Mobile) */}
+              <div className="w-full lg:w-2/3 space-y-12 md:space-y-16">
+                <section>
+                  <p className="font-subtitle text-3xl md:text-5xl leading-tight text-white">"{selectedAssociate.tagline}"</p>
+                </section>
+
+                <section className="space-y-6 md:space-y-8">
+                  <h4 className="font-serif text-3xl md:text-4xl flex items-center gap-4 text-white">About <div className="h-px bg-white/20 flex-grow"></div></h4>
+                  <div className="space-y-6">
+                    {selectedAssociate.about.map((p, i) => (
+                      <p key={i} className="text-lg md:text-xl opacity-90 leading-relaxed text-white">{p}</p>
+                    ))}
+                  </div>
+                </section>
+
+                {selectedAssociate.principles && (
+                  <section className="space-y-6">
+                    <ul className="space-y-4 md:space-y-6">
+                      {selectedAssociate.principles.map((p, i) => (
+                        <li key={i} className="flex gap-4 items-start text-lg md:text-xl opacity-90 leading-relaxed text-white">
+                          <span className="mt-2 shrink-0 bg-white/20 p-1 rounded-full"><Icons.Check /></span>
+                          <span>{p}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+
+                <section className="space-y-6 md:space-y-8 pb-12">
+                  <h4 className="font-serif text-3xl md:text-4xl flex items-center gap-4 text-white">Areas of Interest <div className="h-px bg-white/20 flex-grow"></div></h4>
+                  <div className="flex flex-wrap gap-2 md:gap-3">
+                    {selectedAssociate.interests.map((interest, i) => (
+                      <span key={i} className="px-4 md:px-6 py-2 md:py-3 bg-white/10 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase border border-white/10 text-white hover:bg-white/20 transition-colors">
+                        {interest}
+                      </span>
+                    ))}
+                  </div>
+                </section>
               </div>
             </div>
           </div>

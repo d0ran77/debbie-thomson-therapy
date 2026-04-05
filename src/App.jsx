@@ -633,7 +633,7 @@ export default function App() {
         .animate-marquee-ltr { animation: marquee-ltr 60s linear infinite; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0%, 100% { transform: translateY(0px) rotate(3deg); } 50% { transform: translateY(-15px) rotate(1deg); } }
-        @keyframes marquee-ltr { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+        @keyframes marquee-ltr { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
@@ -693,8 +693,8 @@ export default function App() {
         )}
       </nav>
 
-      {/* Main Content: pb-64 ensures content isn't hidden by the fixed footer */}
-      <main className="flex-grow pb-72">
+      {/* Main Content: pb-48 offset for the fixed glassmorphism footer */}
+      <main className="flex-grow pb-48">
         {currentPage === 'home' && <HomeView navigateTo={navigateTo} />}
         {currentPage === 'about' && <AboutView />}
         {currentPage === 'services' && <ServicesView />}
@@ -704,23 +704,23 @@ export default function App() {
         {currentPage === 'contact' && <ContactView />}
       </main>
 
-      {/* FIXED Footer: Anchors to bottom at all times */}
-      <footer className="fixed bottom-0 left-0 right-0 z-20 pt-10 pb-12 flex flex-col items-center shadow-[0_-10px_30px_rgba(0,0,0,0.1)]" style={{ backgroundColor: COLORS.main }}>
-        <div className="flex gap-10 mb-8">
+      {/* FIXED Footer: Glassmorphism effect, reduced height, anchored to bottom */}
+      <footer className="fixed bottom-0 left-0 right-0 z-20 py-6 flex flex-col items-center bg-white/10 backdrop-blur-xl border-t border-white/5 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+        <div className="flex gap-10 mb-6">
           <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect">
-            <Icons.LinkedIn size={54} />
+            <Icons.LinkedIn size={44} />
           </a>
           <a href="https://www.facebook.com/Debbiettherapy" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect">
-            <Icons.Facebook size={54} />
+            <Icons.Facebook size={44} />
           </a>
           <a href="https://www.instagram.com/debbiettherapy/" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect">
-            <Icons.Instagram size={54} />
+            <Icons.Instagram size={44} />
           </a>
         </div>
         
-        <p className="opacity-70 mb-6 max-w-xs mx-auto text-base text-center text-white">Providing a safe space in Willerby Square.</p>
+        <p className="opacity-70 mb-4 max-w-xs mx-auto text-sm text-center text-white">Providing a safe space in Willerby Square.</p>
         
-        <div className="flex flex-col items-center gap-3 text-[12px] opacity-60 font-sans tracking-widest uppercase text-white">
+        <div className="flex flex-col items-center gap-2 text-[10px] opacity-60 font-sans tracking-widest uppercase text-white">
           <span>&copy; {new Date().getFullYear()} All rights reserved.</span>
           <a href="https://builtbyliam.uk/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline decoration-white/30 underline-offset-4">Built By Liam</a>
         </div>

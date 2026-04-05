@@ -637,6 +637,8 @@ export default function App() {
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .magnet-effect { transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1), filter 0.3s ease; }
+        .magnet-effect:hover { transform: scale(1.15) translateY(-5px); filter: brightness(1.1); }
       `}} />
 
       {/* Header: Fixed Alignment to max-w-7xl and Transparent */}
@@ -664,9 +666,10 @@ export default function App() {
               </div>
             </div>
 
+            {/* Magnetised Contact Button */}
             <button 
               onClick={() => navigateTo('contact')} 
-              className={`text-xl uppercase tracking-widest font-bold transition-all ${currentPage === 'contact' ? 'border-b-4 border-white pb-1' : 'opacity-90 hover:opacity-100'}`}
+              className={`text-xl uppercase tracking-widest font-bold transition-all magnet-effect ${currentPage === 'contact' ? 'border-b-4 border-white pb-1' : 'opacity-90 hover:opacity-100'}`}
             >
               Contact
             </button>
@@ -690,8 +693,8 @@ export default function App() {
         )}
       </nav>
 
-      {/* Main Content: Grows to push footer down */}
-      <main className="flex-grow">
+      {/* Main Content: pb-64 ensures content isn't hidden by the fixed footer */}
+      <main className="flex-grow pb-72">
         {currentPage === 'home' && <HomeView navigateTo={navigateTo} />}
         {currentPage === 'about' && <AboutView />}
         {currentPage === 'services' && <ServicesView />}
@@ -701,16 +704,16 @@ export default function App() {
         {currentPage === 'contact' && <ContactView />}
       </main>
 
-      {/* Sticky Footer: Matches body color and anchors to bottom */}
-      <footer className="sticky bottom-0 z-20 mt-auto pt-10 pb-12 flex flex-col items-center" style={{ backgroundColor: COLORS.main }}>
+      {/* FIXED Footer: Anchors to bottom at all times */}
+      <footer className="fixed bottom-0 left-0 right-0 z-20 pt-10 pb-12 flex flex-col items-center shadow-[0_-10px_30px_rgba(0,0,0,0.1)]" style={{ backgroundColor: COLORS.main }}>
         <div className="flex gap-10 mb-8">
-          <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">
+          <a href="https://www.linkedin.com/in/debbie-thomson-35131a1b8/" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect">
             <Icons.LinkedIn size={54} />
           </a>
-          <a href="https://www.facebook.com/Debbiettherapy" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">
+          <a href="https://www.facebook.com/Debbiettherapy" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect">
             <Icons.Facebook size={54} />
           </a>
-          <a href="https://www.instagram.com/debbiettherapy/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#b28c8e] hover:scale-110 transition-all duration-300">
+          <a href="https://www.instagram.com/debbiettherapy/" target="_blank" rel="noopener noreferrer" className="text-white magnet-effect">
             <Icons.Instagram size={54} />
           </a>
         </div>

@@ -204,25 +204,42 @@ const AssociatesView = ({ navigateTo }) => {
     {
       id: 'kiran',
       name: "Kiran Nagra",
-      titles: ["TA Psychotherapist", "NCPS Registered"],
+      logo: "/kiranlogo.webp",
+      titles: [
+        "Transactional Analysis (TA) Psychotherapist",
+        "Imago Relationship Therapist (in training)",
+        "UKCP trainee member & NCPS registered"
+      ],
       tagline: "A thoughtful and psychologically grounded space for individuals and couples.",
-      about: ["My approach is warm, collaborative and reflective. I work in a trauma-informed way, helping you understand how past experiences shape your present emotional responses."],
-      interests: ["Anxiety", "Depression", "Self-esteem", "Trauma"],
-      worksWith: "Adults 18+",
+      about: [
+        "I offer a thoughtful and psychologically grounded space for individuals and couples who are ready to explore the patterns beneath their struggles.",
+        "I am a psychotherapist and UKCP Trainee Member, registered with the NCPS, with specialist training in Transactional Analysis (TA). I am also an Imago Relationship Therapy practitioner in training.",
+        "My approach is warm, collaborative and reflective. I work in a trauma-informed way, recognising how past experiences particularly relational trauma which can shape present emotional responses, attachment patterns and self-beliefs.",
+        "Transactional Analysis provides a clear and practical framework for understanding how early experiences shape our internal “scripts.” These patterns often influence how we relate to others, manage conflict, and experience ourselves.",
+        "Together, we explore these dynamics at your pace, supporting greater awareness, emotional resilience and meaningful choice."
+      ],
+      interests: [
+        "Relationship difficulties", "Couples therapy", "Imago Therapy", "Low self-esteem", "Anxiety", "Stress", 
+        "Identity", "Childhood neglect", "Inner child work", "Life transitions", "Family dynamics", "Boundaries",
+        "Cultural identity", "Narcissistic abuse", "Trauma recovery", "Somatic awareness", "Depression", 
+        "Inner critic", "Parenting", "Grief & loss"
+      ],
+      worksWith: "Adult individuals & couples (18+)",
       methods: "Face-to-face & online",
       supervisees: "No",
-      hours: "Contact for availability",
-      fees: "£55 / 50 mins",
-      location: "Willerby",
-      img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400"
+      hours: "Mon, Wed, Fri 9am-8pm; Thu 10am-7pm; Sat 10am-3pm",
+      fees: "Individuals £55 (50 mins); Couples £75 (60 mins) & £110 (90 mins)",
+      location: "Willerby Square",
+      insurance: "Balens Ltd",
+      img: "/kiran.webp"
     },
     {
       id: 'sarah',
       name: "Sarah Miller",
       titles: ["Integrative Psychotherapist", "BACP Accredited"],
       tagline: "Finding balance through integrative and mindful therapeutic approaches.",
-      about: ["I integrate various therapeutic models to match the specific needs of my clients, focusing on mindfulness and cognitive awareness."],
-      interests: ["Stress", "Mindfulness", "Workplace burnout"],
+      about: ["I integrate various therapeutic models to match the specific needs of my clients, focusing on mindfulness and cognitive awareness to manage stress and anxiety."],
+      interests: ["Stress", "Mindfulness", "Life transitions", "Workplace burnout"],
       worksWith: "Adults and Professionals",
       methods: "Face-to-face & online",
       supervisees: "Yes",
@@ -289,7 +306,8 @@ const AssociatesView = ({ navigateTo }) => {
                       className="cursor-pointer bg-white/10 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[580px] justify-between overflow-hidden"
                     >
                       <div className="flex flex-col items-center w-full">
-                        <div className="w-24 h-24 md:w-28 md:h-28 rounded-full mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5">
+                        {/* Larger Circle for Carousel (Kim's requirement) */}
+                        <div className="w-32 h-32 md:w-40 md:h-40 rounded-full mb-6 overflow-hidden border-4 border-white/30 shadow-lg bg-white/5">
                           <img src={associate.img} className="w-full h-full object-cover" alt={associate.name} />
                         </div>
                         <h3 className="text-3xl font-serif mb-2" style={{ color: COLORS.button }}>{associate.name}</h3>
@@ -318,7 +336,7 @@ const AssociatesView = ({ navigateTo }) => {
           </div>
         </>
       ) : (
-        /* FULL-VIEW PROFILE DETAIL (FIXES MOBILE COLLISION) */
+        /* FULL-VIEW PROFILE DETAIL (RESPONSIVE FIX) */
         <div className="animate-fadeIn relative z-[10] min-h-[80vh] w-full">
           {/* Parallax - Left to Right Background Layer */}
           <div className="absolute inset-x-0 top-0 h-full overflow-hidden pointer-events-none opacity-10 -z-0">
@@ -341,14 +359,22 @@ const AssociatesView = ({ navigateTo }) => {
             </button>
 
             <div className="flex flex-col lg:flex-row gap-8 md:gap-16 items-start relative z-10">
-              {/* Profile Card Column (Sticky on Desktop) */}
+              {/* Profile Card Column */}
               <div className="w-full lg:w-1/3 space-y-6 md:space-y-8 lg:sticky lg:top-8">
-                <div className="w-full aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden border-4 md:border-8 border-white/20 shadow-2xl bg-white/5">
-                  <img src={selectedAssociate.img} className="w-full h-full object-cover" alt={selectedAssociate.name} />
+                {/* Large Square Image (Fits Kim and Kiran properly) */}
+                <div className="relative group">
+                  {selectedAssociate.logo && (
+                    <div className="absolute -top-4 -left-4 z-20 w-24 h-24 md:w-32 md:h-32 p-2 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 animate-float shadow-2xl">
+                      <img src={selectedAssociate.logo} className="w-full h-full object-contain" alt="Logo" />
+                    </div>
+                  )}
+                  <div className="w-full aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden border-4 md:border-8 border-white/20 shadow-2xl bg-white/5">
+                    <img src={selectedAssociate.img} className="w-full h-full object-cover" alt={selectedAssociate.name} />
+                  </div>
                 </div>
                 
                 <div className="space-y-3 md:space-y-4 text-center lg:text-left">
-                  <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight">Work with {selectedAssociate.name.split(' ')[0]}</h2>
+                  <h2 className="text-4xl md:text-5xl font-serif text-white uppercase tracking-tight leading-none">Work with {selectedAssociate.name.split(' ')[0]}</h2>
                   <div className="space-y-2">
                     {selectedAssociate.titles.map((t, i) => (
                       <p key={i} className="text-[11px] md:text-xs font-bold opacity-80 uppercase tracking-widest leading-tight text-white">{t}</p>
@@ -362,9 +388,12 @@ const AssociatesView = ({ navigateTo }) => {
                   <div className="flex items-start gap-3"><Icons.User className="shrink-0 mt-1" /> <span><strong>Works With:</strong> {selectedAssociate.worksWith}</span></div>
                   <div className="flex items-start gap-3"><Icons.Calendar className="shrink-0 mt-1" /> <span><strong>Methods:</strong> {selectedAssociate.methods}</span></div>
                   <div className="flex items-start gap-3"><Icons.Users className="shrink-0 mt-1" /> <span><strong>Supervisees:</strong> {selectedAssociate.supervisees}</span></div>
+                  {selectedAssociate.insurance && (
+                    <div className="flex items-start gap-3"><Icons.Check className="shrink-0 mt-1" /> <span><strong>Insurance:</strong> {selectedAssociate.insurance}</span></div>
+                  )}
                   <div className="pt-4 border-t border-white/10">
                     <p className="font-bold text-lg mb-2">Fees</p>
-                    <p className="opacity-90 leading-relaxed whitespace-pre-line text-xs">{selectedAssociate.fees}</p>
+                    <p className="opacity-90 leading-relaxed text-xs whitespace-pre-line">{selectedAssociate.fees}</p>
                   </div>
                 </div>
 
@@ -373,8 +402,8 @@ const AssociatesView = ({ navigateTo }) => {
                 </PrimaryButton>
               </div>
 
-              {/* Detail Content Column (Fluid on Mobile) */}
-              <div className="w-full lg:w-2/3 space-y-12 md:space-y-16">
+              {/* Detail Content Column */}
+              <div className="w-full lg:w-2/3 space-y-12 md:space-y-16 pt-8 lg:pt-0">
                 <section>
                   <p className="font-subtitle text-3xl md:text-5xl leading-tight text-white">"{selectedAssociate.tagline}"</p>
                 </section>
@@ -450,7 +479,7 @@ const FAQView = () => (
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">FAQ</h1>
     <div className="space-y-6">
       {[
-        { q: "How long is a standard session?", a: "Individual sessions are 60 minutes. Couples sessions are 90 minutes." },
+        { q: "How long is a standard session?", a: "Individual sessions are 60 minutes long. Couples sessions are 90 minutes." },
         { q: "Where is the practice located?", a: "The practice is centrally located in Willerby Square, East Yorkshire." },
         { q: "Do you offer online sessions?", a: "Yes, I offer online sessions for individuals. Couples therapy is face-to-face only." }
       ].map((item, i) => (

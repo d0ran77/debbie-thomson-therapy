@@ -164,18 +164,30 @@ const AssociatesView = ({ navigateTo }) => {
     {
       id: 'kim',
       name: "Kim Jones",
-      titles: ["UKCP Psychotherapist & Clinical Supervisor", "RTM Licenced Clinician"],
+      titles: [
+        "UKCP Psychotherapist & Clinical Supervisor",
+        "RTM Licenced Clinician",
+        "Eco Coach/Therapist",
+        "Advanced Practitioner of Emotional Freedom Technique"
+      ],
       tagline: "Creating more choices and empowering minds leads to positive changes both personally and professionally.",
       about: [
         "I am empathic, approachable, open minded, friendly and professional. In my work I provide therapeutic solutions, build confidence, enable clients to realise their potential, develop awareness of their innate ability to perceive and resolve problems from a different perspective as well as help re-discover the true inner version of themselves.",
-        "Having made an enquiry, we will arrange a convenient time for an initial consultation where I will learn more about you."
+        "I work with adults and businesses, with a varied range of social, behavioural, and mental health issues, within local authorities, charities, privately and businesses.",
+        "I am passionate about working within a range of areas and clients, ensuring I remain versatile and multi-faceted in my work. My mission to empower you, to remind you that you are enough, always, and to help you re-discover the true inner you.",
+        "I abide by confidentiality and have the utmost respect for who you are.",
+        "Having made an enquiry, we will arrange a convenient time for an initial consultation where I will learn more about you. Together we will outline a flexible schedule, within which we will aim for your goals to be met, we will work together to facilitate positive changes to ensure you get the results that you want."
       ],
-      interests: ["Abuse", "Anxiety", "PTSD/CPTSD", "Depression", "Relationships", "Stress", "Trauma"],
-      worksWith: "Adults 18+",
+      principles: [
+        "I operate judgement free across all services, in a safe, comfortable and a protective environment in which we explore and resolve the things that you want to change.",
+        "I adopt principles of empathy, understanding and support as you begin to find the real and authentic you."
+      ],
+      interests: ["Abuse", "Anger management", "Anxiety", "Bullying", "PTSD/CPTSD", "Depression", "Divorce", "Domestic abuse", "Relationships", "Stress", "Trauma"],
+      worksWith: "Individual clients, groups, adult and young adults from 18+",
       methods: "Face-to-face, online & eco therapy",
       supervisees: "Yes",
-      hours: "Mon 1-7pm; Tue-Thu 8:45am-6:30pm; Fri 8:45am-1pm",
-      fees: "Individual: £85/hr; Supervisees: £60/hr",
+      hours: "Monday 1-7pm; Tuesday/Wednesday/Thursday 8.45am-6.30pm; Friday 8.45am-1pm. (Flexible when required)",
+      fees: "Individual: £85/hr; Trainees: Reduced rates; Supervisees: £60/hr; Groups: On application.",
       location: "Howden",
       img: "/kim.svg"
     },
@@ -262,7 +274,6 @@ const AssociatesView = ({ navigateTo }) => {
               >
                 {associates.map((associate) => (
                   <div key={associate.id} className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 px-3">
-                    {/* Fixed Height Card with Clamping for Stability */}
                     <div 
                       onClick={() => setSelectedAssociate(associate)}
                       className="cursor-pointer bg-white/10 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/20 text-center flex flex-col items-center hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-xl h-[580px] justify-between overflow-hidden"
@@ -277,7 +288,6 @@ const AssociatesView = ({ navigateTo }) => {
                             <p key={i} className="text-[10px] opacity-60 uppercase tracking-widest font-bold px-4 text-white line-clamp-2">{t}</p>
                           ))}
                         </div>
-                        {/* Text Clamping: Tagline won't push the button out anymore */}
                         <p className="font-subtitle text-xl text-white mb-6 leading-snug px-2 line-clamp-4">"{associate.tagline}"</p>
                       </div>
                       <div className="w-full">
@@ -319,9 +329,10 @@ const AssociatesView = ({ navigateTo }) => {
               <Icons.X />
             </button>
 
-            <div className="overflow-y-auto p-8 md:p-16 scrollbar-hide">
+            <div className="overflow-y-auto p-8 md:p-16 scrollbar-hide max-h-[85vh]">
               <div className="flex flex-col md:flex-row gap-12 items-start">
-                <div className="w-full md:w-1/3 space-y-8">
+                {/* Side Info Column */}
+                <div className="w-full md:w-1/3 space-y-8 sticky top-0">
                   <div className="w-full aspect-square rounded-[3rem] overflow-hidden border-8 border-white/20 shadow-2xl bg-white/5">
                     <img src={selectedAssociate.img} className="w-full h-full object-cover" alt={selectedAssociate.name} />
                   </div>
@@ -336,20 +347,21 @@ const AssociatesView = ({ navigateTo }) => {
                   </div>
 
                   <div className="p-6 bg-white/10 rounded-3xl space-y-4 text-sm border border-white/10 text-white">
-                    <div className="flex items-center gap-3"><Icons.MapPin /> <span><strong>Location:</strong> {selectedAssociate.location}</span></div>
-                    <div className="flex items-center gap-3"><Icons.Clock /> <span><strong>Hours:</strong> {selectedAssociate.hours}</span></div>
-                    <div className="flex items-center gap-3"><Icons.User /> <span><strong>Works With:</strong> {selectedAssociate.worksWith}</span></div>
-                    <div className="flex items-center gap-3"><Icons.Calendar /> <span><strong>Methods:</strong> {selectedAssociate.methods}</span></div>
-                    <div className="flex items-center gap-3"><Icons.Users /> <span><strong>Supervisees:</strong> {selectedAssociate.supervisees}</span></div>
+                    <div className="flex items-start gap-3"><Icons.MapPin className="shrink-0 mt-1" /> <span><strong>Location:</strong> {selectedAssociate.location}</span></div>
+                    <div className="flex items-start gap-3"><Icons.Clock className="shrink-0 mt-1" /> <span><strong>Hours:</strong> {selectedAssociate.hours}</span></div>
+                    <div className="flex items-start gap-3"><Icons.User className="shrink-0 mt-1" /> <span><strong>Works With:</strong> {selectedAssociate.worksWith}</span></div>
+                    <div className="flex items-start gap-3"><Icons.Calendar className="shrink-0 mt-1" /> <span><strong>Methods:</strong> {selectedAssociate.methods}</span></div>
+                    <div className="flex items-start gap-3"><Icons.Users className="shrink-0 mt-1" /> <span><strong>Supervisees:</strong> {selectedAssociate.supervisees}</span></div>
                     <div className="pt-4 border-t border-white/10">
                       <p className="font-bold text-base mb-2">Fees</p>
-                      <p className="opacity-80 leading-relaxed text-xs">{selectedAssociate.fees}</p>
+                      <p className="opacity-80 leading-relaxed text-xs whitespace-pre-line">{selectedAssociate.fees}</p>
                     </div>
                   </div>
 
                   <PrimaryButton onClick={() => { navigateTo('contact'); setSelectedAssociate(null); }} className="w-full">Enquire Now</PrimaryButton>
                 </div>
 
+                {/* Content Column */}
                 <div className="w-full md:w-2/3 space-y-10">
                   <section>
                     <p className="font-subtitle text-3xl md:text-4xl leading-snug text-white">"{selectedAssociate.tagline}"</p>
@@ -361,6 +373,19 @@ const AssociatesView = ({ navigateTo }) => {
                       <p key={i} className="text-lg opacity-90 leading-relaxed text-white">{p}</p>
                     ))}
                   </section>
+
+                  {selectedAssociate.principles && (
+                    <section className="space-y-4">
+                      <ul className="space-y-4">
+                        {selectedAssociate.principles.map((p, i) => (
+                          <li key={i} className="flex gap-4 items-start text-lg opacity-90 leading-relaxed text-white">
+                            <span className="mt-2 shrink-0"><Icons.Check /></span>
+                            <span>{p}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  )}
 
                   <section className="space-y-6">
                     <h4 className="font-serif text-3xl flex items-center gap-3 text-white">Areas of Interest <div className="h-px bg-white/20 flex-grow"></div></h4>
@@ -408,9 +433,9 @@ const FAQView = () => (
     <h1 className="text-5xl md:text-7xl font-serif text-center mb-16 uppercase tracking-tight">FAQ</h1>
     <div className="space-y-6">
       {[
+        { q: "How long is a standard session?", a: "Individual sessions are 60 minutes. Couples sessions are 90 minutes." },
         { q: "Where is the practice located?", a: "The practice is centrally located in Willerby Square, East Yorkshire." },
-        { q: "Do you offer online sessions?", a: "Yes, I offer online sessions for individuals. Couples therapy is face-to-face only." },
-        { q: "How long is a standard session?", a: "Individual sessions are 60 minutes. Couples sessions are 90 minutes." }
+        { q: "Do you offer online sessions?", a: "Yes, I offer online sessions for individuals. Couples therapy is face-to-face only." }
       ].map((item, i) => (
         <div key={i} className="p-8 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20">
           <h3 className="text-2xl font-serif mb-3" style={{ color: COLORS.button }}>{item.q}</h3>
